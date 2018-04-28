@@ -23,7 +23,7 @@ Image {
     // Text
     StandardText {
         anchors.centerIn: parent
-        font.pixelSize: 0.15*parent.width
+        font.pixelSize: 0.2*parent.width
         color: batteryColorOverlay.color
         font.bold: true
         text: batteryLevel + "%"

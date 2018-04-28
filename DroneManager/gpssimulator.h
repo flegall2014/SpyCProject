@@ -38,6 +38,9 @@ private:
     //! GPS strength
     int m_iGPSStrength = 0;
 
+    //! Repeat
+    bool m_bRepeat = false;
+
 public slots:
     //! Time out
     void onTimeOut();

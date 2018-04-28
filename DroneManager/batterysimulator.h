@@ -38,6 +38,9 @@ private:
     //! Battery level
     int m_iBatteryLevel = 100;
 
+    //! Repeat
+    bool m_bRepeat = false;
+
 public slots:
     //! Time out
     void onTimeOut();

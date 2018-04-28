@@ -12,6 +12,7 @@ BatterySimulator::BatterySimulator(const QString &sDroneUID, QObject *pParent) :
     m_timer.setInterval(500);
     m_timer.setSingleShot(true);
     connect(&m_timer, &QTimer::timeout, this, &BatterySimulator::onTimeOut);
+    m_timer.start();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -25,6 +26,7 @@ BatterySimulator::~BatterySimulator()
 
 void BatterySimulator::start()
 {
+    m_bRepeat = true;
     m_timer.start();
 }
 
@@ -36,7 +38,8 @@ void BatterySimulator::onTimeOut()
     m_iBatteryLevel--;
     if (m_iBatteryLevel < 0)
         m_iBatteryLevel = 100;
-    m_timer.start();
+    if (m_bRepeat)
+        m_timer.start();
 }
 
 //-------------------------------------------------------------------------------------------------
