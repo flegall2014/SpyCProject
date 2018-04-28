@@ -6,18 +6,18 @@ import ".."
 // Battery image
 Image {
     id: batteryImage
-    property int batteryStatus
-    property int batteryLevel
+    property int gpsStatus
+    property int gpsStrength
     fillMode: Image.PreserveAspectFit
-    source: "qrc:/icons/ico-battery.svg"
+    source: "qrc:/icons/ico-gps.svg"
 
     // Color overlay
     ColorOverlay {
         id: batteryColorOverlay
         anchors.fill: batteryImage
         source: batteryImage
-        color: batteryStatus === DroneBase.NOMINAL ? Theme.nominalColor :
-        (batteryStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
+        color: gpsStatus === DroneBase.NOMINAL ? Theme.nominalColor :
+        (gpsStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
     }
 
     // Text
@@ -26,6 +26,6 @@ Image {
         font.pixelSize: 0.175*parent.width
         color: Theme.invertDefaultFontColor
         font.bold: true
-        text: batteryLevel + "%"
+        text: gpsStrength + "%"
     }
 }

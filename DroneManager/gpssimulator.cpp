@@ -34,8 +34,10 @@ void GPSSimulator::start()
 
 void GPSSimulator::onTimeOut()
 {
-    m_iGPSStrength++;
-    emit gpsStrengthChanged(m_iGPSStrength%100, m_sDroneUID);
+    emit gpsStrengthChanged(m_iGPSStrength, m_sDroneUID);
+    m_iGPSStrength--;
+    if (m_iGPSStrength < 0)
+        m_iGPSStrength = 100;
     if (m_bRepeat)
         m_timer.start();
 }

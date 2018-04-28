@@ -59,5 +59,6 @@
         <file>qml/dialogs/ConfirmTakeOffDialog.qml</file>
         <file>qml/panels/FlightEditor.qml</file>
         <file>qml/widgets/BatteryStatusWidget.qml</file>
+        <file>qml/widgets/GPSStatusWidget.qml</file>
     </qresource>
 </RCC>

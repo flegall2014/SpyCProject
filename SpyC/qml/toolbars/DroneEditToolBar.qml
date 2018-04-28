@@ -20,12 +20,26 @@ ToolBarBase {
             font.bold: true
         }
 
+        // Battery status widget
         BatteryStatusWidget {
+            id: batteryStatusWidget
             width: 64
             anchors.left: droneLabel.right
             anchors.leftMargin: 8
+            anchors.verticalCenter: parent.verticalCenter
             batteryStatus: drone.batteryStatus
             batteryLevel: drone.batteryLevel
+        }
+
+        // GPS status widget
+        GPSStatusWidget {
+            id: gpsStatusWidget
+            width: 64
+            anchors.left: batteryStatusWidget.right
+            anchors.leftMargin: 8
+            anchors.verticalCenter: parent.verticalCenter
+            gpsStatus: drone.gpsStatus
+            gpsStrength: drone.gpsStrength
         }
     }
 

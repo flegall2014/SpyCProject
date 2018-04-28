@@ -15,6 +15,7 @@ DroneBase::DroneBase(QObject *parent) : QObject(parent)
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
     connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::statusChanged);
+    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::statusChanged);
     connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::statusChanged);
 }
 
@@ -27,6 +28,7 @@ DroneBase::DroneBase(const QString &sDroneUID, const QString &sVideoUrl, const Q
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
     connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::statusChanged);
+    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::statusChanged);
     connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::statusChanged);
 }
 
@@ -148,7 +150,7 @@ int DroneBase::gpsStatus() const
 
 int DroneBase::status() const
 {
-    return batteryStatus();
+    return qMax(batteryStatus(), gpsStatus());
 }
 
 //-------------------------------------------------------------------------------------------------

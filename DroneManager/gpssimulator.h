@@ -36,7 +36,7 @@ public:
 
 private:
     //! GPS strength
-    int m_iGPSStrength = 0;
+    int m_iGPSStrength = 100;
 
     //! Repeat
     bool m_bRepeat = false;
@@ -47,7 +47,7 @@ public slots:
 
 signals:
     //! GPS strength changed
-    void gpsStrengthChanged(int iStrength, const QString &sDroneUID);
+    void gpsStrengthChanged(int iLevel, const QString &sDroneUID);
 };
 }
 
