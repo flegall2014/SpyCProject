@@ -1,14 +1,13 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import QtMultimedia 5.5
-import QtGraphicalEffects 1.0
 import Components 1.0
+import "widgets"
 import "."
 
 Rectangle {
     color: Theme.backgroundColor
-    width: 300
+    width: Theme.controlPanelWidth
 
     TabView {
         anchors.fill: parent
@@ -30,35 +29,17 @@ Rectangle {
             Item {
                 anchors.fill: parent
 
-                // Battery image
-                Image {
-                    id: batteryImage
+                // Battery status widget
+                BatteryStatusWidget {
                     width: parent.width-64
-                    fillMode: Image.PreserveAspectFit
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.horizontalCenter: parent.horizontalCenter
-                    source: "qrc:/icons/ico-battery.svg"
-
-                    // Color overlay
-                    ColorOverlay {
-                        id: batteryColorOverlay
-                        anchors.fill: batteryImage
-                        source: batteryImage
-                        color: drone.batteryStatus === DroneBase.NOMINAL ? Theme.nominalColor :
-                        (drone.batteryStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
-                    }
-
-                    // Text
-                    StandardText {
-                        anchors.centerIn: parent
-                        font.pixelSize: Theme.veryLargeFontSize
-                        color: batteryColorOverlay.color
-                        font.bold: true
-                        text: drone.batteryLevel + "%"
-                    }
+                    batteryStatus: drone.batteryStatus
+                    batteryLevel: drone.batteryLevel
                 }
 
+                /*
                 // GPS image
                 Image {
                     id: gpsImage
@@ -87,6 +68,7 @@ Rectangle {
                         text: drone.gpsStrength + "%"
                     }
                 }
+                */
             }
         }
 

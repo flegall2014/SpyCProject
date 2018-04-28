@@ -48,6 +48,7 @@ Rectangle {
                 visible: width > 0
                 z: 0
 
+                // Drone display state changed
                 function onDroneDisplayStateChanged()
                 {
                     if (droneView.droneExpanded === false)
@@ -95,10 +96,10 @@ Rectangle {
                         }
                         PropertyChanges {
                             target: videoView
-                            width: 256
-                            height: 256
-                            x: mapView.width-256
-                            y: mapView.height-256
+                            width: Theme.mapOrVideoThumbnailSize
+                            height: Theme.mapOrVideoThumbnailSize
+                            x: mapView.width-Theme.mapOrVideoThumbnailSize
+                            y: mapView.height-Theme.mapOrVideoThumbnailSize
                             z: 1000
                         }
                     },
@@ -106,10 +107,10 @@ Rectangle {
                         name: "mapMinimized"
                         PropertyChanges {
                             target: mapView
-                            width: 256
-                            height: 256
-                            x: videoView.width-256
-                            y: videoView.height-256
+                            width: Theme.mapOrVideoThumbnailSize
+                            height: Theme.mapOrVideoThumbnailSize
+                            x: videoView.width-Theme.mapOrVideoThumbnailSize
+                            y: videoView.height-Theme.mapOrVideoThumbnailSize
                             z: 1000
                         }
                         PropertyChanges {

@@ -58,5 +58,6 @@
         <file>qml/panels/SafetyEditorPanel.qml</file>
         <file>qml/dialogs/ConfirmTakeOffDialog.qml</file>
         <file>qml/panels/FlightEditor.qml</file>
+        <file>qml/widgets/BatteryStatusWidget.qml</file>
     </qresource>
 </RCC>

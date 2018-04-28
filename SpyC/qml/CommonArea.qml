@@ -7,6 +7,7 @@ import "."
 Rectangle {
     id: commonArea
     color: Theme.backgroundColor
+    height: Theme.commonAreaHeight
 
     // Panel manager
     PanelManager {
