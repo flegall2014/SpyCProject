@@ -14,9 +14,9 @@ DroneBase::DroneBase(QObject *parent) : QObject(parent)
     // Mission plan model
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
-    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -27,9 +27,9 @@ DroneBase::DroneBase(const QString &sDroneUID, const QString &sVideoUrl, const Q
     // Mission plan model
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
-    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -148,7 +148,7 @@ int DroneBase::gpsStatus() const
 
 //-------------------------------------------------------------------------------------------------
 
-int DroneBase::status() const
+int DroneBase::globalStatus() const
 {
     return qMax(batteryStatus(), gpsStatus());
 }
@@ -164,10 +164,6 @@ int DroneBase::state() const
 
 QString DroneBase::stateText() const
 {
-    if (m_eState == MISSION_PLAN_EDIT)
-        return tr("Mission Plan Edit");
-    if (m_eState == SAFETY_EDIT)
-        return tr("Safety Edit");
     if (m_eState == FLYING)
         return tr("Flying");
     return tr("IDLE");
@@ -175,11 +171,28 @@ QString DroneBase::stateText() const
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneBase::setState(int iMode)
+void DroneBase::setState(int iState)
 {
-    m_eState = (DroneBase::State)iMode;
-    qDebug() << "STATE = " << m_eState;
+    m_eState = (DroneBase::State)iState;
     emit stateChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::setEditMode(int iMode)
+{
+    m_eEditMode = (DroneBase::EditMode)iMode;
+    emit editModeChanged();
+
+
+    qDebug() << "------------------------------------------ " << m_eEditMode;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+int DroneBase::editMode() const
+{
+    return (int)m_eEditMode;
 }
 
 //-------------------------------------------------------------------------------------------------

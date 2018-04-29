@@ -12,9 +12,9 @@ DialogBase {
             anchors.right: parent.right
             anchors.rightMargin: 4
             anchors.verticalCenter: parent.verticalCenter
-            text: qsTr("Cancel")
+            label: qsTr("Cancel")
             onClicked: {
-                MASTERCONTROLLER.currentDrone.state = DroneBase.IDLE
+                MASTERCONTROLLER.currentDrone.editMode = DroneBase.NONE
                 closeDialog()
             }
         }
@@ -25,7 +25,7 @@ DialogBase {
             anchors.right: cancelButton.left
             anchors.rightMargin: 4
             anchors.verticalCenter: parent.verticalCenter
-            text: qsTr("OK")
+            label: qsTr("OK")
             onClicked: {
                 MASTERCONTROLLER.missionPlanController.failSafe(MASTERCONTROLLER.currentDrone.uid)
                 closeDialog()

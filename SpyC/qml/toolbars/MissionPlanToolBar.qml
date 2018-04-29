@@ -25,7 +25,7 @@ ToolBarBase {
         anchors.verticalCenter: parent.verticalCenter
         label: qsTr("Cancel")
         endColor: Theme.defaultButtonColor
-        onClicked: drone.state = DroneBase.IDLE
+        onClicked: drone.editMode = DroneBase.NONE
     }
     StandardButton {
         id: done

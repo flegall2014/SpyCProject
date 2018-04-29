@@ -11,29 +11,45 @@ class WayPointModel;
 class DroneBase : public QObject
 {
     Q_OBJECT
+
+    // UID & video URL
     Q_PROPERTY(QString uid READ uid NOTIFY uidChanged)
     Q_PROPERTY(QString videoUrl READ videoUrl NOTIFY uidChanged)
+
+    // Initial position, current position and heading
+    Q_PROPERTY(QGeoCoordinate initialPosition READ initialPosition NOTIFY initialPositionChanged)
+    Q_PROPERTY(QGeoCoordinate position READ position WRITE setPosition NOTIFY positionChanged)
+    Q_PROPERTY(double heading READ heading WRITE setHeading NOTIFY headingChanged)
+
+    // State, edit mode and global status
     Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
     Q_PROPERTY(QString stateText READ stateText NOTIFY stateChanged)
-    Q_PROPERTY(int status READ status NOTIFY statusChanged)
+    Q_PROPERTY(int editMode READ editMode WRITE setEditMode NOTIFY editModeChanged)
+    Q_PROPERTY(int globalStatus READ globalStatus NOTIFY globalStatusChanged)
+
+    // Battery and GPS level/status
     Q_PROPERTY(int batteryLevel READ batteryLevel WRITE setBatteryLevel NOTIFY batteryLevelChanged)
     Q_PROPERTY(int gpsStrength READ gpsStrength WRITE setGPSStrength NOTIFY gpsStrengthChanged)
     Q_PROPERTY(int batteryStatus READ batteryStatus NOTIFY batteryStatusChanged)
     Q_PROPERTY(int gpsStatus READ gpsStatus NOTIFY gpsStatusChanged)
-    Q_PROPERTY(QGeoCoordinate initialPosition READ initialPosition NOTIFY initialPositionChanged)
-    Q_PROPERTY(QGeoCoordinate position READ position WRITE setPosition NOTIFY positionChanged)
-    Q_PROPERTY(double heading READ heading WRITE setHeading NOTIFY headingChanged)
+
+    // Mission plan model and safety model
     Q_PROPERTY(WayPointModel *missionPlanModel READ missionPlanModel NOTIFY missionPlanModelChanged)
     Q_PROPERTY(WayPointModel *safetyModel READ safetyModel NOTIFY safetyModelChanged)
+
     Q_ENUMS(Status)
     Q_ENUMS(State)
+    Q_ENUMS(EditMode)
 
 public:
     //! Define a status
-    enum Status {NOMINAL=0, WARNING, CRITICAL};
+    enum Status {NOMINAL=Qt::UserRole+1, WARNING, CRITICAL};
 
-    //! Define a mode
-    enum State {IDLE=0, MISSION_PLAN_EDIT, SAFETY_EDIT, FLYING};
+    //! Define a drone state
+    enum State {IDLE=Qt::UserRole+1, FLYING};
+
+    //! Define a drone mode
+    enum EditMode {NONE=Qt::UserRole+1, MISSION_PLAN_EDIT, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT};
 
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
@@ -92,7 +108,7 @@ public:
     int gpsStatus() const;
 
     //! Return global status
-    int status() const;
+    int globalStatus() const;
 
     //! Return state
     int state() const;
@@ -100,8 +116,14 @@ public:
     //! Return state text
     QString stateText() const;
 
-    //! Set mode
-    void setState(int iMode);
+    //! Set state
+    void setState(int iState);
+
+    //! Return edit mode
+    int editMode() const;
+
+    //! Set edit mode
+    void setEditMode(int iMode);
 
     //! Return mission plan model
     WayPointModel *missionPlanModel() const;
@@ -159,8 +181,11 @@ private:
     //! Safety model
     WayPointModel *m_pSafetyModel = nullptr;
 
-    //! Mode
+    //! State
     State m_eState = IDLE;
+
+    //! Mode
+    EditMode m_eEditMode = PAYLOAD_EDIT;
 
 signals:
     //! UID changed
@@ -170,7 +195,7 @@ signals:
     void videoUrlChanged();
 
     //! Global status changed
-    void statusChanged();
+    void globalStatusChanged();
 
     //! Mode changed
     void stateChanged();
@@ -204,6 +229,9 @@ signals:
 
     //! Safety model changed
     void safetyModelChanged();
+
+    //! Edit mode changed
+    void editModeChanged();
 };
 
 Q_DECLARE_METATYPE(DroneBase::State)

@@ -27,9 +27,6 @@ Rectangle {
         source: drone.videoUrl
         loops: MediaPlayer.Infinite
         focus: true
-        Keys.onSpacePressed: video.playbackState == MediaPlayer.PlayingState ? video.pause() : video.play()
-        Keys.onLeftPressed: video.seek(video.position - 5000)
-        Keys.onRightPressed: video.seek(video.position + 5000)
         opacity: drone.state === DroneBase.FLYING ? 1 : 0
         visible: opacity > 0
         Behavior on opacity {

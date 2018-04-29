@@ -70,7 +70,6 @@ void MissionPlanController::validateSafety(const QString &sDroneUID)
                     emit missionPlanError(MissionPlanError::NOT_ENOUGH_POINTS_IN_SAFETY, pDrone->uid());
             }
             else {
-                qDebug() << "EMPTY SAFETY ICI1 " << pDrone->uid();
                 emit missionPlanError(MissionPlanError::EMPTY_SAFETY, pDrone->uid());
             }
         }
@@ -105,7 +104,6 @@ void MissionPlanController::failSafe(const QString &sDroneUID)
 
 void MissionPlanController::onMissionPlanError(const Model::Drone::DroneError &eError, const QString &sDroneUID)
 {
-    qDebug() << "MISSION PLAN ERROR!";
     if (eError == Model::Drone::NO_SAFETY)
         emit missionPlanError(EMPTY_SAFETY, sDroneUID);
     else

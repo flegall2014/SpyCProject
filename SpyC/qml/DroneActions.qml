@@ -12,8 +12,8 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-safety.svg"
             checkable: true
-            checked: drone.state === DroneBase.SAFETY_EDIT
-            onClicked: drone.state = DroneBase.SAFETY_EDIT
+            checked: drone.editMode === DroneBase.SAFETY_EDIT
+            onClicked: drone.editMode = DroneBase.SAFETY_EDIT
             enabled: drone.state !== DroneBase.FLYING
             label: qsTr("Safety")
             textPosition: "below"
@@ -27,8 +27,8 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-missionplan.svg"
             checkable: true
-            checked: drone.state === DroneBase.MISSION_PLAN_EDIT
-            onClicked: drone.state = DroneBase.MISSION_PLAN_EDIT
+            checked: drone.editMode === DroneBase.MISSION_PLAN_EDIT
+            onClicked: drone.editMode = DroneBase.MISSION_PLAN_EDIT
             enabled: drone.state !== DroneBase.FLYING
             label: qsTr("Mission plan")
             textPosition: "below"

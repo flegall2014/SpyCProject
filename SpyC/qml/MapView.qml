@@ -16,7 +16,7 @@ Map {
     property string missionPlanColor: Theme.missionPlanColor
     property string safetyColor: Theme.safetyColor
     property int blinkCount: 0
-    gesture.enabled: (drone.state !== DroneBase.SAFETY_EDIT) && (drone.state !== DroneBase.MISSION_PLAN_EDIT)
+    gesture.enabled: (drone.editMode !== DroneBase.SAFETY_EDIT) && (drone.editMode !== DroneBase.MISSION_PLAN_EDIT)
 
     // Map plugin
     Plugin {
@@ -29,12 +29,13 @@ Map {
         id: blinkTimer
         interval: 300
         repeat: true
-        running: (drone.state === DroneBase.MISSION_PLAN_EDIT) || (drone.state === DroneBase.SAFETY_EDIT)
+        running: (drone.editMode === DroneBase.MISSION_PLAN_EDIT) || (drone.editMode === DroneBase.SAFETY_EDIT)
+        onRunningChanged: console.log("ICI : ", running)
         onTriggered: {
-            if (drone.state === DroneBase.MISSION_PLAN_EDIT)
+            if (drone.editMode === DroneBase.MISSION_PLAN_EDIT)
                 mapView.missionPlanColor = (blinkCount%2 === 0) ? Theme.missionPlanColor : "blue"
             else
-            if (drone.state === DroneBase.SAFETY_EDIT)
+            if (drone.editMode === DroneBase.SAFETY_EDIT)
                 mapView.safetyColor = (blinkCount%2 === 0) ? Theme.safetyColor : "blue"
             blinkCount++
         }
@@ -81,13 +82,13 @@ Map {
                     latitude: wayPointLatitude
                     longitude: wayPointLongitude
                 }
-                radius: 500
+                radius: 250
                 color: Theme.missionPlanColor
                 border.width: 3
                 MouseArea {
                     id: circleMouseArea
                     anchors.fill: parent
-                    enabled: drone.state === DroneBase.MISSION_PLAN_EDIT
+                    enabled: drone.editMode === DroneBase.MISSION_PLAN_EDIT
                     onPressed: {
                         circle.selected = true
                     }
@@ -156,7 +157,7 @@ Map {
                 MouseArea {
                     id: circleMouseArea
                     anchors.fill: parent
-                    enabled: drone.state === DroneBase.SAFETY_EDIT
+                    enabled: drone.editMode === DroneBase.SAFETY_EDIT
                     onPressed: {
                         circle.selected = true
                     }
@@ -209,14 +210,14 @@ Map {
     // Handle clicks
     MouseArea {
         anchors.fill: parent
-        enabled: (drone.state === DroneBase.MISSION_PLAN_EDIT) || (drone.state === DroneBase.SAFETY_EDIT)
+        enabled: (drone.editMode === DroneBase.MISSION_PLAN_EDIT) || (drone.editMode === DroneBase.SAFETY_EDIT)
 
         onClicked: {
-            if (drone.state === DroneBase.SAFETY_EDIT)
+            if (drone.editMode === DroneBase.SAFETY_EDIT)
                 drone.addCoordinateToSafety(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
             else
-                if (drone.state === DroneBase.MISSION_PLAN_EDIT)
-                    drone.addCoordinateToMissionPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+            if (drone.editMode === DroneBase.MISSION_PLAN_EDIT)
+                drone.addCoordinateToMissionPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
         }
     }
 

@@ -15,10 +15,10 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Alert level
-    enum AlertLevel {UNDEFINED_LEVEL=0, WARNING, CRITICAL};
+    enum AlertLevel {UNDEFINED_LEVEL=Qt::UserRole+1, WARNING, CRITICAL};
 
     //! Alert type
-    enum AlertType {UNDEFINED_ALERT=0, BATTERY, POSITION};
+    enum AlertType {UNDEFINED_ALERT=Qt::UserRole+1, BATTERY, POSITION};
 
     //! Default constructor
     Alert();

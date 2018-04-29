@@ -8,7 +8,7 @@ import "."
 
 Rectangle {
     id: droneDisplay
-    border.color: (drone.status === DroneBase.NOMINAL) ? Theme.nominalColor : (drone.status === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
+    border.color: (drone.globalStatus === DroneBase.NOMINAL) ? Theme.nominalColor : (drone.globalStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
     border.width: 3
     color: Theme.backgroundColor
     Item {
@@ -82,7 +82,7 @@ Rectangle {
                         states: [
                             State {
                                 name: "missionPlanEdit"
-                                when: drone.state === DroneBase.MISSION_PLAN_EDIT
+                                when: drone.editMode === DroneBase.MISSION_PLAN_EDIT
                                 PropertyChanges {
                                     target: toolBarLoader
                                     source: "qrc:/qml/toolbars/MissionPlanToolBar.qml"
@@ -90,7 +90,7 @@ Rectangle {
                             },
                             State {
                                 name: "safetyEdit"
-                                when: drone.state === DroneBase.SAFETY_EDIT
+                                when: drone.editMode === DroneBase.SAFETY_EDIT
                                 PropertyChanges {
                                     target: toolBarLoader
                                     source: "qrc:/qml/toolbars/SafetyToolBar.qml"
@@ -159,6 +159,7 @@ Rectangle {
                     // Drone state changed
                     function onDroneStateChanged()
                     {
+                        console.log("DRONE STATE CHANGED !", drone.state === DroneBase.FLYING)
                         if (drone.state === DroneBase.FLYING)
                             videoView.play()
                         else

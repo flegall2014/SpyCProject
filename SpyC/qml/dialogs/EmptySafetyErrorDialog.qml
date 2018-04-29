@@ -12,10 +12,10 @@ DialogBase {
             anchors.right: parent.right
             anchors.rightMargin: 4
             anchors.verticalCenter: parent.verticalCenter
-            text: qsTr("OK")
+            label: qsTr("OK")
             onClicked: {
                 console.log(MASTERCONTROLLER.missionPlanController.currentDrone)
-                MASTERCONTROLLER.currentDrone.state = DroneBase.IDLE
+                MASTERCONTROLLER.currentDrone.editMode = DroneBase.NONE
                 closeDialog()
             }
         }
