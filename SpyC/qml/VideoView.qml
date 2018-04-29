@@ -7,12 +7,23 @@ Rectangle {
     color: Theme.videoBkgColor
     signal maximizeVideo()
 
+    // Play video
+    function play()
+    {
+        video.play()
+    }
+
+    // Stop video
+    function stop()
+    {
+        video.stop()
+    }
+
     // Video
     Video {
         id: video
         anchors.fill: parent
         source: drone.videoUrl
-        autoPlay: true
         loops: MediaPlayer.Infinite
         focus: true
         Keys.onSpacePressed: video.playbackState == MediaPlayer.PlayingState ? video.pause() : video.play()

@@ -147,6 +147,37 @@ Rectangle {
                     }
                 }
 
+                // No video image
+                Item {
+                    id: noVideoImage
+                    x: droneDisplay.state === "expanded" ? mapView.width : 0
+                    y: droneDisplay.state === "expanded" ? 0 : mapView.height
+                    z: 0
+                    width: droneDisplay.state === "expanded" ? parent.width/2 : parent.width
+                    height: droneDisplay.state === "expanded" ? parent.height : parent.height/2
+                    opacity: 1
+                    visible: opacity > 0
+                    Image {
+                        anchors.centerIn: parent
+                        source: "qrc:/images/img-novideo.jpg"
+                    }
+                    states: State {
+                        name: "droneFlying"
+                        when: drone.state === DroneBase.FLYING
+                        PropertyChanges {
+                            target: noVideoImage
+                            opacity: 0
+                        }
+                    }
+                    transitions: Transition {
+                        // Make the state changes smooth
+                        NumberAnimation {
+                            duration: 300
+                            properties: "opacity"
+                        }
+                    }
+                }
+
                 // Video view
                 VideoView {
                     id: videoView
@@ -155,6 +186,19 @@ Rectangle {
                     z: 0
                     width: droneDisplay.state === "expanded" ? parent.width/2 : parent.width
                     height: droneDisplay.state === "expanded" ? parent.height : parent.height/2
+                    visible: drone.state === DroneBase.FLYING
+
+                    function onDroneStateChanged()
+                    {
+                        if (drone.state === DroneBase.FLYING)
+                            videoView.play()
+                        else
+                            videoView.stop()
+
+                    }
+                    Component.onCompleted: {
+                        drone.stateChanged.connect(onDroneStateChanged)
+                    }
 
                     // Maximize
                     ImageButton {

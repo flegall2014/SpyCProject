@@ -55,7 +55,7 @@ Map {
 
             Image {
                 id: vehicleIcon
-                source: "qrc:/icons/ico-drone.svg"
+                source: "qrc:/icons/ico-drone2.svg"
                 mipmap: true
                 width: vehicleItem.size
                 sourceSize.width: vehicleItem.size

@@ -43,7 +43,7 @@ void FlightSimulator::computeFlightPath(const QGeoPath &geoPath, int iPointCount
             double dLatitude = geoPath.coordinateAt(i).latitude()+j*dStep;
             double dLongitude = m*dLatitude+p;
             m_vDetailedPath << QGeoCoordinate(dLatitude, dLongitude);
-            m_vHeading << dHeading*180/M_PI+90;
+            m_vHeading << dHeading*180/M_PI+180;
         }
     }
 }
