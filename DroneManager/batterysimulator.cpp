@@ -11,7 +11,7 @@ BatterySimulator::BatterySimulator(const QString &sDroneUID, QObject *pParent) :
 {
     m_timer.setInterval(500);
     m_timer.setSingleShot(true);
-    connect(&m_timer, &QTimer::timeout, this, &BatterySimulator::onTimeOut);
+    connect(&m_timer, &QTimer::timeout, this, &BatterySimulator::onTimeOut, Qt::QueuedConnection);
     m_timer.start();
 }
 

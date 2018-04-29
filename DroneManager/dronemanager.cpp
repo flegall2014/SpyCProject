@@ -15,7 +15,7 @@ DroneManager::DroneManager(QObject *pParent) : IBasePlugin(pParent)
     qsrand((uint)time.msec());
     m_droneTimer.setInterval(1000);
     m_droneTimer.setSingleShot(true);
-    connect(&m_droneTimer, &QTimer::timeout, this, &DroneManager::onDroneTimeOut);
+    connect(&m_droneTimer, &QTimer::timeout, this, &DroneManager::onDroneTimeOut, Qt::QueuedConnection);
     m_droneTimer.start();
 }
 
@@ -61,13 +61,13 @@ void DroneManager::onDroneTimeOut()
     if ((m_hDrones[sDroneUID] == nullptr) && (iDroneCount < 3))
     {
         Drone *pDrone = new Drone(sDroneUID, lVideos[iDroneCount%3], initialPos, this);
-        connect(pDrone, &Drone::positionChanged, this, &DroneManager::positionChanged);
-        connect(pDrone, &Drone::batteryLevelChanged, this, &DroneManager::batteryLevelChanged);
-        connect(pDrone, &Drone::gpsStrengthChanged, this, &DroneManager::gpsStrengthChanged);
-        connect(pDrone, &Drone::missionPlanChanged, this, &DroneManager::missionPlanChanged);
-        connect(pDrone, &Drone::safetyChanged, this, &DroneManager::safetyChanged);
-        connect(pDrone, &Drone::droneError, this, &DroneManager::droneError);
-        connect(pDrone, &Drone::failSafeDone, this, &DroneManager::failSafeDone);
+        connect(pDrone, &Drone::positionChanged, this, &DroneManager::positionChanged, Qt::QueuedConnection);
+        connect(pDrone, &Drone::batteryLevelChanged, this, &DroneManager::batteryLevelChanged, Qt::QueuedConnection);
+        connect(pDrone, &Drone::gpsStrengthChanged, this, &DroneManager::gpsStrengthChanged, Qt::QueuedConnection);
+        connect(pDrone, &Drone::missionPlanChanged, this, &DroneManager::missionPlanChanged, Qt::QueuedConnection);
+        connect(pDrone, &Drone::safetyChanged, this, &DroneManager::safetyChanged, Qt::QueuedConnection);
+        connect(pDrone, &Drone::droneError, this, &DroneManager::droneError, Qt::QueuedConnection);
+        connect(pDrone, &Drone::failSafeDone, this, &DroneManager::failSafeDone, Qt::QueuedConnection);
         m_hDrones[pDrone->uid()] = pDrone;
         emit newDroneAvailable(pDrone->videoUrl(), pDrone->initialPosition(), pDrone->uid());
         m_droneTimer.start();
@@ -95,7 +95,7 @@ void DroneManager::setSafety(const QString &sDroneUID, const QGeoPath &safety)
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneManager::onTakeOff(const QString &sDroneUID)
+void DroneManager::onTakeOffRequest(const QString &sDroneUID)
 {
     Drone *pTargetDrone = m_hDrones[sDroneUID];
     if (pTargetDrone != nullptr)
@@ -104,7 +104,7 @@ void DroneManager::onTakeOff(const QString &sDroneUID)
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneManager::onFailSafe(const QString &sDroneUID)
+void DroneManager::onFailSafeRequest(const QString &sDroneUID)
 {
     Drone *pTargetDrone = m_hDrones[sDroneUID];
     if (pTargetDrone != nullptr)

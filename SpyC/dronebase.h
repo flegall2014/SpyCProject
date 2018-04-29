@@ -14,6 +14,7 @@ class DroneBase : public QObject
     Q_PROPERTY(QString uid READ uid NOTIFY uidChanged)
     Q_PROPERTY(QString videoUrl READ videoUrl NOTIFY uidChanged)
     Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
+    Q_PROPERTY(QString stateText READ stateText NOTIFY stateChanged)
     Q_PROPERTY(int status READ status NOTIFY statusChanged)
     Q_PROPERTY(int batteryLevel READ batteryLevel WRITE setBatteryLevel NOTIFY batteryLevelChanged)
     Q_PROPERTY(int gpsStrength READ gpsStrength WRITE setGPSStrength NOTIFY gpsStrengthChanged)
@@ -93,8 +94,11 @@ public:
     //! Return global status
     int status() const;
 
-    //! Return mode
+    //! Return state
     int state() const;
+
+    //! Return state text
+    QString stateText() const;
 
     //! Set mode
     void setState(int iMode);

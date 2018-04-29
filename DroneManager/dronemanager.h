@@ -64,10 +64,10 @@ public slots:
     void onDroneTimeOut();
 
     //! Take off drone
-    void onTakeOff(const QString &DroneUID);
+    void onTakeOffRequest(const QString &DroneUID);
 
     //! Fail safe
-    void onFailSafe(const QString &DroneUID);
+    void onFailSafeRequest(const QString &DroneUID);
 
     //! Upload mission plan
     void onUploadMissionPlan(const QGeoPath &path, const QString &sDroneUID);

@@ -3,6 +3,7 @@ import QtPositioning 5.6
 import QtLocation 5.6
 import QtQuick.Controls 1.4
 import Components 1.0
+import "widgets"
 import "."
 
 Rectangle {
@@ -40,120 +41,135 @@ Rectangle {
             anchors.bottom: commonArea.top
             anchors.top: parent.top
 
-            // Map view
-            MapView {
-                id: mapView
-                width: droneDisplay.state === "expanded" ? parent.width/2 : parent.width
-                height: droneDisplay.state === "expanded" ? parent.height : parent.height/2
-                visible: width > 0
-                z: 0
+            // Drone status widget
+            DroneStatusWidget {
+                id: droneStatusWidget
+                width: parent.width
+                height: Theme.toolBarHeight
+                currentDrone: drone
+                opacity: 1
+                visible: opacity > 0
+            }
 
-                // Drone display state changed
-                function onDroneDisplayStateChanged()
-                {
-                    if (droneView.droneExpanded === false)
-                        mapView.state = ""
-                }
-                Component.onCompleted: droneView.droneExpandedChanged.connect(onDroneDisplayStateChanged)
+            Item {
+                width: parent.width
+                anchors.top: droneStatusWidget.bottom
+                anchors.bottom: parent.bottom
 
-                // Toolbar loader
-                Loader {
-                    id: toolBarLoader
-                    width: parent.width
-                    height: Theme.toolBarHeight
-                    z: 1000
-                    anchors.top: parent.top
-                    source: "qrc:/qml/toolbars/DroneEditToolBar.qml"
+                // Map view
+                MapView {
+                    id: mapView
+                    width: droneDisplay.state === "expanded" ? parent.width/2 : parent.width
+                    height: droneDisplay.state === "expanded" ? parent.height : parent.height/2
+                    z: 0
+
+                    // Drone display state changed
+                    function onDroneDisplayStateChanged()
+                    {
+                        if (droneView.droneExpanded === false)
+                            mapView.state = ""
+                    }
+                    Component.onCompleted: droneView.droneExpandedChanged.connect(onDroneDisplayStateChanged)
+
+                    // Toolbar loader
+                    Loader {
+                        id: toolBarLoader
+                        width: parent.width
+                        height: Theme.toolBarHeight
+                        z: 1000
+                        anchors.top: parent.top
+                        source: "qrc:/qml/toolbars/DroneEditToolBar.qml"
+                        states: [
+                            State {
+                                name: "missionPlanEdit"
+                                when: drone.state === DroneBase.MISSION_PLAN_EDIT
+                                PropertyChanges {
+                                    target: toolBarLoader
+                                    source: "qrc:/qml/toolbars/MissionPlanToolBar.qml"
+                                }
+                            },
+                            State {
+                                name: "safetyEdit"
+                                when: drone.state === DroneBase.SAFETY_EDIT
+                                PropertyChanges {
+                                    target: toolBarLoader
+                                    source: "qrc:/qml/toolbars/SafetyToolBar.qml"
+                                }
+                            }
+                        ]
+                    }
+
                     states: [
                         State {
-                            name: "missionPlanEdit"
-                            when: drone.state === DroneBase.MISSION_PLAN_EDIT
+                            name: "mapMaximized"
                             PropertyChanges {
-                                target: toolBarLoader
-                                source: "qrc:/qml/toolbars/MissionPlanToolBar.qml"
+                                target: mapView
+                                width: root.width
+                                x: 0
+                                y: 0
+                                z: 0
+                            }
+                            PropertyChanges {
+                                target: videoView
+                                width: Theme.mapOrVideoThumbnailSize
+                                height: Theme.mapOrVideoThumbnailSize
+                                x: mapView.width-Theme.mapOrVideoThumbnailSize
+                                y: mapView.height-Theme.mapOrVideoThumbnailSize
+                                z: 1000
                             }
                         },
                         State {
-                            name: "safetyEdit"
-                            when: drone.state === DroneBase.SAFETY_EDIT
+                            name: "mapMinimized"
                             PropertyChanges {
-                                target: toolBarLoader
-                                source: "qrc:/qml/toolbars/SafetyToolBar.qml"
+                                target: mapView
+                                width: Theme.mapOrVideoThumbnailSize
+                                height: Theme.mapOrVideoThumbnailSize
+                                x: videoView.width-Theme.mapOrVideoThumbnailSize
+                                y: videoView.height-Theme.mapOrVideoThumbnailSize
+                                z: 1000
+                            }
+                            PropertyChanges {
+                                target: videoView
+                                width: root.width
+                                x: 0
+                                y: 0
+                                z: 0
                             }
                         }
                     ]
-                }
 
-                states: [
-                    State {
-                        name: "mapMaximized"
-                        PropertyChanges {
-                            target: mapView
-                            width: root.width
-                            x: 0
-                            y: 0
-                            z: 0
-                        }
-                        PropertyChanges {
-                            target: videoView
-                            width: Theme.mapOrVideoThumbnailSize
-                            height: Theme.mapOrVideoThumbnailSize
-                            x: mapView.width-Theme.mapOrVideoThumbnailSize
-                            y: mapView.height-Theme.mapOrVideoThumbnailSize
-                            z: 1000
-                        }
-                    },
-                    State {
-                        name: "mapMinimized"
-                        PropertyChanges {
-                            target: mapView
-                            width: Theme.mapOrVideoThumbnailSize
-                            height: Theme.mapOrVideoThumbnailSize
-                            x: videoView.width-Theme.mapOrVideoThumbnailSize
-                            y: videoView.height-Theme.mapOrVideoThumbnailSize
-                            z: 1000
-                        }
-                        PropertyChanges {
-                            target: videoView
-                            width: root.width
-                            x: 0
-                            y: 0
-                            z: 0
+                    transitions: Transition {
+                        // Make the state changes smooth
+                        NumberAnimation {
+                            duration: 300
+                            properties: "x, y, width, height, opacity"
                         }
                     }
-                ]
-
-                transitions: Transition {
-                    // Make the state changes smooth
-                    NumberAnimation {
-                        duration: 300
-                        properties: "x, y, width, height"
-                    }
                 }
-            }
 
-            VideoView {
-                id: videoView
-                x: droneDisplay.state === "expanded" ? mapView.width : 0
-                y: droneDisplay.state === "expanded" ? 0 : mapView.height
-                z: 0
-                width: droneDisplay.state === "expanded" ? parent.width/2 : parent.width
-                height: droneDisplay.state === "expanded" ? parent.height : parent.height/2
-                visible: width > 0
+                // Video view
+                VideoView {
+                    id: videoView
+                    x: droneDisplay.state === "expanded" ? mapView.width : 0
+                    y: droneDisplay.state === "expanded" ? 0 : mapView.height
+                    z: 0
+                    width: droneDisplay.state === "expanded" ? parent.width/2 : parent.width
+                    height: droneDisplay.state === "expanded" ? parent.height : parent.height/2
 
-                // Maximize
-                ImageButton {
-                    anchors.right: parent.right
-                    anchors.rightMargin: 4
-                    anchors.top: parent.top
-                    anchors.topMargin: 4
-                    visible: droneDisplay.state === "expanded" && mapView.state !== "mapMaximized"
-                    source: mapView.state === "" ? "qrc:/icons/ico-maximized.png" : "qrc:/icons/ico-minimized.png"
-                    onClicked: {
-                        if (mapView.state === "")
-                            mapView.state = "mapMinimized"
-                        else
-                            mapView.state = ""
+                    // Maximize
+                    ImageButton {
+                        anchors.right: parent.right
+                        anchors.rightMargin: 4
+                        anchors.top: parent.top
+                        anchors.topMargin: 4
+                        visible: droneDisplay.state === "expanded" && mapView.state !== "mapMaximized"
+                        source: mapView.state === "" ? "qrc:/icons/ico-maximized.png" : "qrc:/icons/ico-minimized.png"
+                        onClicked: {
+                            if (mapView.state === "")
+                                mapView.state = "mapMinimized"
+                            else
+                                mapView.state = ""
+                        }
                     }
                 }
             }
@@ -182,6 +198,11 @@ Rectangle {
                 target: listView
                 explicit: true
                 contentX: droneDisplay.x
+            }
+            PropertyChanges {
+                target: droneStatusWidget
+                height: 0
+                opacity: 0
             }
         }
     ]

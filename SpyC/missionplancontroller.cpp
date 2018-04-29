@@ -38,20 +38,15 @@ void MissionPlanController::validateMissionPlan(const QString &sDroneUID)
         if (pDrone != nullptr)
         {
             // Retrieve safety area
-            QGeoPath safety = pDrone->safetyModel()->path();
-            if (!safety.isEmpty())
+            QGeoPath missionPlan = pDrone->missionPlanModel()->path();
+            if (!missionPlan.isEmpty())
             {
-                if (safety.size() > 2)
-                {
-                    QGeoPath missionPlan = pDrone->missionPlanModel()->path();
-                    if (missionPlan.size() > 2)
-                        emit uploadMissionPlan(pDrone->missionPlanModel()->path(), pDrone->uid());
-                    else
-                        emit missionPlanError(MissionPlanError::NOT_ENOUGH_POINTS_IN_MISSION_PLAN, pDrone->uid());
-                }
-                else emit missionPlanError(MissionPlanError::NOT_ENOUGH_POINTS_IN_SAFETY, pDrone->uid());
+                if (missionPlan.size() > 2)
+                    emit uploadMissionPlan(pDrone->missionPlanModel()->path(), pDrone->uid());
+                else
+                    emit missionPlanError(MissionPlanError::NOT_ENOUGH_POINTS_IN_MISSION_PLAN, pDrone->uid());
             }
-            else emit missionPlanError(MissionPlanError::EMPTY_SAFETY, pDrone->uid());
+            else emit missionPlanError(MissionPlanError::EMPTY_MISSION_PLAN, pDrone->uid());
         }
     }
 }
@@ -74,7 +69,10 @@ void MissionPlanController::validateSafety(const QString &sDroneUID)
                 else
                     emit missionPlanError(MissionPlanError::NOT_ENOUGH_POINTS_IN_SAFETY, pDrone->uid());
             }
-            else emit missionPlanError(MissionPlanError::EMPTY_SAFETY, pDrone->uid());
+            else {
+                qDebug() << "EMPTY SAFETY ICI1 " << pDrone->uid();
+                emit missionPlanError(MissionPlanError::EMPTY_SAFETY, pDrone->uid());
+            }
         }
     }
 }
@@ -87,7 +85,7 @@ void MissionPlanController::takeOff(const QString &sDroneUID)
     {
         DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
         if (pDrone != nullptr)
-            emit startTakeOff(pDrone->uid());
+            emit takeOffRequest(pDrone->uid());
     }
 }
 
@@ -99,7 +97,7 @@ void MissionPlanController::failSafe(const QString &sDroneUID)
     {
         DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
         if (pDrone != nullptr)
-            emit startFailSafe(pDrone->uid());
+            emit failSafeRequest(pDrone->uid());
     }
 }
 
@@ -107,6 +105,7 @@ void MissionPlanController::failSafe(const QString &sDroneUID)
 
 void MissionPlanController::onMissionPlanError(const Model::Drone::DroneError &eError, const QString &sDroneUID)
 {
+    qDebug() << "MISSION PLAN ERROR!";
     if (eError == Model::Drone::NO_SAFETY)
         emit missionPlanError(EMPTY_SAFETY, sDroneUID);
     else

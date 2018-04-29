@@ -6,54 +6,60 @@ Item {
     id: root
     opacity: 0
     visible: opacity > 0
-    property alias source: dialogLoader.source
     property int msgType: SpyC.INFORMATION
+
+    onStateChanged: console.log("*** DIALOGMGR STATE = ", state)
 
     function showDialog(dialogType, droneUID)
     {
+        root.state = "active"
         if (dialogType === SpyC.CONFIRM_TAKE_OFF)
         {
-            root.source = "qrc:/qml/dialogs/ConfirmTakeOffDialog.qml"
+            dialogLoader.source = "qrc:/qml/dialogs/ConfirmTakeOffDialog.qml"
             root.msgType = SpyC.INFORMATION
+        }
+        else
+        if (dialogType === SpyC.CONFIRM_FAILSAFE)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/ConfirmFailSafeDialog.qml"
+            root.msgType = SpyC.CRITICAL
         }
         else
         if (dialogType === SpyC.EMPTY_MISSION_PLAN_ERROR)
         {
-            root.source = "qrc:/qml/dialogs/EmptyMissionPlanErrorDialog.qml"
+            dialogLoader.source = "qrc:/qml/dialogs/EmptyMissionPlanErrorDialog.qml"
             root.msgType = SpyC.CRITICAL
         }
         else
         if (dialogType === SpyC.EMPTY_SAFETY_ERROR)
         {
-            root.source = "qrc:/qml/dialogs/EmptySafetyErrorDialog.qml"
+            dialogLoader.source = "qrc:/qml/dialogs/EmptySafetyErrorDialog.qml"
             root.msgType = SpyC.CRITICAL
         }
         else
         if (dialogType === SpyC.MISSION_PLAN_VALIDATION)
         {
-            root.source = "qrc:/qml/dialogs/MissionPlanValidationDialog.qml"
+            dialogLoader.source = "qrc:/qml/dialogs/MissionPlanValidationDialog.qml"
             root.msgType = SpyC.INFORMATION
         }
         else
         if (dialogType === SpyC.NOT_ENOUGH_POINT_IN_MISSION_PLAN)
         {
-            root.source = "qrc:/qml/dialogs/NotEnoughPointInMissionPlanErrorDialog.qml"
+            dialogLoader.source = "qrc:/qml/dialogs/NotEnoughPointInMissionPlanErrorDialog.qml"
             root.msgType = SpyC.CRITICAL
         }
         else
         if (dialogType === SpyC.NOT_ENOUGH_POINT_IN_SAFETY)
         {
-            root.source = "qrc:/qml/dialogs/NotEnoughPointInSafetyErrorDialog.qml"
+            dialogLoader.source = "qrc:/qml/dialogs/NotEnoughPointInSafetyErrorDialog.qml"
             root.msgType = SpyC.CRITICAL
         }
         else
         if (dialogType === SpyC.SAFETY_VALIDATION)
         {
-            root.source = "qrc:/qml/dialogs/SafetyValidationDialog.qml"
+            dialogLoader.source = "qrc:/qml/dialogs/SafetyValidationDialog.qml"
             root.msgType = SpyC.INFORMATION
         }
-
-        root.state = "active"
     }
 
     // Background
@@ -113,6 +119,7 @@ Item {
             width: parent.width
             anchors.top: titleArea.bottom
             anchors.bottom: parent.bottom
+            onSourceChanged: console.log("current source is ", source)
             onLoaded: {
                 item.closeDialog.connect(onCloseDialog)
             }
@@ -122,8 +129,9 @@ Item {
     // Close dialog
     function onCloseDialog()
     {
+        console.log("CLOSING DIALOG")
         root.state = ""
-        dialogLoader.source = ""
+        //dialogLoader.source = ""
     }
 
     // States

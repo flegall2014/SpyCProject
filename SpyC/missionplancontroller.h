@@ -71,11 +71,11 @@ signals:
     //! Upload safety
     void uploadSafety(const QGeoPath &geoPath, const QString &sDroneUID);
 
-    //! Take off
-    void startTakeOff(const QString &sDroneUID);
+    //! Send a take off request
+    void takeOffRequest(const QString &sDroneUID);
 
-    //! Fail safe
-    void startFailSafe(const QString &sDroneUID);
+    //! Send a failsafe request
+    void failSafeRequest(const QString &sDroneUID);
 
     //! Mission plan error
     void missionPlanError(const MissionPlanError &eError, const QString &sDroneUID);

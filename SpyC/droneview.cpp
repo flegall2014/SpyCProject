@@ -30,8 +30,8 @@ void DroneView::addDrone(DroneBase *pDrone)
     {
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
         m_vDrones << pDrone;
-        connect(pDrone, &DroneBase::batteryLevelChanged, this, &DroneView::onUpdateView);
-        connect(pDrone, &DroneBase::positionChanged, this, &DroneView::onUpdateView);
+        connect(pDrone, &DroneBase::batteryLevelChanged, this, &DroneView::onUpdateView, Qt::QueuedConnection);
+        connect(pDrone, &DroneBase::positionChanged, this, &DroneView::onUpdateView, Qt::QueuedConnection);
         endInsertRows();
         emit droneCountChanged();
     }

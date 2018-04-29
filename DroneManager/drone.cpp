@@ -13,17 +13,20 @@ using namespace Model;
 Drone::Drone(const QString &sDroneUID, const QString &sVideoUrl, const QGeoCoordinate &initalPosition, QObject *pParent) : QObject(pParent),
     m_sDroneUID(sDroneUID), m_sVideoUrl(sVideoUrl), m_initialPosition(initalPosition)
 {
+    // Register type
+    qRegisterMetaType<Drone::DroneError>("Drone::DroneError");
+
     // Flight simulator
     m_pFlightSimulator = new FlightSimulator(sDroneUID, this);
-    connect(m_pFlightSimulator, &FlightSimulator::positionChanged, this, &Drone::positionChanged);
+    connect(m_pFlightSimulator, &FlightSimulator::positionChanged, this, &Drone::positionChanged, Qt::QueuedConnection);
 
     // Battery simulator
     m_pBatterySimulator = new BatterySimulator(sDroneUID, this);
-    connect(m_pBatterySimulator, &BatterySimulator::batteryLevelChanged, this, &Drone::batteryLevelChanged);
+    connect(m_pBatterySimulator, &BatterySimulator::batteryLevelChanged, this, &Drone::batteryLevelChanged, Qt::QueuedConnection);
 
     // GPS simulator
     m_pGPSSimulator = new GPSSimulator(sDroneUID, this);
-    connect(m_pGPSSimulator, &GPSSimulator::gpsStrengthChanged, this, &Drone::gpsStrengthChanged);
+    connect(m_pGPSSimulator, &GPSSimulator::gpsStrengthChanged, this, &Drone::gpsStrengthChanged, Qt::QueuedConnection);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -74,7 +77,6 @@ void Drone::setMissionPlan(const QGeoPath &geoPath)
 
 void Drone::takeOff()
 {
-    qDebug() << "TAKE OFF" << m_missionPlan.size();
     if (m_safety.isEmpty())
         emit droneError(NO_SAFETY, m_sDroneUID);
     else

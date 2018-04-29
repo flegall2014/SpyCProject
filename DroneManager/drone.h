@@ -108,7 +108,7 @@ signals:
     void safetyChanged(const QString &sDroneUID);
 
     //! Drone error
-    void droneError(const DroneError &eDroneError, const QString &sDroneUID);
+    void droneError(const Drone::DroneError &eDroneError, const QString &sDroneUID);
 
     //! Fail safe
     void failSafeDone(const QString &sDroneUID);

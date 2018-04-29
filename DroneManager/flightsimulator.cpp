@@ -11,7 +11,7 @@ FlightSimulator::FlightSimulator(const QString &sDroneUID, QObject *pParent) : B
 {
     m_timer.setInterval(100);
     m_timer.setSingleShot(true);
-    connect(&m_timer, &QTimer::timeout, this, &FlightSimulator::onTimeOut);
+    connect(&m_timer, &QTimer::timeout, this, &FlightSimulator::onTimeOut, Qt::QueuedConnection);
 }
 
 //-------------------------------------------------------------------------------------------------

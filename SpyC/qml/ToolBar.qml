@@ -2,11 +2,28 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import Components 1.0
 import "."
+import "widgets"
 
 // Status bar
 Rectangle {
     id: toolBar
     color: Theme.toolBarColor
+    property bool showDroneStatus: false
+
+    // Drone status widget
+    DroneStatusWidget {
+        id: droneStatusWidget
+        width: (parent.width-Theme.controlPanelWidth)/2
+        height: parent.height
+        visible: showDroneStatus
+        currentDrone: MASTERCONTROLLER.currentDrone
+        function onDroneReady()
+        {
+            if ((typeof MASTERCONTROLLER.currentDrone !== "undefined") && (MASTERCONTROLLER.currentDrone !== null))
+                droneStatusWidget.currentDrone = MASTERCONTROLLER.currentDrone
+        }
+        Component.onCompleted: MASTERCONTROLLER.currentDroneChanged.connect(onDroneReady)
+    }
 
     // Mission name
     StandardText {

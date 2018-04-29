@@ -11,7 +11,7 @@ GPSSimulator::GPSSimulator(const QString &sDroneUID, QObject *pParent) : BaseSim
 {
     m_timer.setInterval(1000);
     m_timer.setSingleShot(true);
-    connect(&m_timer, &QTimer::timeout, this, &GPSSimulator::onTimeOut);
+    connect(&m_timer, &QTimer::timeout, this, &GPSSimulator::onTimeOut, Qt::QueuedConnection);
     m_timer.start();
 }
 

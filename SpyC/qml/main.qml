@@ -32,6 +32,7 @@ ApplicationWindow {
             height: Theme.toolBarHeight
             anchors.top: parent.top
             enabled: dialogMgr.state === ""
+            showDroneStatus: droneView.droneExpanded
         }
 
         // Drone view
@@ -68,8 +69,7 @@ ApplicationWindow {
             // Safety error
             function onMissionPlanError(error, droneUID)
             {
-                console.log("POPO ", error, droneUID)
-
+                console.log("ICI: MISSION PLAN ERROR ", error, droneUID)
                 if (error === MissionPlanController.EMPTY_SAFETY)
                     dialogMgr.showDialog(SpyC.EMPTY_SAFETY_ERROR, droneUID)
                 else

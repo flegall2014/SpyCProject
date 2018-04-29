@@ -47,20 +47,20 @@ void MasterController::setModel(Model::DroneManager *pDroneManager)
     if (m_pDroneManager != nullptr)
     {
         // From model to view
-        connect(m_pDroneManager, &Model::DroneManager::newDroneAvailable, this, &MasterController::onNewDroneAvailable);
-        connect(m_pDroneManager, &Model::DroneManager::positionChanged, this, &MasterController::onPositionChanged);
-        connect(m_pDroneManager, &Model::DroneManager::batteryLevelChanged, this, &MasterController::onBatteryLevelChanged);
-        connect(m_pDroneManager, &Model::DroneManager::gpsStrengthChanged, this, &MasterController::onGPSStrengthChanged);
-        connect(m_pDroneManager, &Model::DroneManager::missionPlanChanged, this, &MasterController::onMissionPlanChanged);
-        connect(m_pDroneManager, &Model::DroneManager::safetyChanged, this, &MasterController::onSafetyChanged);
-        connect(m_pDroneManager, &Model::DroneManager::droneError, m_pMissionPlanController, &MissionPlanController::onMissionPlanError);
-        connect(m_pDroneManager, &Model::DroneManager::failSafeDone, m_pMissionPlanController, &MissionPlanController::onFailSafeDone);
+        connect(m_pDroneManager, &Model::DroneManager::newDroneAvailable, this, &MasterController::onNewDroneAvailable, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::positionChanged, this, &MasterController::onPositionChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::batteryLevelChanged, this, &MasterController::onBatteryLevelChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::gpsStrengthChanged, this, &MasterController::onGPSStrengthChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::missionPlanChanged, this, &MasterController::onMissionPlanChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::safetyChanged, this, &MasterController::onSafetyChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::droneError, m_pMissionPlanController, &MissionPlanController::onMissionPlanError, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::failSafeDone, m_pMissionPlanController, &MissionPlanController::onFailSafeDone, Qt::QueuedConnection);
 
         // From view to model
-        connect(m_pMissionPlanController, &MissionPlanController::uploadMissionPlan, m_pDroneManager, &Model::DroneManager::onUploadMissionPlan);
-        connect(m_pMissionPlanController, &MissionPlanController::uploadSafety, m_pDroneManager, &Model::DroneManager::onUploadSafety);
-        connect(m_pMissionPlanController, &MissionPlanController::startTakeOff, m_pDroneManager, &Model::DroneManager::onTakeOff);
-        connect(m_pMissionPlanController, &MissionPlanController::startFailSafe, m_pDroneManager, &Model::DroneManager::onFailSafe);
+        connect(m_pMissionPlanController, &MissionPlanController::uploadMissionPlan, m_pDroneManager, &Model::DroneManager::onUploadMissionPlan, Qt::QueuedConnection);
+        connect(m_pMissionPlanController, &MissionPlanController::uploadSafety, m_pDroneManager, &Model::DroneManager::onUploadSafety, Qt::QueuedConnection);
+        connect(m_pMissionPlanController, &MissionPlanController::takeOffRequest, m_pDroneManager, &Model::DroneManager::onTakeOffRequest, Qt::QueuedConnection);
+        connect(m_pMissionPlanController, &MissionPlanController::failSafeRequest, m_pDroneManager, &Model::DroneManager::onFailSafeRequest, Qt::QueuedConnection);
     }
 }
 

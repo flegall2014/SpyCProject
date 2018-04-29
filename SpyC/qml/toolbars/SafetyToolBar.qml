@@ -7,6 +7,7 @@ import ".."
 ToolBarBase {
     width: parent.width
     StandardButton {
+        id: clear
         width: Theme.buttonSize
         height: Theme.buttonSize
         anchors.left: parent.left
@@ -17,6 +18,18 @@ ToolBarBase {
         onClicked: drone.clearSafety()
     }
     StandardButton {
+        id: cancel
+        width: Theme.buttonSize
+        height: Theme.buttonSize
+        anchors.right: done.left
+        anchors.rightMargin: 4
+        anchors.verticalCenter: parent.verticalCenter
+        text: qsTr("Cancel")
+        endColor: Theme.defaultButtonColor
+        onClicked: drone.state = DroneBase.IDLE
+    }
+    StandardButton {
+        id: done
         width: Theme.buttonSize
         height: Theme.buttonSize
         anchors.right: parent.right

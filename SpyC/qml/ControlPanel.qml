@@ -23,55 +23,6 @@ Rectangle {
             }
         }
 
-        // Status tab
-        Tab {
-            title: qsTr("Status")
-            Item {
-                anchors.fill: parent
-
-                // Battery status widget
-                BatteryStatusWidget {
-                    width: parent.width-64
-                    anchors.top: parent.top
-                    anchors.topMargin: 8
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    batteryStatus: drone.batteryStatus
-                    batteryLevel: drone.batteryLevel
-                }
-
-                /*
-                // GPS image
-                Image {
-                    id: gpsImage
-                    width: parent.width-64
-                    anchors.top: batteryImage.bottom
-                    anchors.topMargin: 8
-                    fillMode: Image.PreserveAspectFit
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    source: "qrc:/icons/ico-gps.svg"
-
-                    // Color overlay
-                    ColorOverlay {
-                        id: gpsColorOverlay
-                        anchors.fill: gpsImage
-                        source: gpsImage
-                        color: drone.gpsStatus === DroneBase.NOMINAL ? Theme.nominalColor :
-                        (drone.gpsStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
-                    }
-
-                    // Text
-                    StandardText {
-                        anchors.centerIn: parent
-                        font.pixelSize: Theme.veryLargeFontSize
-                        color: gpsColorOverlay.color
-                        font.bold: true
-                        text: drone.gpsStrength + "%"
-                    }
-                }
-                */
-            }
-        }
-
         /*
         // Alerts tab
         Tab {

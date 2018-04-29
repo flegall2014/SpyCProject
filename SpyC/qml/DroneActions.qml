@@ -37,7 +37,7 @@ Grid {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
             source: "qrc:/icons/ico-takeoff.svg"
-            onClicked: MASTERCONTROLLER.missionPlanController.takeOff(drone.uid)
+            onClicked: dialogMgr.showDialog(SpyC.CONFIRM_TAKE_OFF)
         }
     }
     Item {
@@ -47,7 +47,8 @@ Grid {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
             source: "qrc:/icons/ico-crash.svg"
-            onClicked: MASTERCONTROLLER.missionPlanController.failSafe(drone.uid)
+            enabled: drone.state === DroneBase.FLYING
+            onClicked: dialogMgr.showDialog(SpyC.CONFIRM_FAILSAFE)
         }
     }
     Item {
@@ -57,8 +58,7 @@ Grid {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
             source: "qrc:/icons/ico-measurement.svg"
-            //commandId: commands[index].comId
-            //onClicked: MASTERCONTROLLER.executeCommand(commands[index].comId, drone.uid)
+            enabled: false
         }
     }
     Item {
@@ -68,8 +68,7 @@ Grid {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
             source: "qrc:/icons/ico-geometry.svg"
-            //commandId: commands[index].comId
-            //onClicked: MASTERCONTROLLER.executeCommand(commands[index].comId, drone.uid)
+            enabled: false
         }
     }
     Item {
@@ -79,8 +78,7 @@ Grid {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
             source: "qrc:/icons/ico-shape.svg"
-            //commandId: commands[index].comId
-            //onClicked: MASTERCONTROLLER.executeCommand(commands[index].comId, drone.uid)
+            enabled: false
         }
     }
     Item {
@@ -90,8 +88,7 @@ Grid {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
             source: "qrc:/icons/ico-ground.svg"
-            //commandId: commands[index].comId
-            //onClicked: MASTERCONTROLLER.executeCommand(commands[index].comId, drone.uid)
+            enabled: false
         }
     }
     Item {
@@ -101,8 +98,7 @@ Grid {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
             source: "qrc:/icons/ico-shape.svg"
-            //commandId: commands[index].comId
-            //onClicked: MASTERCONTROLLER.executeCommand(commands[index].comId, drone.uid)
+            enabled: false
         }
     }
 }

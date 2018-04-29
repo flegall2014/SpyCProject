@@ -60,5 +60,8 @@
         <file>qml/panels/FlightEditor.qml</file>
         <file>qml/widgets/BatteryStatusWidget.qml</file>
         <file>qml/widgets/GPSStatusWidget.qml</file>
+        <file>qml/widgets/DroneStatusWidget.qml</file>
+        <file>qml/ItemStatus.qml</file>
+        <file>qml/dialogs/ConfirmFailSafeDialog.qml</file>
     </qresource>
 </RCC>

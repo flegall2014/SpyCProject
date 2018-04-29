@@ -14,9 +14,9 @@ DroneBase::DroneBase(QObject *parent) : QObject(parent)
     // Mission plan model
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
-    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::statusChanged);
-    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::statusChanged);
-    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::statusChanged);
+    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -27,9 +27,9 @@ DroneBase::DroneBase(const QString &sDroneUID, const QString &sVideoUrl, const Q
     // Mission plan model
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
-    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::statusChanged);
-    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::statusChanged);
-    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::statusChanged);
+    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::statusChanged, Qt::QueuedConnection);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -158,6 +158,19 @@ int DroneBase::status() const
 int DroneBase::state() const
 {
     return (int)m_eState;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+QString DroneBase::stateText() const
+{
+    if (m_eState == MISSION_PLAN_EDIT)
+        return tr("Mission Plan Edit");
+    if (m_eState == SAFETY_EDIT)
+        return tr("Safety Edit");
+    if (m_eState == FLYING)
+        return tr("Flying");
+    return tr("IDLE");
 }
 
 //-------------------------------------------------------------------------------------------------
