@@ -12,7 +12,7 @@ ToolBarBase {
         anchors.left: parent.left
         anchors.leftMargin: 4
         anchors.verticalCenter: parent.verticalCenter
-        text: qsTr("Clear")
+        label: qsTr("Clear")
         endColor: Theme.defaultButtonColor
         onClicked: drone.clearMissionPlan()
     }
@@ -23,7 +23,7 @@ ToolBarBase {
         anchors.right: done.left
         anchors.rightMargin: 4
         anchors.verticalCenter: parent.verticalCenter
-        text: qsTr("Cancel")
+        label: qsTr("Cancel")
         endColor: Theme.defaultButtonColor
         onClicked: drone.state = DroneBase.IDLE
     }
@@ -34,7 +34,7 @@ ToolBarBase {
         anchors.right: parent.right
         anchors.rightMargin: 4
         anchors.verticalCenter: parent.verticalCenter
-        text: qsTr("Done")
+        label: qsTr("Done")
         endColor: Theme.defaultButtonColor
         onClicked: {
             if (drone.missionPlanModel.pointCount === 0)
