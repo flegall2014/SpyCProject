@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtMultimedia 5.2
+import Components 1.0
 
 // Video area
 Rectangle {
@@ -29,6 +30,26 @@ Rectangle {
         Keys.onSpacePressed: video.playbackState == MediaPlayer.PlayingState ? video.pause() : video.play()
         Keys.onLeftPressed: video.seek(video.position - 5000)
         Keys.onRightPressed: video.seek(video.position + 5000)
+        opacity: drone.state === DroneBase.FLYING ? 1 : 0
+        visible: opacity > 0
+        Behavior on opacity {
+            NumberAnimation {duration: 300}
+        }
+    }
+
+    // No video image
+    Item {
+        id: noVideoImage
+        anchors.fill: parent
+        opacity: drone.state !== DroneBase.FLYING ? 1 : 0
+        visible: opacity > 0
+        Behavior on opacity {
+            NumberAnimation {duration: 300}
+        }
+        Image {
+            anchors.centerIn: parent
+            source: "qrc:/images/img-novideo.jpg"
+        }
     }
 
     // Display current lat/lon
