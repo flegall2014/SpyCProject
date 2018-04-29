@@ -15,6 +15,8 @@ Grid {
             checked: drone.state === DroneBase.SAFETY_EDIT
             onClicked: drone.state = DroneBase.SAFETY_EDIT
             enabled: drone.state !== DroneBase.FLYING
+            label: qsTr("Safety")
+            textPosition: "below"
         }
     }
     Item {
@@ -28,6 +30,8 @@ Grid {
             checked: drone.state === DroneBase.MISSION_PLAN_EDIT
             onClicked: drone.state = DroneBase.MISSION_PLAN_EDIT
             enabled: drone.state !== DroneBase.FLYING
+            label: qsTr("Mission plan")
+            textPosition: "below"
         }
     }
     Item {
@@ -38,6 +42,8 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-takeoff.svg"
             onClicked: dialogMgr.showDialog(SpyC.CONFIRM_TAKE_OFF)
+            label: qsTr("Take off")
+            textPosition: "below"
         }
     }
     Item {
@@ -49,6 +55,8 @@ Grid {
             source: "qrc:/icons/ico-crash.svg"
             enabled: drone.state === DroneBase.FLYING
             onClicked: dialogMgr.showDialog(SpyC.CONFIRM_FAILSAFE)
+            label: qsTr("Fail safe")
+            textPosition: "below"
         }
     }
     Item {
@@ -57,8 +65,10 @@ Grid {
         ImageButton {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
-            source: "qrc:/icons/ico-measurement.svg"
-            enabled: false
+            source: "qrc:/icons/ico-home.svg"
+            enabled: drone.state === DroneBase.FLYING
+            label: qsTr("Home")
+            textPosition: "below"
         }
     }
     Item {
@@ -69,6 +79,8 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-geometry.svg"
             enabled: false
+            label: qsTr("Geometry")
+            textPosition: "below"
         }
     }
     Item {
@@ -79,6 +91,8 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-shape.svg"
             enabled: false
+            label: qsTr("Loiter")
+            textPosition: "below"
         }
     }
     Item {
@@ -89,6 +103,8 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-ground.svg"
             enabled: false
+            label: qsTr("Test")
+            textPosition: "below"
         }
     }
     Item {
@@ -99,6 +115,8 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-shape.svg"
             enabled: false
+            label: qsTr("Test")
+            textPosition: "below"
         }
     }
 }

@@ -16,7 +16,7 @@ Item {
     property color defaultFontColor: "white"
     property color invertDefaultFontColor: "black"
     property color checkedColor: "red"
-    property color disabledColor: "gray"
+    property color disabledColor: "black"
     property color safetyColor: "red"
     property color missionPlanColor: "green"
     property color videoBkgColor: "black"

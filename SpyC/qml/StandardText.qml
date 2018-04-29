@@ -8,5 +8,5 @@ Text {
     font.family: Theme.standardFont
     font.pixelSize: Theme.standardFontSize
     color: Theme.defaultFontColor
-    elide: Text.ElideMiddle
+    wrapMode: Text.WordWrap
 }

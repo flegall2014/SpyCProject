@@ -63,5 +63,6 @@
         <file>qml/widgets/DroneStatusWidget.qml</file>
         <file>qml/ItemStatus.qml</file>
         <file>qml/dialogs/ConfirmFailSafeDialog.qml</file>
+        <file>icons/ico-home.svg</file>
     </qresource>
 </RCC>

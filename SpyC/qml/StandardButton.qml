@@ -9,13 +9,14 @@ Rectangle {
     radius: 5
     border.color: enabled ? (checkable ? (checked ? Theme.checkedColor : Theme.disabledColor) : Theme.disabledColor) : Theme.invertDefaultFontColor
     border.width: checkable ? (checked ? 3 : 1) : 1
-    property alias text: title.text
+    property string label: ""
     antialiasing: true
     property color startColor: "white"
     property color endColor: Theme.defaultButtonColor
     property string textColor: Theme.invertDefaultFontColor
     property bool checkable: false
     property bool checked: false
+    property string textPosition: "centered"
 
     // Gradient
     gradient: Gradient {
@@ -25,16 +26,32 @@ Rectangle {
 
     // Label
     StandardText {
-        id: title
+        id: titleBelow
+        visible: textPosition === "below" && text.length > 0
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.bottom
+        anchors.topMargin: 4
+        width: parent.width
+        color: textColor
+        text: button.label
+    }
+
+    // Label
+    StandardText {
+        id: titleCentered
+        visible: textPosition === "centered" && text.length > 0
         anchors.centerIn: parent
         width: parent.width
         color: textColor
+        text: button.label
     }
 
+    // Disable mask
     Rectangle {
-        color: "gray"
+        color: Theme.disabledColor
         anchors.fill: parent
-        opacity: .5
+        opacity: .33
+        radius: parent.radius
         visible: button.enabled === false
     }
 

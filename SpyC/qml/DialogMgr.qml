@@ -104,6 +104,7 @@ Item {
                 color: Theme.invertDefaultFontColor
             }
 
+            // Close button
             ImageButton {
                 anchors.right: parent.right
                 anchors.rightMargin: 4
