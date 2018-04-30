@@ -69,5 +69,6 @@
         <file>images/spyranger.png</file>
         <file>qml/widgets/CustomRadioButton.qml</file>
         <file>icons/ico-go-right.svg</file>
+        <file>qml/dialogs/ConfirmExitSpyCDialog.qml</file>
     </qresource>
 </RCC>

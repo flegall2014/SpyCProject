@@ -59,6 +59,12 @@ Item {
             dialogLoader.source = "qrc:/qml/dialogs/SafetyValidationDialog.qml"
             root.msgType = SpyC.INFORMATION
         }
+        else
+        if (dialogType === SpyC.EXIT_SPYC)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/ConfirmExitSpyCDialog.qml"
+            root.msgType = SpyC.INFORMATION
+        }
     }
 
     // Background

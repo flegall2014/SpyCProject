@@ -39,6 +39,6 @@ Rectangle {
         anchors.rightMargin: 4
         anchors.verticalCenter: parent.verticalCenter
         source: "qrc:/icons/ico-shutdown.png"
-        onClicked: Qt.quit()
+        onClicked: dialogMgr.showDialog(SpyC.EXIT_SPYC)
     }
 }
