@@ -37,19 +37,29 @@ StackView {
         }
     }
 
-
     // Panels
-    property variant panels: []
-
-    // Panel parser
-    JSONParser {
-        id: panelParser
-        source: "qrc:/json/panels/panels.json"
-        onDataReady: {
-            panels = JSON.parse(responseText)
-            loadPanel("PayloadEditor")
+    property variant panels: [
+        {
+            "name": "MissionPlanEditor",
+            "displayName": "Mission Plan Editor",
+            "url": "qrc:/qml/panels/MissionPlanEditorPanel.qml"
+        },
+        {
+            "name": "SafetyPlanEditor",
+            "displayName": "Safety Plan Editor",
+            "url": "qrc:/qml/panels/SafetyEditorPanel.qml"
+        },
+        {
+            "name": "PayloadEditor",
+            "displayName": "Payload Editor",
+            "url": "qrc:/qml/panels/PayloadEditorPanel.qml"
+        },
+        {
+            "name": "FlightEditor",
+            "displayName": "Flight Editor",
+            "url": "qrc:/qml/panels/FlightEditor.qml"
         }
-    }
+    ]
 
     // Get panel object
     function getPanelObject(name)
@@ -122,5 +132,6 @@ StackView {
 
     Component.onCompleted: {
         panelMgr.loadPanel.connect(onLoadPanel)
+        loadPanel("PayloadEditor")
     }
 }
