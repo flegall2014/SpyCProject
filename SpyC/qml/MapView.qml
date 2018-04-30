@@ -23,15 +23,29 @@ Map {
         name: "osm"
     }
 
-    // Blink effect
+    // Blink effect for safety
     Timer {
-        id: blinkTimer
+        id: safetyBlinkTimer
         interval: 300
         repeat: true
-        running: drone.editMode === DroneBase.MISSION_PLAN_EDIT
-        onTriggered: {
-            console.log("TRIGGERED ", drone.editMode, DroneBase.NONE, DroneBase.MISSION_PLAN_EDIT, DroneBase.SAFETY_EDIT, DroneBase.CARTO_EDIT, DroneBase.PAYLOAD_EDIT)
-            mapView.missionPlanVisible = !mapView.missionPlanVisible
+        running: (drone.editMode === DroneBase.SAFETY_EDIT)
+        onTriggered: mapView.safetyVisible = !mapView.safetyVisible
+        onRunningChanged: {
+            if (running === false)
+                mapView.safetyVisible = true
+        }
+    }
+
+    // Blink effect for mission plan
+    Timer {
+        id: missionPlanBlinkTimer
+        interval: 300
+        repeat: true
+        running: (drone.editMode === DroneBase.MISSION_PLAN_EDIT)
+        onTriggered: mapView.missionPlanVisible = !mapView.missionPlanVisible
+        onRunningChanged: {
+            if (running === false)
+                mapView.missionPlanVisible = true
         }
     }
 
@@ -146,7 +160,7 @@ Map {
                     longitude: wayPointLongitude
                 }
                 radius: 500
-                color: Theme.safetyColor
+                color: mapView.safetyVisible ? Theme.safetyColor : "black"
                 border.width: 3
                 MouseArea {
                     id: circleMouseArea
@@ -175,7 +189,7 @@ Map {
         id: safetyPoly
         objectName: "safetyPoly"
         line.width: 3
-        line.color: Theme.safetyColor
+        line.color: mapView.safetyVisible ? Theme.safetyColor : "black"
         function updatePolyLine()
         {
             var lines = []
