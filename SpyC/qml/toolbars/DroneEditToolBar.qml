@@ -25,7 +25,7 @@ ToolBarBase {
             if (droneDisplay.state === "")
             {
                 droneDisplay.state = "expanded"
-                listView.droneExpanded = true
+                dronePage.droneExpanded = true
                 MASTERCONTROLLER.currentDrone = drone
             }
             else

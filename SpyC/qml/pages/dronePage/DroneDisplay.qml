@@ -205,10 +205,10 @@ Rectangle {
             }
             PropertyChanges {
                 target: droneDisplay
-                width: listView.width
+                width: dronePage.width
             }
             PropertyChanges {
-                target: listView
+                target: dronePage
                 explicit: true
                 contentX: droneDisplay.x
             }
