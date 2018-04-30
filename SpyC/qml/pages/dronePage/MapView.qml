@@ -158,7 +158,7 @@ Map {
                     latitude: wayPointLatitude
                     longitude: wayPointLongitude
                 }
-                radius: 500
+                radius: 250
                 color: mapView.safetyVisible ? Theme.safetyColor : "black"
                 border.width: 3
                 MouseArea {
