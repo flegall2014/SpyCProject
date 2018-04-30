@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import "."
+import "./widgets"
 
 Item {
     id: root

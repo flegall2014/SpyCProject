@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Components 1.0
+import "./widgets"
 
 Grid {
     id: droneActions

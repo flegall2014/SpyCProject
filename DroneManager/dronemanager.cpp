@@ -52,8 +52,8 @@ void DroneManager::onDroneTimeOut()
     QVector<double> vLatitudes = QVector<double>() << 48.856614 << 40.7127753 << 9.641185499999999;
     QVector<double> vLongitudes = QVector<double>() << 2.3522219000000177 << -74.0059728 << -13.57840120000003;
     static int iDroneCount = 0;
-    double dLatitude = vLatitudes[iDroneCount];
-    double dLongitude = vLongitudes[iDroneCount];
+    double dLatitude = vLatitudes[iDroneCount%3];
+    double dLongitude = vLongitudes[iDroneCount%3];
     QGeoCoordinate initialPos(dLatitude, dLongitude);
 
     // Create enw drone

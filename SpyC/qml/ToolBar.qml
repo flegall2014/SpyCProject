@@ -2,7 +2,7 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import Components 1.0
 import "."
-import "widgets"
+import "./widgets"
 
 // Status bar
 Rectangle {

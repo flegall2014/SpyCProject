@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import "."
+import ".."
 
 StandardButton {
     property alias source: icon.source

@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtMultimedia 5.2
 import Components 1.0
+import "./widgets"
 
 // Video area
 Rectangle {

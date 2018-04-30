@@ -14,11 +14,9 @@
         <file>qml/ToolBar.qml</file>
         <file>qml/DroneDisplay.qml</file>
         <file>qml/DroneView.qml</file>
-        <file>qml/ImageButton.qml</file>
         <file>qml/StatusBar.qml</file>
         <file>icons/ico-windows.svg</file>
         <file>icons/ico-shutdown.png</file>
-        <file>qml/DateDisplay.qml</file>
         <file>icons/ico-takeoff.svg</file>
         <file>icons/ico-crash.svg</file>
         <file>icons/ico-missionplan.svg</file>
@@ -38,10 +36,8 @@
         <file>qml/dialogs/MissionPlanValidationDialog.qml</file>
         <file>qml/DialogBase.qml</file>
         <file>icons/ico-safety.svg</file>
-        <file>qml/StandardText.qml</file>
         <file>icons/ico-close.svg</file>
         <file>qml/DroneActions.qml</file>
-        <file>qml/StandardButton.qml</file>
         <file>qml/toolbars/SafetyToolBar.qml</file>
         <file>qml/dialogs/SafetyValidationDialog.qml</file>
         <file>icons/ico-drone2.svg</file>
@@ -64,5 +60,9 @@
         <file>qml/ItemStatus.qml</file>
         <file>qml/dialogs/ConfirmFailSafeDialog.qml</file>
         <file>icons/ico-home.svg</file>
+        <file>qml/widgets/StandardButton.qml</file>
+        <file>qml/widgets/StandardText.qml</file>
+        <file>qml/widgets/ImageButton.qml</file>
+        <file>qml/widgets/DateDisplay.qml</file>
     </qresource>
 </RCC>
