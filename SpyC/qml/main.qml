@@ -84,7 +84,6 @@ ApplicationWindow {
             // Safety error
             function onMissionPlanError(error, droneUID)
             {
-                console.log("ICI: MISSION PLAN ERROR ", error, droneUID)
                 if (error === MissionPlanController.EMPTY_SAFETY)
                     dialogMgr.showDialog(SpyC.EMPTY_SAFETY_ERROR, droneUID)
                 else

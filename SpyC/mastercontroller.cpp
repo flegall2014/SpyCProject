@@ -13,6 +13,7 @@
 
 MasterController::MasterController(QObject *pParent) : QObject(pParent)
 {
+    qRegisterMetaType<DroneList>("DroneList");
     m_pDroneModel = new DroneModel(this);
     m_pMissionPlanController = new MissionPlanController(this);
     m_pMissionPlanController->setMasterController(this);
@@ -172,6 +173,12 @@ void MasterController::setCurrentDrone(DroneBase *pDrone)
 {
     m_pCurrentDrone = pDrone;
     emit currentDroneChanged();
+    m_lOtherDrones.clear();
+    emit otherDroneCountChanged();
+    foreach (DroneBase *pDrone, m_vDrones)
+        if (pDrone != m_pCurrentDrone)
+            m_lOtherDrones << pDrone;
+    emit otherDroneCountChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -179,4 +186,20 @@ void MasterController::setCurrentDrone(DroneBase *pDrone)
 DroneBase *MasterController::currentDrone() const
 {
     return m_pCurrentDrone;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+int MasterController::otherDroneCount() const
+{
+    return m_lOtherDrones.size();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+DroneBase *MasterController::getOtherDrone(int iDroneIndex) const
+{
+    if ((iDroneIndex >= 0) && (iDroneIndex < m_lOtherDrones.size()))
+        return m_lOtherDrones[iDroneIndex];
+    return nullptr;
 }

@@ -253,3 +253,20 @@ void DroneBase::setSafetyPointPosition(int iPointIndex, const QGeoCoordinate &ge
     if (m_pSafetyModel != nullptr)
         m_pSafetyModel->setPointPosition(iPointIndex, geoCoord);
 }
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::removeCoordinateFromSafetyPlanAtIndex(int iPointIndex)
+{
+    if (m_pSafetyModel != nullptr)
+        m_pSafetyModel->removeCoordinateAtIndex(iPointIndex);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::removeCoordinateFromMissionPlanAtIndex(int iPointIndex)
+{
+    if (m_pMissionPlanModel != nullptr)
+        m_pMissionPlanModel->removeCoordinateAtIndex(iPointIndex);
+}
+

@@ -14,6 +14,7 @@ namespace Model {
 class DroneManager;
 }
 class MissionPlanController;
+typedef QList<DroneBase *> DroneList;
 
 class MasterController : public QObject, public IService
 {
@@ -21,6 +22,7 @@ class MasterController : public QObject, public IService
     Q_PROPERTY(DroneModel *droneModel READ droneModel NOTIFY droneModelChanged)
     Q_PROPERTY(MissionPlanController *missionPlanController READ missionPlanController NOTIFY missionPlanControllerChanged)
     Q_PROPERTY(DroneBase *currentDrone READ currentDrone WRITE setCurrentDrone NOTIFY currentDroneChanged)
+    Q_PROPERTY(int otherDroneCount READ otherDroneCount NOTIFY otherDroneCountChanged)
     Q_ENUMS(DroneError)
 
 public:
@@ -72,6 +74,12 @@ public:
     //! Return current drone
     DroneBase *currentDrone() const;
 
+    //! Return other drone count
+    int otherDroneCount() const;
+
+    //! Return other drones
+    Q_INVOKABLE DroneBase *getOtherDrone(int iDroneIndex) const;
+
 private:
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
@@ -98,6 +106,9 @@ private:
 
     //! Current drone
     DroneBase *m_pCurrentDrone = nullptr;
+
+    //! Other drones
+    DroneList m_lOtherDrones;
 
     //! Mission plan controller
     MissionPlanController *m_pMissionPlanController = nullptr;
@@ -127,6 +138,9 @@ signals:
 
     //! Current drone changed
     void currentDroneChanged();
+
+    //! Other drones changed
+    void otherDroneCountChanged();
 
     //! Drone model view changed
     void droneModelChanged();

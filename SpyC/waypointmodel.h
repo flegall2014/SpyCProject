@@ -60,6 +60,9 @@ public:
     //! Add coordinate
     void addCoordinate(const QGeoCoordinate &coordinate);
 
+    //! Remove coordinate at index
+    void removeCoordinateAtIndex(int iCoordIndex);
+
     //! Clear mission plan
     void clear();
 

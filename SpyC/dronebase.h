@@ -153,6 +153,12 @@ public:
     //! Set safety point position
     Q_INVOKABLE void setSafetyPointPosition(int iPointIndex, const QGeoCoordinate &geoCoord);
 
+    //! Remove coordinate from safety at index
+    Q_INVOKABLE void removeCoordinateFromSafetyPlanAtIndex(int iPointIndex);
+
+    //! Remove coordinate from mission plan at index
+    Q_INVOKABLE void removeCoordinateFromMissionPlanAtIndex(int iPointIndex);
+
 private:
     //! UID
     QString m_sDroneUID = "";

@@ -60,7 +60,7 @@ Item {
             // Army
             Item {
                 id: armyGroup
-               width: parent.width
+                width: parent.width
                 height: Theme.toolBarHeight
                 anchors.top: missionOrReplayGroup.bottom
                 anchors.topMargin: Theme.toolBarHeight
@@ -85,7 +85,7 @@ Item {
             // Unit
             Item {
                 id: unitGroup
-               width: parent.width
+                width: parent.width
                 height: Theme.toolBarHeight
                 anchors.top: armyGroup.bottom
                 anchors.topMargin: Theme.toolBarHeight
@@ -110,7 +110,7 @@ Item {
             // Mission
             Item {
                 id: missionGroup
-               width: parent.width
+                width: parent.width
                 height: Theme.toolBarHeight
                 anchors.top: unitGroup.bottom
                 anchors.topMargin: Theme.toolBarHeight
@@ -120,7 +120,7 @@ Item {
                     anchors.left: parent.left
                     horizontalAlignment: Text.AlignLeft
                     font.pixelSize: Theme.veryLargeFontSize
-                    text: qsTr("Unit")
+                    text: qsTr("Mission")
                     width: 256
                 }
                 TextField {
@@ -135,7 +135,7 @@ Item {
             // Operator
             Item {
                 id: operatorGroup
-               width: parent.width
+                width: parent.width
                 height: Theme.toolBarHeight
                 anchors.top: missionGroup.bottom
                 anchors.topMargin: Theme.toolBarHeight

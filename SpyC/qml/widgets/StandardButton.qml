@@ -51,6 +51,7 @@ Rectangle {
         color: Theme.disabledColor
         anchors.fill: parent
         radius: parent.radius
+        opacity: button.enabled === false ? .45 : 0
         Behavior on opacity {
             NumberAnimation {duration: Theme.standardAnimationDuration}
         }

@@ -107,6 +107,19 @@ void WayPointModel::addCoordinate(const QGeoCoordinate &coordinate)
 
 //-------------------------------------------------------------------------------------------------
 
+void WayPointModel::removeCoordinateAtIndex(int iCoordIndex)
+{
+    if ((iCoordIndex >= 0) && (iCoordIndex < rowCount()))
+    {
+        beginRemoveRows(QModelIndex(), iCoordIndex, iCoordIndex);
+        m_geoPath.removeCoordinate(iCoordIndex);
+        endRemoveRows();
+        emit pathChanged();
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void WayPointModel::clear()
 {
     beginResetModel();

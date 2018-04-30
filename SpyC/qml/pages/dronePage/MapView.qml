@@ -94,8 +94,17 @@ Map {
                 border.width: 3
                 MouseArea {
                     id: circleMouseArea
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent
                     enabled: drone.editMode === DroneBase.MISSION_PLAN_EDIT
+                    onClicked: {
+                        console.log("TOTO")
+                        if (circleMouseArea.button === Qt.RightButton)
+                        {
+                            console.log("VRAI")
+                            drone.removeCoordinateFromMissionPlanAtIndex(index)
+                        }
+                    }
                     onPressed: {
                         circle.selected = true
                     }
@@ -163,8 +172,13 @@ Map {
                 border.width: 3
                 MouseArea {
                     id: circleMouseArea
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent
                     enabled: drone.editMode === DroneBase.SAFETY_EDIT
+                    onClicked: {
+                        if (circleMouseArea.button === Qt.RightButton)
+                            drone.removeCoordinateFromSafetyAtIndex(index)
+                    }
                     onPressed: {
                         circle.selected = true
                     }

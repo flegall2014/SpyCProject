@@ -15,7 +15,8 @@ Rectangle {
         id: droneStatusWidget
         width: (parent.width-Theme.controlPanelWidth)/2
         height: parent.height
-        visible: showDroneStatus
+        opacity: showDroneStatus ? 1 : 0
+        visible: opacity > 0
         currentDrone: MASTERCONTROLLER.currentDrone
         function onDroneReady()
         {
@@ -23,6 +24,9 @@ Rectangle {
                 droneStatusWidget.currentDrone = MASTERCONTROLLER.currentDrone
         }
         Component.onCompleted: MASTERCONTROLLER.currentDroneChanged.connect(onDroneReady)
+        Behavior on opacity {
+            NumberAnimation {duration: Theme.standardAnimationDuration}
+        }
     }
 
     // Mission name

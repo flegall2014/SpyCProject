@@ -16,6 +16,8 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 4
         anchors.verticalCenter: parent.verticalCenter
+        font.pixelSize: Theme.largeFontSize
+        color: endColor
     }
 
     // Image

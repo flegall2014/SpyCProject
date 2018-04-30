@@ -19,15 +19,16 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 4
         anchors.verticalCenter: parent.verticalCenter
-        text: droneValid() ? currentDrone.uid + " (" + currentDrone.stateText + ")" : ""
-        font.bold: true
+        color: droneValid() ? ((currentDrone.globalStatus === DroneBase.NOMINAL) ? Theme.nominalColor : (currentDrone.globalStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)) : Theme.defaultButtonColor
+        text: droneValid() ? ("[" + currentDrone.uid + " (" + currentDrone.stateText + ")]") : ""
+        font.pixelSize: Theme.largeFontSize
     }
 
     // Battery status widget
     BatteryStatusWidget {
         id: batteryStatusWidget
-        anchors.right: gpsStatusWidget.left
-        anchors.rightMargin: 4
+        anchors.left: droneLabel.right
+        anchors.leftMargin: 4
         anchors.verticalCenter: parent.verticalCenter
         status: droneValid() ? currentDrone.batteryStatus : DroneBase.NOMINAL
         level: droneValid() ? currentDrone.batteryLevel : 0
@@ -36,8 +37,8 @@ Item {
     // GPS status widget
     GPSStatusWidget {
         id: gpsStatusWidget
-        anchors.right: parent.right
-        anchors.rightMargin: 4
+        anchors.left: batteryStatusWidget.right
+        anchors.leftMargin: 4
         anchors.verticalCenter: parent.verticalCenter
         status: droneValid() ? currentDrone.gpsStatus : DroneBase.NOMINAL
         level: droneValid() ? currentDrone.gpsStrength : 0

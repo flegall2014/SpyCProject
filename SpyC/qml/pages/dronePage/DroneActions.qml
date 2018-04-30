@@ -44,6 +44,7 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-takeoff.svg"
             onClicked: dialogMgr.showDialog(SpyC.CONFIRM_TAKE_OFF)
+            enabled: drone.state !== DroneBase.FLYING
             label: qsTr("Take off")
             textPosition: "below"
         }
