@@ -5,7 +5,7 @@ ListView {
     id: listView
     interactive: false
     cacheBuffer: width > 0 ? 3*width : 0
-    model: MASTERCONTROLLER.droneView
+    model: MASTERCONTROLLER.droneModel
     spacing: 3
     orientation: Qt.Horizontal
     clip: true
@@ -14,7 +14,7 @@ ListView {
     // Drone display
     delegate: DroneDisplay {
         id: droneDisplay
-        width: listView.width/MASTERCONTROLLER.droneView.droneCount
+        width: listView.width/MASTERCONTROLLER.droneModel.droneCount
         height: listView.height
         clip: true
         function onDroneExpandedChanged()

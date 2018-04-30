@@ -9,7 +9,7 @@
 #include "dronebase.h"
 #include <dronemanager.h>
 #include <alert.h>
-class DroneView;
+class DroneModel;
 namespace Model {
 class DroneManager;
 }
@@ -18,7 +18,7 @@ class MissionPlanController;
 class MasterController : public QObject, public IService
 {
     Q_OBJECT
-    Q_PROPERTY(DroneView *droneView READ droneView NOTIFY droneViewChanged)
+    Q_PROPERTY(DroneModel *droneModel READ droneModel NOTIFY droneModelChanged)
     Q_PROPERTY(MissionPlanController *missionPlanController READ missionPlanController NOTIFY missionPlanControllerChanged)
     Q_PROPERTY(DroneBase *currentDrone READ currentDrone WRITE setCurrentDrone NOTIFY currentDroneChanged)
     Q_ENUMS(DroneError)
@@ -75,7 +75,7 @@ private:
     //-------------------------------------------------------------------------------------------------
 
     //! Return drone model view
-    DroneView *droneView() const;
+    DroneModel *droneModel() const;
 
     //! Return mission plan controller
     MissionPlanController *missionPlanController() const;
@@ -88,7 +88,7 @@ private:
     Model::DroneManager *m_pDroneManager = nullptr;
 
     //! Drone view model
-    DroneView *m_pDroneView = nullptr;
+    DroneModel *m_pDroneModel = nullptr;
 
     //! Drone list
     QVector<DroneBase *> m_vDrones;
@@ -123,7 +123,7 @@ signals:
     void currentDroneChanged();
 
     //! Drone model view changed
-    void droneViewChanged();
+    void droneModelChanged();
 
     //! Mission plan controller changed
     void missionPlanControllerChanged();

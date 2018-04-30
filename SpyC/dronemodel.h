@@ -1,5 +1,5 @@
-#ifndef DRONEVIEW_H
-#define DRONEVIEW_H
+#ifndef DRONEMODEL_H
+#define DRONEMODEL_H
 
 // Qt
 #include <QAbstractListModel>
@@ -13,7 +13,7 @@ namespace Model {
 class DroneManager;
 }
 
-class DroneView : public QAbstractListModel
+class DroneModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(int droneCount READ droneCount NOTIFY droneCountChanged)
@@ -26,10 +26,10 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Constructor
-    DroneView(QObject *pParent=nullptr);
+    DroneModel(QObject *pParent=nullptr);
 
     //! Destructor
-    ~DroneView();
+    ~DroneModel();
 
     //-------------------------------------------------------------------------------------------------
     // Control methods
@@ -68,4 +68,4 @@ signals:
     void droneCountChanged();
 };
 
-#endif // DRONEVIEW_H
+#endif // DRONEMODEL_H

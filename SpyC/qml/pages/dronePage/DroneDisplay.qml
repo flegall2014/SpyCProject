@@ -66,10 +66,10 @@ Rectangle {
                     // Drone display state changed
                     function onDroneDisplayStateChanged()
                     {
-                        if (droneView.droneExpanded === false)
+                        if (dronePage.droneExpanded === false)
                             mapView.state = ""
                     }
-                    Component.onCompleted: droneView.droneExpandedChanged.connect(onDroneDisplayStateChanged)
+                    Component.onCompleted: dronePage.droneExpandedChanged.connect(onDroneDisplayStateChanged)
 
                     // Toolbar loader
                     Loader {

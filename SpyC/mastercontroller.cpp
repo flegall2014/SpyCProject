@@ -4,7 +4,7 @@
 // Application
 #include "mastercontroller.h"
 #include "pluginloader.h"
-#include "droneview.h"
+#include "dronemodel.h"
 #include "missionplancontroller.h"
 #include "dronebase.h"
 #include <dronemanager.h>
@@ -13,7 +13,7 @@
 
 MasterController::MasterController(QObject *pParent) : QObject(pParent)
 {
-    m_pDroneView = new DroneView(this);
+    m_pDroneModel = new DroneModel(this);
     m_pMissionPlanController = new MissionPlanController(this);
     m_pMissionPlanController->setMasterController(this);
 }
@@ -75,9 +75,9 @@ void MasterController::setAllDroneState(const DroneBase::State &eState)
 
 //-------------------------------------------------------------------------------------------------
 
-DroneView *MasterController::droneView() const
+DroneModel *MasterController::droneModel() const
 {
-    return m_pDroneView;
+    return m_pDroneModel;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ void MasterController::onNewDroneAvailable(const QString &sVideoUrl, const QGeoC
 {
     DroneBase *pDrone = new DroneBase(sDroneUID, sVideoUrl, initialPosition, this);
     m_vDrones << pDrone;
-    m_pDroneView->addDrone(pDrone);
+    m_pDroneModel->addDrone(pDrone);
 }
 
 //-------------------------------------------------------------------------------------------------

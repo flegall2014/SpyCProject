@@ -6,6 +6,7 @@ import QtPositioning 5.6
 import Components 1.0
 import "."
 import "pages/dronePage"
+import "pages/loginPage"
 
 // Main application window
 ApplicationWindow {
@@ -22,6 +23,9 @@ ApplicationWindow {
     // Visibility
     visibility: Window.Maximized
 
+    // Current page
+    property string currentPage: "login"
+
     Rectangle {
         anchors.fill: parent
         color: Theme.backgroundColor
@@ -33,12 +37,12 @@ ApplicationWindow {
             height: Theme.toolBarHeight
             anchors.top: parent.top
             enabled: dialogMgr.state === ""
-            showDroneStatus: droneView.droneExpanded
+            showDroneStatus: dronePage.droneExpanded
         }
 
-        // Drone view
-        DroneView {
-            id: droneView
+        // Drone page
+        DronePage {
+            id: dronePage
             anchors.bottom: statusBar.top
             anchors.top: toolBar.bottom
             width: parent.width
@@ -51,10 +55,10 @@ ApplicationWindow {
             width: parent.width
             height: Theme.toolBarHeight
             anchors.bottom: parent.bottom
-            windowsButtonVisible: droneView.droneExpanded
+            windowsButtonVisible: dronePage.droneExpanded
             enabled: dialogMgr.state === ""
             onWindowsButtonClicked: {
-                droneView.droneExpanded = false
+                dronePage.droneExpanded = false
                 MASTERCONTROLLER.setAllDroneState(DroneBase.IDLE)
             }
         }

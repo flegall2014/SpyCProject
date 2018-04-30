@@ -55,32 +55,24 @@ HEADERS += \
     iservice.h \
     pluginloader.h \
     spyc.h \
-    droneview.h \
     dronebase.h \
     alert.h \
     waypointmodel.h \
     mastercontroller.h \
-    missionplancontroller.h
+    missionplancontroller.h \
+    dronemodel.h
 
 SOURCES += \
     main.cpp \
     pluginloader.cpp \
     spyc.cpp \
-    droneview.cpp \
     dronebase.cpp \
     alert.cpp \
     waypointmodel.cpp \
     mastercontroller.cpp \
-    missionplancontroller.cpp
+    missionplancontroller.cpp \
+    dronemodel.cpp
 
-DISTFILES += \
-    qml/mapviewer/map/CircleItem.qml \
-    qml/mapviewer/map/ImageItem.qml \
-    qml/mapviewer/map/MapComponent.qml \
-    qml/mapviewer/map/Marker.qml \
-    qml/mapviewer/map/MiniMap.qml \
-    qml/mapviewer/map/PolygonItem.qml \
-    qml/mapviewer/map/PolylineItem.qml \
-    qml/mapviewer/map/RectangleItem.qml
+
 
 
