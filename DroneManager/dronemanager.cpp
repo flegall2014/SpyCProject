@@ -16,7 +16,6 @@ DroneManager::DroneManager(QObject *pParent) : IBasePlugin(pParent)
     m_droneTimer.setInterval(1000);
     m_droneTimer.setSingleShot(true);
     connect(&m_droneTimer, &QTimer::timeout, this, &DroneManager::onDroneTimeOut, Qt::QueuedConnection);
-    m_droneTimer.start();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -38,6 +37,13 @@ QString DroneManager::name() const
 float DroneManager::version() const
 {
     return 1.0;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneManager::onStartDroneDetection()
+{
+    m_droneTimer.start();
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -10,7 +10,7 @@ import "pages/loginPage"
 
 // Main application window
 ApplicationWindow {
-    id: app
+    id: appWindow
     width: 512
     height: 512
 
@@ -22,9 +22,6 @@ ApplicationWindow {
 
     // Visibility
     visibility: Window.Maximized
-
-    // Current page
-    property string currentPage: "login"
 
     Rectangle {
         anchors.fill: parent
@@ -38,6 +35,19 @@ ApplicationWindow {
             anchors.top: parent.top
             enabled: dialogMgr.state === ""
             showDroneStatus: dronePage.droneExpanded
+        }
+
+        // Login page
+        LoginPage {
+            id: loginPage
+            anchors.bottom: statusBar.top
+            anchors.top: toolBar.bottom
+            width: parent.width
+            onLoginClicked: {
+                MASTERCONTROLLER.detectDrones()
+                loginPage.state = "hidden"
+                dronePage.state = "visible"
+            }
         }
 
         // Drone page

@@ -57,11 +57,19 @@ void MasterController::setModel(Model::DroneManager *pDroneManager)
         connect(m_pDroneManager, &Model::DroneManager::failSafeDone, m_pMissionPlanController, &MissionPlanController::onFailSafeDone, Qt::QueuedConnection);
 
         // From view to model
+        connect(this, &MasterController::startDroneDetection, m_pDroneManager, &Model::DroneManager::onStartDroneDetection, Qt::QueuedConnection);
         connect(m_pMissionPlanController, &MissionPlanController::uploadMissionPlan, m_pDroneManager, &Model::DroneManager::onUploadMissionPlan, Qt::QueuedConnection);
         connect(m_pMissionPlanController, &MissionPlanController::uploadSafety, m_pDroneManager, &Model::DroneManager::onUploadSafety, Qt::QueuedConnection);
         connect(m_pMissionPlanController, &MissionPlanController::takeOffRequest, m_pDroneManager, &Model::DroneManager::onTakeOffRequest, Qt::QueuedConnection);
         connect(m_pMissionPlanController, &MissionPlanController::failSafeRequest, m_pDroneManager, &Model::DroneManager::onFailSafeRequest, Qt::QueuedConnection);
     }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::detectDrones()
+{
+    emit startDroneDetection();
 }
 
 //-------------------------------------------------------------------------------------------------

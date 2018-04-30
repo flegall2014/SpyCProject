@@ -60,6 +60,9 @@ private:
     QHash<QString, Drone *> m_hDrones;
 
 public slots:
+    //! Start drone detection
+    void onStartDroneDetection();
+
     //! Drone time out
     void onDroneTimeOut();
 

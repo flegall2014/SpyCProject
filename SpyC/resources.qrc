@@ -65,5 +65,9 @@
         <file>qml/PanelBase.qml</file>
         <file>qml/pages/loginPage/LoginPage.qml</file>
         <file>qml/pages/dronePage/DronePage.qml</file>
+        <file>images/spyranger.jpg</file>
+        <file>images/spyranger.png</file>
+        <file>qml/widgets/CustomRadioButton.qml</file>
+        <file>icons/ico-go-right.svg</file>
     </qresource>
 </RCC>

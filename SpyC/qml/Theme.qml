@@ -1,6 +1,7 @@
 pragma Singleton
 import QtQuick 2.5
 import QtQuick.Controls.Styles 1.4
+import "widgets"
 
 Item {
     // Colors
@@ -30,6 +31,7 @@ Item {
     property int alertDeleagateHeight: 32
     property int wayPointDelegateHeight: 48
     property int mapOrVideoThumbnailSize: 256
+    property int goNextIconSize: 160
 
     // Font
     property string standardFont: "Segoe UI"

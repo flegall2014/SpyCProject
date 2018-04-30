@@ -56,6 +56,9 @@ public:
     //! Set model
     void setModel(Model::DroneManager *pDroneManager);
 
+    //! Detect drones
+    Q_INVOKABLE void detectDrones();
+
     //! Set drone state
     Q_INVOKABLE void setAllDroneState(const DroneBase::State &eState);
 
@@ -119,6 +122,9 @@ public slots:
     void onSafetyChanged(const QString &sDroneUID);
 
 signals:
+    //! Start drone detection
+    void startDroneDetection();
+
     //! Current drone changed
     void currentDroneChanged();
 
