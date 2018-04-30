@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Components 1.0
-import "./widgets"
+import "../../widgets"
+import "../.."
 
 Grid {
     id: droneActions

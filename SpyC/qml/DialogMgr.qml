@@ -9,8 +9,6 @@ Item {
     visible: opacity > 0
     property int msgType: SpyC.INFORMATION
 
-    onStateChanged: console.log("*** DIALOGMGR STATE = ", state)
-
     function showDialog(dialogType, droneUID)
     {
         root.state = "active"
@@ -121,7 +119,6 @@ Item {
             width: parent.width
             anchors.top: titleArea.bottom
             anchors.bottom: parent.bottom
-            onSourceChanged: console.log("current source is ", source)
             onLoaded: {
                 item.closeDialog.connect(onCloseDialog)
             }
@@ -131,9 +128,8 @@ Item {
     // Close dialog
     function onCloseDialog()
     {
-        console.log("CLOSING DIALOG")
         root.state = ""
-        //dialogLoader.source = ""
+        dialogLoader.source = ""
     }
 
     // States

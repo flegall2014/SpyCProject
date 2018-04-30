@@ -5,6 +5,7 @@ import QtLocation 5.3
 import QtPositioning 5.6
 import Components 1.0
 import "."
+import "pages/dronePage"
 
 // Main application window
 ApplicationWindow {

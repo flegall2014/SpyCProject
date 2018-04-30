@@ -1,7 +1,6 @@
 import QtQuick 2.5
 import Components 1.0
-import "."
-import "./widgets"
+import ".."
 
 Item {
     width: 96

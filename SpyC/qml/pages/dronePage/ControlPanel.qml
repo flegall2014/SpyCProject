@@ -2,8 +2,8 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import Components 1.0
-import "widgets"
-import "."
+import "../../widgets"
+import "../.."
 
 Rectangle {
     color: Theme.backgroundColor

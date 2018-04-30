@@ -3,17 +3,11 @@
         <file>qml/main.qml</file>
         <file>qml/Theme.qml</file>
         <file>qml/qmldir</file>
-        <file>qml/PanelManager.qml</file>
         <file>json/panels/panels.json</file>
         <file>qml/JSONParser.qml</file>
-        <file>qml/PanelBase.qml</file>
         <file>icons/ico-battery.svg</file>
-        <file>qml/ControlPanel.qml</file>
         <file>icons/ico-drone.svg</file>
-        <file>qml/CommonArea.qml</file>
         <file>qml/ToolBar.qml</file>
-        <file>qml/DroneDisplay.qml</file>
-        <file>qml/DroneView.qml</file>
         <file>qml/StatusBar.qml</file>
         <file>icons/ico-windows.svg</file>
         <file>icons/ico-shutdown.png</file>
@@ -27,8 +21,6 @@
         <file>icons/ico-ground.svg</file>
         <file>icons/ico-circle.svg</file>
         <file>icons/ico-gps.svg</file>
-        <file>qml/MapView.qml</file>
-        <file>qml/VideoView.qml</file>
         <file>qml/ToolBarBase.qml</file>
         <file>qml/toolbars/MissionPlanToolBar.qml</file>
         <file>images/img-novideo.jpg</file>
@@ -37,7 +29,6 @@
         <file>qml/DialogBase.qml</file>
         <file>icons/ico-safety.svg</file>
         <file>icons/ico-close.svg</file>
-        <file>qml/DroneActions.qml</file>
         <file>qml/toolbars/SafetyToolBar.qml</file>
         <file>qml/dialogs/SafetyValidationDialog.qml</file>
         <file>icons/ico-drone2.svg</file>
@@ -57,12 +48,21 @@
         <file>qml/widgets/BatteryStatusWidget.qml</file>
         <file>qml/widgets/GPSStatusWidget.qml</file>
         <file>qml/widgets/DroneStatusWidget.qml</file>
-        <file>qml/ItemStatus.qml</file>
         <file>qml/dialogs/ConfirmFailSafeDialog.qml</file>
         <file>icons/ico-home.svg</file>
         <file>qml/widgets/StandardButton.qml</file>
         <file>qml/widgets/StandardText.qml</file>
         <file>qml/widgets/ImageButton.qml</file>
         <file>qml/widgets/DateDisplay.qml</file>
+        <file>qml/pages/dronePage/CommonArea.qml</file>
+        <file>qml/pages/dronePage/ControlPanel.qml</file>
+        <file>qml/pages/dronePage/DroneActions.qml</file>
+        <file>qml/pages/dronePage/DroneDisplay.qml</file>
+        <file>qml/pages/dronePage/DroneView.qml</file>
+        <file>qml/pages/dronePage/MapView.qml</file>
+        <file>qml/pages/dronePage/PanelManager.qml</file>
+        <file>qml/pages/dronePage/VideoView.qml</file>
+        <file>qml/widgets/ItemStatus.qml</file>
+        <file>qml/PanelBase.qml</file>
     </qresource>
 </RCC>

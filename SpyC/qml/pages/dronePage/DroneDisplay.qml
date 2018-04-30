@@ -3,8 +3,8 @@ import QtPositioning 5.6
 import QtLocation 5.6
 import QtQuick.Controls 1.4
 import Components 1.0
-import "widgets"
-import "."
+import "../../widgets"
+import "../.."
 
 Rectangle {
     id: droneDisplay
@@ -159,7 +159,6 @@ Rectangle {
                     // Drone state changed
                     function onDroneStateChanged()
                     {
-                        console.log("DRONE STATE CHANGED !", drone.state === DroneBase.FLYING)
                         if (drone.state === DroneBase.FLYING)
                             videoView.play()
                         else
