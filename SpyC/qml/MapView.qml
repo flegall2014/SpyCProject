@@ -13,9 +13,8 @@ Map {
     id: mapView
     plugin: mapPlugin
     zoomLevel: 10
-    property string missionPlanColor: Theme.missionPlanColor
-    property string safetyColor: Theme.safetyColor
-    property int blinkCount: 0
+    property bool missionPlanVisible: true
+    property bool safetyVisible: true
     gesture.enabled: (drone.editMode !== DroneBase.SAFETY_EDIT) && (drone.editMode !== DroneBase.MISSION_PLAN_EDIT)
 
     // Map plugin
@@ -29,15 +28,10 @@ Map {
         id: blinkTimer
         interval: 300
         repeat: true
-        running: (drone.editMode === DroneBase.MISSION_PLAN_EDIT) || (drone.editMode === DroneBase.SAFETY_EDIT)
-        onRunningChanged: console.log("ICI : ", running)
+        running: drone.editMode === DroneBase.MISSION_PLAN_EDIT
         onTriggered: {
-            if (drone.editMode === DroneBase.MISSION_PLAN_EDIT)
-                mapView.missionPlanColor = (blinkCount%2 === 0) ? Theme.missionPlanColor : "blue"
-            else
-            if (drone.editMode === DroneBase.SAFETY_EDIT)
-                mapView.safetyColor = (blinkCount%2 === 0) ? Theme.safetyColor : "blue"
-            blinkCount++
+            console.log("TRIGGERED ", drone.editMode, DroneBase.NONE, DroneBase.MISSION_PLAN_EDIT, DroneBase.SAFETY_EDIT, DroneBase.CARTO_EDIT, DroneBase.PAYLOAD_EDIT)
+            mapView.missionPlanVisible = !mapView.missionPlanVisible
         }
     }
 
@@ -83,7 +77,7 @@ Map {
                     longitude: wayPointLongitude
                 }
                 radius: 250
-                color: Theme.missionPlanColor
+                color: mapView.missionPlanVisible ? Theme.missionPlanColor : "black"
                 border.width: 3
                 MouseArea {
                     id: circleMouseArea
@@ -112,7 +106,7 @@ Map {
         id: missionPlanPoly
         objectName: "missionPlanPoly"
         line.width: 3
-        line.color: drone.state === DroneBase.IDLE ? Theme.missionPlanColor : mapView.missionPlanColor
+        line.color: mapView.missionPlanVisible ? Theme.missionPlanColor : "black"
         function updatePolyLine()
         {
             var lines = []
@@ -181,7 +175,7 @@ Map {
         id: safetyPoly
         objectName: "safetyPoly"
         line.width: 3
-        line.color: drone.state === DroneBase.IDLE ? Theme.safetyColor : mapView.safetyColor
+        line.color: Theme.safetyColor
         function updatePolyLine()
         {
             var lines = []

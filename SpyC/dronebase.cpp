@@ -183,9 +183,6 @@ void DroneBase::setEditMode(int iMode)
 {
     m_eEditMode = (DroneBase::EditMode)iMode;
     emit editModeChanged();
-
-
-    qDebug() << "------------------------------------------ " << m_eEditMode;
 }
 
 //-------------------------------------------------------------------------------------------------
