@@ -25,14 +25,14 @@ StackView {
                 property: "y"
                 from: target.height
                 to: 0
-                duration: 300
+                duration: Theme.standardAnimationDuration
             }
             PropertyAnimation {
                 target: exitItem
                 property: "y"
                 from: 0
                 to: target.height
-                duration: 300
+                duration: Theme.standardAnimationDuration
             }
         }
     }

@@ -187,6 +187,6 @@ Item {
         }
     }
     transitions: Transition {
-        NumberAnimation {duration: 300; properties: "opacity"}
+        NumberAnimation {duration: Theme.standardAnimationDuration; properties: "opacity"}
     }
 }

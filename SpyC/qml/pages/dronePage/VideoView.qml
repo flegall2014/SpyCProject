@@ -32,7 +32,7 @@ Rectangle {
         opacity: drone.state === DroneBase.FLYING ? 1 : 0
         visible: opacity > 0
         Behavior on opacity {
-            NumberAnimation {duration: 300}
+            NumberAnimation {duration: Theme.standardAnimationDuration}
         }
     }
 
@@ -43,7 +43,7 @@ Rectangle {
         opacity: drone.state !== DroneBase.FLYING ? 1 : 0
         visible: opacity > 0
         Behavior on opacity {
-            NumberAnimation {duration: 300}
+            NumberAnimation {duration: Theme.standardAnimationDuration}
         }
         Image {
             anchors.centerIn: parent

@@ -50,9 +50,10 @@ Rectangle {
     Rectangle {
         color: Theme.disabledColor
         anchors.fill: parent
-        opacity: .33
         radius: parent.radius
-        visible: button.enabled === false
+        Behavior on opacity {
+            NumberAnimation {duration: Theme.standardAnimationDuration}
+        }
     }
 
     // Handle clicks

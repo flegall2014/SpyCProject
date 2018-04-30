@@ -25,7 +25,7 @@ Map {
     // Blink effect for safety
     Timer {
         id: safetyBlinkTimer
-        interval: 300
+        interval: Theme.standardAnimationDuration
         repeat: true
         running: (drone.editMode === DroneBase.SAFETY_EDIT)
         onTriggered: mapView.safetyVisible = !mapView.safetyVisible
@@ -38,7 +38,7 @@ Map {
     // Blink effect for mission plan
     Timer {
         id: missionPlanBlinkTimer
-        interval: 300
+        interval: Theme.standardAnimationDuration
         repeat: true
         running: (drone.editMode === DroneBase.MISSION_PLAN_EDIT)
         onTriggered: mapView.missionPlanVisible = !mapView.missionPlanVisible

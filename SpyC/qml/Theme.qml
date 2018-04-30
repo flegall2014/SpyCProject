@@ -40,4 +40,7 @@ Item {
     property int largeFontSize: 18
     property int mediumFontSize: 13
     property int smallFontSize: 12
+
+    // Animation
+    property int standardAnimationDuration: 300
 }

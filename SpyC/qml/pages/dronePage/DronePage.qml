@@ -39,7 +39,7 @@ ListView {
     transitions: Transition {
         // Make the state changes smooth
         NumberAnimation {
-            duration: 300
+            duration: Theme.standardAnimationDuration
             properties: "opacity"
         }
     }
