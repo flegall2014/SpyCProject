@@ -34,7 +34,7 @@ Rectangle {
         anchors.centerIn: parent
         font.pixelSize: Theme.largeFontSize
         font.bold: true
-        text: qsTr("Spy'C by THALES")
+        text: MASTERCONTROLLER.applicationTitle
     }
 
     // Quit button

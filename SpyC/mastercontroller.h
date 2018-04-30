@@ -3,6 +3,7 @@
 
 // Qt
 #include <QObject>
+class QTextToSpeech;
 
 // Application
 #include "iservice.h"
@@ -23,6 +24,7 @@ class MasterController : public QObject, public IService
     Q_PROPERTY(MissionPlanController *missionPlanController READ missionPlanController NOTIFY missionPlanControllerChanged)
     Q_PROPERTY(DroneBase *currentDrone READ currentDrone WRITE setCurrentDrone NOTIFY currentDroneChanged)
     Q_PROPERTY(int otherDroneCount READ otherDroneCount NOTIFY otherDroneCountChanged)
+    Q_PROPERTY(QString applicationTitle READ applicationTitle WRITE setApplicationTitle NOTIFY applicationTitleChanged)
     Q_ENUMS(DroneError)
 
 public:
@@ -64,6 +66,12 @@ public:
     //! Set drone state
     Q_INVOKABLE void setAllDroneState(const DroneBase::State &eState);
 
+    //! Update application title
+    Q_INVOKABLE void updateApplicationTitle(const QString &sArmy, const QString &sUnit, const QString &sMission, const QString &sOperator);
+
+    //! Say speech
+    Q_INVOKABLE void say(const QString &sSpeech);
+
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
     //-------------------------------------------------------------------------------------------------
@@ -80,6 +88,12 @@ public:
     //! Return other drones
     Q_INVOKABLE DroneBase *getOtherDrone(int iDroneIndex) const;
 
+    //! Set application title
+    void setApplicationTitle(const QString &sApplicationTitle);
+
+    //! Return application title
+    const QString &applicationTitle() const;
+
 private:
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
@@ -95,6 +109,9 @@ private:
     DroneBase *getDrone(const QString &sDroneUID) const;
 
 private:
+    //! Application title
+    QString m_sApplicationTitle = tr("Spy'C by THALES");
+
     //! Drone manager
     Model::DroneManager *m_pDroneManager = nullptr;
 
@@ -112,6 +129,12 @@ private:
 
     //! Mission plan controller
     MissionPlanController *m_pMissionPlanController = nullptr;
+
+    //! Text to speech
+    QTextToSpeech *m_pSpeech = nullptr;
+
+    //! Drone global status
+    QHash<DroneBase *, DroneBase::Status> m_hDroneGlobalStatus;
 
 public slots:
     //! New drone available
@@ -132,6 +155,9 @@ public slots:
     //! Safety changed
     void onSafetyChanged(const QString &sDroneUID);
 
+    //! Drone global status changed
+    void onDroneGlobalStatusChanged();
+
 signals:
     //! Start drone detection
     void startDroneDetection();
@@ -147,6 +173,9 @@ signals:
 
     //! Mission plan controller changed
     void missionPlanControllerChanged();
+
+    //! Application title changed
+    void applicationTitleChanged();
 };
 
 #endif // MASTERCONTROLLER_H

@@ -9,10 +9,9 @@ using namespace Model;
 
 BatterySimulator::BatterySimulator(const QString &sDroneUID, QObject *pParent) : BaseSimulator(sDroneUID, pParent)
 {
-    m_timer.setInterval(500);
     m_timer.setSingleShot(true);
     connect(&m_timer, &QTimer::timeout, this, &BatterySimulator::onTimeOut, Qt::QueuedConnection);
-    m_timer.start();
+    m_timer.start(0);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -26,6 +25,7 @@ BatterySimulator::~BatterySimulator()
 
 void BatterySimulator::start()
 {
+    m_timer.setInterval(500);
     m_bRepeat = true;
     m_timer.start();
 }

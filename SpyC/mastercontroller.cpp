@@ -1,5 +1,6 @@
 // Qt
 #include <QDebug>
+#include <QTextToSpeech>
 
 // Application
 #include "mastercontroller.h"
@@ -17,6 +18,8 @@ MasterController::MasterController(QObject *pParent) : QObject(pParent)
     m_pDroneModel = new DroneModel(this);
     m_pMissionPlanController = new MissionPlanController(this);
     m_pMissionPlanController->setMasterController(this);
+    m_pSpeech = new QTextToSpeech(this);
+    m_pSpeech->setLocale(QLocale::English);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -84,6 +87,22 @@ void MasterController::setAllDroneState(const DroneBase::State &eState)
 
 //-------------------------------------------------------------------------------------------------
 
+void MasterController::updateApplicationTitle(const QString &sArmy, const QString &sUnit, const QString &sMission, const QString &sOperator)
+{
+    QString sApplicationTitle = QString("[%1] [%2] [%3] [%4]").arg(sArmy).arg(sUnit).arg(sMission).arg(sOperator);
+    setApplicationTitle(sApplicationTitle);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::say(const QString &sSpeech)
+{
+    qDebug() << "SAYING " << sSpeech.toLower();
+    m_pSpeech->say(sSpeech.toLower());
+}
+
+//-------------------------------------------------------------------------------------------------
+
 DroneModel *MasterController::droneModel() const
 {
     return m_pDroneModel;
@@ -111,6 +130,7 @@ DroneBase *MasterController::getDrone(const QString &sDroneUID) const
 void MasterController::onNewDroneAvailable(const QString &sVideoUrl, const QGeoCoordinate &initialPosition, const QString &sDroneUID)
 {
     DroneBase *pDrone = new DroneBase(sDroneUID, sVideoUrl, initialPosition, this);
+    connect(pDrone, &DroneBase::globalStatusChanged, this, &MasterController::onDroneGlobalStatusChanged);
     m_vDrones << pDrone;
     m_pDroneModel->addDrone(pDrone);
 }
@@ -169,6 +189,36 @@ void MasterController::onSafetyChanged(const QString &sDroneUID)
 
 //-------------------------------------------------------------------------------------------------
 
+void MasterController::onDroneGlobalStatusChanged()
+{
+    DroneBase *pSender = dynamic_cast<DroneBase *>(sender());
+    if (pSender != nullptr)
+    {
+        if (pSender->globalStatus() != DroneBase::NOMINAL)
+        {
+            if (m_hDroneGlobalStatus[pSender] != pSender->globalStatus())
+            {
+                QString sVoiceMsg = "";
+                if (pSender->globalStatus() == DroneBase::WARNING)
+                {
+                    sVoiceMsg = QString("%1 is in warning state").arg(pSender->uid());
+                }
+                else
+                if (pSender->globalStatus() == DroneBase::CRITICAL)
+                {
+                    sVoiceMsg = QString("%1 is in critical state").arg(pSender->uid());
+                }
+                if (!sVoiceMsg.isEmpty())
+                    say(sVoiceMsg);
+
+                m_hDroneGlobalStatus[pSender] = (DroneBase::Status)pSender->globalStatus();
+            }
+        }
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void MasterController::setCurrentDrone(DroneBase *pDrone)
 {
     m_pCurrentDrone = pDrone;
@@ -202,4 +252,19 @@ DroneBase *MasterController::getOtherDrone(int iDroneIndex) const
     if ((iDroneIndex >= 0) && (iDroneIndex < m_lOtherDrones.size()))
         return m_lOtherDrones[iDroneIndex];
     return nullptr;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MasterController::setApplicationTitle(const QString &sApplicationTitle)
+{
+    m_sApplicationTitle = sApplicationTitle;
+    emit applicationTitleChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+const QString &MasterController::applicationTitle() const
+{
+    return m_sApplicationTitle;
 }

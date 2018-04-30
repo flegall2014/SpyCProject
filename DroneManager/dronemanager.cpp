@@ -63,7 +63,7 @@ void DroneManager::onDroneTimeOut()
     QGeoCoordinate initialPos(dLatitude, dLongitude);
 
     // Create enw drone
-    QString sDroneUID = QString("DRONE%1").arg(iDroneCount);
+    QString sDroneUID = QString("DRONE %1").arg(iDroneCount);
     if ((m_hDrones[sDroneUID] == nullptr) && (iDroneCount < 3))
     {
         Drone *pDrone = new Drone(sDroneUID, lVideos[iDroneCount%3], initialPos, this);

@@ -5,7 +5,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui qml quick quickwidgets positioning
+QT += core gui qml quick quickwidgets positioning texttospeech
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT       += core gui
 INCLUDEPATH += $$PWD/../DroneManager

@@ -79,6 +79,7 @@ Item {
                     anchors.right: parent.right
                     height: Theme.toolBarHeight
                     font.pixelSize: Theme.veryLargeFontSize
+                    placeholderText: "NAVY"
                 }
             }
 
@@ -104,6 +105,7 @@ Item {
                     anchors.right: parent.right
                     height: Theme.toolBarHeight
                     font.pixelSize: Theme.veryLargeFontSize
+                    placeholderText: "TX-304"
                 }
             }
 
@@ -129,6 +131,7 @@ Item {
                     anchors.right: parent.right
                     height: Theme.toolBarHeight
                     font.pixelSize: Theme.veryLargeFontSize
+                    placeholderText: "MALI"
                 }
             }
 
@@ -154,6 +157,7 @@ Item {
                     anchors.right: parent.right
                     height: Theme.toolBarHeight
                     font.pixelSize: Theme.veryLargeFontSize
+                    placeholderText: "Will SMITH"
                 }
             }
         }
@@ -175,7 +179,10 @@ Item {
                      (missionTextField.text.length > 0) && (operatorTextField.text.length > 0)
             width: Theme.goNextIconSize
             height: Theme.goNextIconSize
-            onClicked: loginClicked()
+            onClicked: {
+                MASTERCONTROLLER.updateApplicationTitle(armyTextField.text, unitTextField.text, missionTextField.text, operatorTextField.text)
+                loginClicked()
+            }
         }
     }
 

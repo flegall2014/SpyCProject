@@ -9,10 +9,9 @@ using namespace Model;
 
 GPSSimulator::GPSSimulator(const QString &sDroneUID, QObject *pParent) : BaseSimulator(sDroneUID, pParent)
 {
-    m_timer.setInterval(1000);
     m_timer.setSingleShot(true);
     connect(&m_timer, &QTimer::timeout, this, &GPSSimulator::onTimeOut, Qt::QueuedConnection);
-    m_timer.start();
+    m_timer.start(0);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -26,6 +25,7 @@ GPSSimulator::~GPSSimulator()
 
 void GPSSimulator::start()
 {
+    m_timer.setInterval(1000);
     m_bRepeat = true;
     m_timer.start();
 }
