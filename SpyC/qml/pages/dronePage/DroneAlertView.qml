@@ -23,7 +23,7 @@ Item {
                 border.width: 3
                 StandardText {
                     anchors.left: parent.left
-                    anchors.leftMargin: 4
+                    anchors.leftMargin: Theme.standardMargin
                     anchors.verticalCenter: parent.verticalCenter
                     text: what
                 }

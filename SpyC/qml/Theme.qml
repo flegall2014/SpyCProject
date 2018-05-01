@@ -43,4 +43,7 @@ Item {
 
     // Animation
     property int standardAnimationDuration: 300
+
+    // Margins
+    property int standardMargin: 4
 }

@@ -15,7 +15,7 @@ Rectangle {
         id: windowsButton
         visible: windowsButtonVisible
         anchors.left: parent.left
-        anchors.leftMargin: 8
+        anchors.leftMargin: Theme.standardMargin
         anchors.verticalCenter: parent.verticalCenter
         source: "qrc:/icons/ico-windows.svg"
         onClicked: windowsButtonClicked()
@@ -25,7 +25,7 @@ Rectangle {
     Item {
         id: otherDroneDisplay
         anchors.left: windowsButton.right
-        anchors.leftMargin: 8
+        anchors.leftMargin: Theme.standardMargin
         width: 512
         height: parent.height
         visible: windowsButtonVisible

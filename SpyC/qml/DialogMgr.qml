@@ -103,7 +103,7 @@ Item {
                 text: qsTr("Spy'C messenger")
                 font.pixelSize: Theme.largeFontSize
                 anchors.left: parent.left
-                anchors.leftMargin: 4
+                anchors.leftMargin: Theme.standardMargin
                 anchors.verticalCenter: parent.verticalCenter
                 font.bold: true
                 color: Theme.invertDefaultFontColor

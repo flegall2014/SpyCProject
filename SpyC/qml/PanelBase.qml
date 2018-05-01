@@ -37,7 +37,7 @@ Item {
         StandardText {
             id: panelTitle
             anchors.left: parent.left
-            anchors.leftMargin: 4
+            anchors.leftMargin: Theme.standardMargin
             anchors.verticalCenter: parent.verticalCenter
         }
     }

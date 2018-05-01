@@ -52,6 +52,21 @@ Rectangle {
                 targetDrone: drone
                 opacity: 1
                 visible: opacity > 0
+                onMaximizeButtonClicked: {
+                    if (droneDisplay.state === "")
+                    {
+                        droneDisplay.state = "expanded"
+                        dronePage.droneExpanded = true
+                        MASTERCONTROLLER.currentDrone = drone
+                    }
+                    else
+                    {
+                        if (mapView.state === "")
+                            mapView.state = "mapMaximized"
+                        else
+                            mapView.state = ""
+                    }
+                }
             }
 
             Item {
@@ -82,8 +97,15 @@ Rectangle {
                         height: Theme.toolBarHeight
                         z: 1000
                         anchors.top: parent.top
-                        source: "qrc:/qml/toolbars/DroneEditToolBar.qml"
                         states: [
+                            State {
+                                name: "default"
+                                when: ((targetDrone.editMode === DroneBase.NONE) || (targetDrone.editMode === DroneBase.PAYLOAD_EDIT)) && (droneDisplay.state === "expanded") && (mapView.state !== "mapMinimized")
+                                PropertyChanges {
+                                    target: toolBarLoader
+                                    source: "qrc:/qml/toolbars/DroneEditToolBar.qml"
+                                }
+                            },
                             State {
                                 name: "missionPlanEdit"
                                 when: targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT

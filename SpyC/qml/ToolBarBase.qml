@@ -3,9 +3,4 @@ import "."
 
 Item {
     property variant targetDrone
-    Rectangle {
-        anchors.fill: parent
-        color: "gray"
-        opacity: .5
-    }
 }

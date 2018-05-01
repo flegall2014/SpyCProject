@@ -11,7 +11,7 @@ ToolBarBase {
         width: Theme.buttonSize
         height: Theme.buttonSize
         anchors.left: parent.left
-        anchors.leftMargin: 4
+        anchors.leftMargin: Theme.standardMargin
         anchors.verticalCenter: parent.verticalCenter
         label: qsTr("Clear")
         endColor: Theme.defaultButtonColor

@@ -20,7 +20,6 @@ ToolBarBase {
         anchors.top: parent.top
         anchors.topMargin: 4
         source: mapView.state === "" ? "qrc:/icons/ico-maximized.png" : "qrc:/icons/ico-minimized.png"
-        visible: mapView.state !== "mapMinimized"
         onClicked: {
             if (droneDisplay.state === "")
             {

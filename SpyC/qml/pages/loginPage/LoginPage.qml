@@ -41,7 +41,7 @@ Item {
                 CustomRadioButton {
                     exclusiveGroup: group
                     anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.leftMargin: Theme.standardMargin
                     anchors.verticalCenter: parent.verticalCenter
                     labelText: qsTr("Mission")
                     checked: true

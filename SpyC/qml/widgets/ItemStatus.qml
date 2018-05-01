@@ -14,7 +14,7 @@ Item {
     StandardText {
         id: statusLabel
         anchors.left: parent.left
-        anchors.leftMargin: 4
+        anchors.leftMargin: Theme.standardMargin
         anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: Theme.largeFontSize
         color: endColor
