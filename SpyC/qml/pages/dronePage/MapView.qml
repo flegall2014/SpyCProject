@@ -14,6 +14,7 @@ Map {
     zoomLevel: 10
     property bool missionPlanVisible: true
     property bool safetyVisible: true
+    gesture.enabled: (drone.editMode !== DroneBase.SAFETY_EDIT) && (drone.editMode !== DroneBase.MISSION_PLAN_EDIT)
 
     // Map plugin
     Plugin {
@@ -50,26 +51,26 @@ Map {
     // Drone marker
     MapQuickItem {
         id: droneMarker
-        anchorPoint.x: vehicleItem.width  / 2
-        anchorPoint.y: vehicleItem.height / 2
+        anchorPoint.x: droneItem.width  / 2
+        anchorPoint.y: droneItem.height / 2
         coordinate: drone.position
 
         sourceItem: Item {
-            id: vehicleItem
-            width: vehicleIcon.width
-            height: vehicleIcon.height
+            id: droneItem
+            width: droneIcon.width
+            height: droneIcon.height
             property int size: 48
 
             Image {
-                id: vehicleIcon
+                id: droneIcon
                 source: "qrc:/icons/ico-drone2.svg"
                 mipmap: true
-                width: vehicleItem.size
-                sourceSize.width: vehicleItem.size
+                width: droneItem.size
+                sourceSize.width: droneItem.size
                 fillMode: Image.PreserveAspectFit
                 transform: Rotation {
-                    origin.x: vehicleIcon.width /2
-                    origin.y: vehicleIcon.height/2
+                    origin.x: droneIcon.width /2
+                    origin.y: droneIcon.height/2
                     angle: drone.heading
                 }
             }
@@ -104,7 +105,6 @@ Map {
                     }
                     onPressed: {
                         circle.selected = true
-                        mapView.gesture.enabled = false
                     }
                     onPositionChanged: {
                         if (circle.selected)
@@ -115,7 +115,6 @@ Map {
                     }
                     onReleased: {
                         circle.selected = false
-                        mapView.gesture.enabled = false
                     }
                 }
             }
@@ -180,7 +179,6 @@ Map {
                     }
                     onPressed: {
                         circle.selected = true
-                        mapView.gesture.enabled = false
                     }
                     onPositionChanged: {
                         if (circle.selected)
@@ -191,7 +189,6 @@ Map {
                     }
                     onReleased: {
                         circle.selected = false
-                        mapView.gesture.enabled = true
                     }
                 }
             }

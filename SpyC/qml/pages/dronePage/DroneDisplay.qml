@@ -160,10 +160,12 @@ Rectangle {
                     function onDroneStateChanged()
                     {
                         if (drone.state === DroneBase.FLYING)
+                        {
                             videoView.play()
+                            console.log("PLAYING ", drone.videoUrl)
+                        }
                         else
                             videoView.stop()
-
                     }
                     Component.onCompleted: {
                         drone.stateChanged.connect(onDroneStateChanged)
