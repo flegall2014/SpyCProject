@@ -28,7 +28,7 @@ DialogBase {
             anchors.verticalCenter: parent.verticalCenter
             label: qsTr("OK")
             onClicked: {
-                MASTERCONTROLLER.missionPlanController.failSafe(targetDrone.uid)
+                MASTERCONTROLLER.flightController.failSafe(targetDrone.uid)
                 closeDialog()
             }
         }

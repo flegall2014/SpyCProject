@@ -6,7 +6,9 @@
 #include <QObject>
 #include <QTime>
 
-namespace Model {
+// Application
+#include "dronebase.h"
+
 class Alert
 {
 public:
@@ -14,17 +16,11 @@ public:
     // Constructors & destructors
     //-------------------------------------------------------------------------------------------------
 
-    //! Alert level
-    enum AlertLevel {UNDEFINED_LEVEL=Qt::UserRole+1, WARNING, CRITICAL};
-
-    //! Alert type
-    enum AlertType {UNDEFINED_ALERT=Qt::UserRole+1, BATTERY, POSITION};
-
-    //! Default constructor
+    //! Constructor
     Alert();
 
-    // Constructor
-    Alert(const AlertType &eType, const AlertLevel &eLevel, const QString &sWhat);
+    //! Constructor
+    Alert(const DroneBase::AlertType &eAlertType, const DroneBase::Status &eAlertLevel, const QString &sWhat);
 
     //! Destructor
     ~Alert();
@@ -34,10 +30,10 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Return type
-    AlertType type() const;
+    const DroneBase::AlertType &type() const;
 
     //! Return level
-    AlertLevel level() const;
+    const DroneBase::Status &level() const;
 
     //! Return message
     const QString &what() const;
@@ -47,10 +43,10 @@ public:
 
 private:
     //! Type
-    AlertType m_eType = UNDEFINED_ALERT;
+    DroneBase::AlertType m_eType = DroneBase::UNDEFINED_ALERT_TYPE;
 
     //! Level
-    AlertLevel m_eLevel = UNDEFINED_LEVEL;
+    DroneBase::Status m_eLevel = DroneBase::UNDEFINED_STATUS;
 
     //! Message
     QString m_sWhat = "";
@@ -58,6 +54,5 @@ private:
     //! Date
     QTime m_dateTime = QTime::currentTime();
 };
-}
 
 #endif // ALERT_H

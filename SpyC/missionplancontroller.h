@@ -47,12 +47,6 @@ public:
     //! Validate safety
     Q_INVOKABLE void validateSafety(const QString &sDroneUID);
 
-    //! Take off
-    Q_INVOKABLE void takeOff(const QString &sDroneUID);
-
-    //! Fail safe
-    Q_INVOKABLE void failSafe(const QString &sDroneUID);
-
 private:
     //! Master controller
     MasterController *m_pMasterController=nullptr;
@@ -70,12 +64,6 @@ signals:
 
     //! Upload safety
     void uploadSafety(const QGeoPath &geoPath, const QString &sDroneUID);
-
-    //! Send a take off request
-    void takeOffRequest(const QString &sDroneUID);
-
-    //! Send a failsafe request
-    void failSafeRequest(const QString &sDroneUID);
 
     //! Mission plan error
     void missionPlanError(const MissionPlanError &eError, const QString &sDroneUID);

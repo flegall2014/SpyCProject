@@ -34,12 +34,12 @@ Rectangle {
             anchors.fill: parent
             interactive: false
             orientation: Qt.Horizontal
-            model: MASTERCONTROLLER.otherDroneCount
+            model: MASTERCONTROLLER.droneModel
             spacing: 8
             delegate: StandardText {
                 anchors.verticalCenter: parent.verticalCenter
-                color: (MASTERCONTROLLER.getOtherDrone(index).globalStatus === DroneBase.NOMINAL) ? Theme.nominalColor : (MASTERCONTROLLER.getOtherDrone(index).globalStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
-                text: "[" + MASTERCONTROLLER.getOtherDrone(index).uid + " (" + MASTERCONTROLLER.getOtherDrone(index).stateText + ")]"
+                color: (drone.globalStatus === DroneBase.NOMINAL) ? Theme.nominalColor : (drone.globalStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
+                text: "[" + drone.uid + " (" + drone.stateText + ")]"
                 font.pixelSize: Theme.largeFontSize
             }
         }

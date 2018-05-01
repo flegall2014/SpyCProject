@@ -7,6 +7,7 @@
 #include "pluginloader.h"
 #include "dronemodel.h"
 #include "missionplancontroller.h"
+#include "flightcontroller.h"
 #include "dronebase.h"
 #include <dronemanager.h>
 
@@ -16,8 +17,16 @@ MasterController::MasterController(QObject *pParent) : QObject(pParent)
 {
     qRegisterMetaType<DroneList>("DroneList");
     m_pDroneModel = new DroneModel(this);
+
+    // Setup mission plan controller
     m_pMissionPlanController = new MissionPlanController(this);
     m_pMissionPlanController->setMasterController(this);
+
+    // Setup flight controller
+    m_pFlightController = new FlightController(this);
+    m_pFlightController->setMasterController(this);
+
+    // Speech management
     m_pSpeech = new QTextToSpeech(this);
     m_pSpeech->setLocale(QLocale::English);
 }
@@ -64,8 +73,8 @@ void MasterController::setModel(Model::DroneManager *pDroneManager)
         connect(this, &MasterController::startDroneDetection, m_pDroneManager, &Model::DroneManager::onStartDroneDetection, Qt::QueuedConnection);
         connect(m_pMissionPlanController, &MissionPlanController::uploadMissionPlan, m_pDroneManager, &Model::DroneManager::onUploadMissionPlan, Qt::QueuedConnection);
         connect(m_pMissionPlanController, &MissionPlanController::uploadSafety, m_pDroneManager, &Model::DroneManager::onUploadSafety, Qt::QueuedConnection);
-        connect(m_pMissionPlanController, &MissionPlanController::takeOffRequest, m_pDroneManager, &Model::DroneManager::onTakeOffRequest, Qt::QueuedConnection);
-        connect(m_pMissionPlanController, &MissionPlanController::failSafeRequest, m_pDroneManager, &Model::DroneManager::onFailSafeRequest, Qt::QueuedConnection);
+        connect(m_pFlightController, &FlightController::takeOffRequest, m_pDroneManager, &Model::DroneManager::onTakeOffRequest, Qt::QueuedConnection);
+        connect(m_pFlightController, &FlightController::failSafeRequest, m_pDroneManager, &Model::DroneManager::onFailSafeRequest, Qt::QueuedConnection);
     }
 }
 
@@ -113,6 +122,13 @@ DroneModel *MasterController::droneModel() const
 MissionPlanController *MasterController::missionPlanController() const
 {
     return m_pMissionPlanController;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+FlightController *MasterController::flightController() const
+{
+    return m_pFlightController;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -196,23 +212,18 @@ void MasterController::onDroneGlobalStatusChanged()
     {
         if (pSender->globalStatus() != DroneBase::NOMINAL)
         {
-            if (m_hDroneGlobalStatus[pSender] != pSender->globalStatus())
+            QString sVoiceMsg = "";
+            if (pSender->globalStatus() == DroneBase::WARNING)
             {
-                QString sVoiceMsg = "";
-                if (pSender->globalStatus() == DroneBase::WARNING)
-                {
-                    sVoiceMsg = QString("%1 is in warning state").arg(pSender->uid());
-                }
-                else
-                if (pSender->globalStatus() == DroneBase::CRITICAL)
-                {
-                    sVoiceMsg = QString("%1 is in critical state").arg(pSender->uid());
-                }
-                if (!sVoiceMsg.isEmpty())
-                    say(sVoiceMsg);
-
-                m_hDroneGlobalStatus[pSender] = (DroneBase::Status)pSender->globalStatus();
+                sVoiceMsg = QString("%1 is in warning state").arg(pSender->uid());
             }
+            else
+            if (pSender->globalStatus() == DroneBase::CRITICAL)
+            {
+                sVoiceMsg = QString("%1 is in critical state").arg(pSender->uid());
+            }
+            if (!sVoiceMsg.isEmpty())
+                say(sVoiceMsg);
         }
     }
 }
@@ -223,12 +234,6 @@ void MasterController::setCurrentDrone(DroneBase *pDrone)
 {
     m_pCurrentDrone = pDrone;
     emit currentDroneChanged();
-    m_lOtherDrones.clear();
-    emit otherDroneCountChanged();
-    foreach (DroneBase *pDrone, m_vDrones)
-        if (pDrone != m_pCurrentDrone)
-            m_lOtherDrones << pDrone;
-    emit otherDroneCountChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -236,22 +241,6 @@ void MasterController::setCurrentDrone(DroneBase *pDrone)
 DroneBase *MasterController::currentDrone() const
 {
     return m_pCurrentDrone;
-}
-
-//-------------------------------------------------------------------------------------------------
-
-int MasterController::otherDroneCount() const
-{
-    return m_lOtherDrones.size();
-}
-
-//-------------------------------------------------------------------------------------------------
-
-DroneBase *MasterController::getOtherDrone(int iDroneIndex) const
-{
-    if ((iDroneIndex >= 0) && (iDroneIndex < m_lOtherDrones.size()))
-        return m_lOtherDrones[iDroneIndex];
-    return nullptr;
 }
 
 //-------------------------------------------------------------------------------------------------

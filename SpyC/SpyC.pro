@@ -61,7 +61,8 @@ HEADERS += \
     mastercontroller.h \
     missionplancontroller.h \
     dronemodel.h \
-    flightcontroller.h
+    flightcontroller.h \
+    alertmodel.h
 
 SOURCES += \
     main.cpp \
@@ -73,7 +74,8 @@ SOURCES += \
     mastercontroller.cpp \
     missionplancontroller.cpp \
     dronemodel.cpp \
-    flightcontroller.cpp
+    flightcontroller.cpp \
+    alertmodel.cpp
 
 DISTFILES +=
 

@@ -14,9 +14,9 @@ DroneBase::DroneBase(QObject *parent) : QObject(parent)
     // Mission plan model
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
-    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -27,9 +27,9 @@ DroneBase::DroneBase(const QString &sDroneUID, const QString &sVideoUrl, const Q
     // Mission plan model
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
-    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::globalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ void DroneBase::setBatteryLevel(int iBatteryLevel)
 {
     m_iBatteryLevel = iBatteryLevel;
     emit batteryLevelChanged();
-    emit batteryStatusChanged();
+    updateBatteryStatus();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void DroneBase::setGPSStrength(int iStrength)
 {
     m_iGPSStrength = iStrength;
     emit gpsStrengthChanged();
-    emit gpsStatusChanged();
+    updateGPSStatus();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -126,31 +126,43 @@ void DroneBase::setHeading(double dHeading)
 
 int DroneBase::batteryStatus() const
 {
-    if (m_iBatteryLevel <= 33)
-        return CRITICAL;
-    else
-    if ((m_iBatteryLevel > 33) && (m_iBatteryLevel <= 66))
-        return WARNING;
-    return NOMINAL;
+    return m_eBatteryStatus;
+}
+
+void DroneBase::setBatteryStatus(int iBatteryStatus)
+{
+    m_eBatteryStatus = (Status)iBatteryStatus;
+    emit batteryStatusChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
 
 int DroneBase::gpsStatus() const
 {
-    if (m_iGPSStrength <= 33)
-        return CRITICAL;
-    else
-    if ((m_iGPSStrength > 33) && (m_iGPSStrength <= 66))
-        return WARNING;
-    return NOMINAL;
+    return m_eGPSStatus;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::setGPSStatus(int iGPSStatus)
+{
+    m_eGPSStatus = (Status)iGPSStatus;
+    emit gpsStatusChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::setGlobalStatus(const Status &eStatus)
+{
+    m_eGlobalStatus = eStatus;
+    emit globalStatusChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
 
 int DroneBase::globalStatus() const
 {
-    return qMax(batteryStatus(), gpsStatus());
+    return m_eGlobalStatus;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -266,8 +278,43 @@ void DroneBase::removeCoordinateFromSafetyPlanAtIndex(int iPointIndex)
 
 void DroneBase::removeCoordinateFromMissionPlanAtIndex(int iPointIndex)
 {
-    qDebug() << "NEED TO REMOVE " << iPointIndex;
     if (m_pMissionPlanModel != nullptr)
         m_pMissionPlanModel->removeCoordinateAtIndex(iPointIndex);
 }
 
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::onGlobalStatusChanged()
+{
+    Status eNewGlobalStatus = (Status)qMax(batteryStatus(), gpsStatus());
+    if (eNewGlobalStatus != m_eGlobalStatus)
+        setGlobalStatus(eNewGlobalStatus);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::updateBatteryStatus()
+{
+    Status eBatteryStatus = NOMINAL;
+    if ((m_iBatteryLevel > 33) && (m_iBatteryLevel <= 66))
+        eBatteryStatus = WARNING;
+    else
+    if (m_iBatteryLevel <= 33)
+        eBatteryStatus = CRITICAL;
+    if (eBatteryStatus != m_eBatteryStatus)
+        setBatteryStatus(eBatteryStatus);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::updateGPSStatus()
+{
+    Status eGPSStatus = NOMINAL;
+    if ((m_iGPSStrength > 33) && (m_iGPSStrength <= 66))
+        eGPSStatus = WARNING;
+    else
+    if (m_iGPSStrength <= 33)
+        eGPSStatus = CRITICAL;
+    if (eGPSStatus != m_eGPSStatus)
+        setGPSStatus(eGPSStatus);
+}

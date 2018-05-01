@@ -30,10 +30,10 @@ public:
     void setMasterController(MasterController *pMasterController);
 
     //! Take off
-    void takeOff(const QString &sDroneUID);
+    Q_INVOKABLE void takeOff(const QString &sDroneUID);
 
     //! Fail safe
-    void failSafe(const QString &sDroneUID);
+    Q_INVOKABLE void failSafe(const QString &sDroneUID);
 
 private:
     //! Master controller

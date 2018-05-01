@@ -1,3 +1,6 @@
+// Qt
+#include <QDebug>
+
 // Application
 #include "flightcontroller.h"
 #include "mastercontroller.h"
@@ -27,11 +30,15 @@ void FlightController::setMasterController(MasterController *pMasterController)
 
 void FlightController::takeOff(const QString &sDroneUID)
 {
+    qDebug() << "ICI";
     if (m_pMasterController != nullptr)
     {
         DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
         if (pDrone != nullptr)
+        {
+            qDebug() << "TOTO";
             emit takeOffRequest(pDrone->uid());
+        }
     }
 }
 

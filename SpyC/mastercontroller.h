@@ -15,6 +15,7 @@ namespace Model {
 class DroneManager;
 }
 class MissionPlanController;
+class FlightController;
 typedef QList<DroneBase *> DroneList;
 
 class MasterController : public QObject, public IService
@@ -22,13 +23,14 @@ class MasterController : public QObject, public IService
     Q_OBJECT
     Q_PROPERTY(DroneModel *droneModel READ droneModel NOTIFY droneModelChanged)
     Q_PROPERTY(MissionPlanController *missionPlanController READ missionPlanController NOTIFY missionPlanControllerChanged)
+    Q_PROPERTY(FlightController *flightController READ flightController NOTIFY flightControllerChanged)
     Q_PROPERTY(DroneBase *currentDrone READ currentDrone WRITE setCurrentDrone NOTIFY currentDroneChanged)
-    Q_PROPERTY(int otherDroneCount READ otherDroneCount NOTIFY otherDroneCountChanged)
     Q_PROPERTY(QString applicationTitle READ applicationTitle WRITE setApplicationTitle NOTIFY applicationTitleChanged)
     Q_ENUMS(DroneError)
 
 public:
     friend class MissionPlanController;
+    friend class FlightController;
 
     //! Drone error
     enum DroneError {NO_SAFETY=Qt::UserRole+1, NO_MISSION_PLAN};
@@ -82,12 +84,6 @@ public:
     //! Return current drone
     DroneBase *currentDrone() const;
 
-    //! Return other drone count
-    int otherDroneCount() const;
-
-    //! Return other drones
-    Q_INVOKABLE DroneBase *getOtherDrone(int iDroneIndex) const;
-
     //! Set application title
     void setApplicationTitle(const QString &sApplicationTitle);
 
@@ -104,6 +100,9 @@ private:
 
     //! Return mission plan controller
     MissionPlanController *missionPlanController() const;
+
+    //! Return flight controller
+    FlightController *flightController() const;
 
     //! Return drone by UID
     DroneBase *getDrone(const QString &sDroneUID) const;
@@ -124,17 +123,14 @@ private:
     //! Current drone
     DroneBase *m_pCurrentDrone = nullptr;
 
-    //! Other drones
-    DroneList m_lOtherDrones;
-
     //! Mission plan controller
     MissionPlanController *m_pMissionPlanController = nullptr;
 
+    //! Flight controller
+    FlightController *m_pFlightController = nullptr;
+
     //! Text to speech
     QTextToSpeech *m_pSpeech = nullptr;
-
-    //! Drone global status
-    QHash<DroneBase *, DroneBase::Status> m_hDroneGlobalStatus;
 
 public slots:
     //! New drone available
@@ -165,14 +161,14 @@ signals:
     //! Current drone changed
     void currentDroneChanged();
 
-    //! Other drones changed
-    void otherDroneCountChanged();
-
     //! Drone model view changed
     void droneModelChanged();
 
     //! Mission plan controller changed
     void missionPlanControllerChanged();
+
+    //! Flight controller changed
+    void flightControllerChanged();
 
     //! Application title changed
     void applicationTitleChanged();

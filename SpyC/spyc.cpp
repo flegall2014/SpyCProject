@@ -9,9 +9,12 @@
 #include "pluginloader.h"
 #include "mastercontroller.h"
 #include "missionplancontroller.h"
+#include "flightcontroller.h"
 #include "dronemodel.h"
 #include "dronebase.h"
 #include "waypointmodel.h"
+#include "alertmodel.h"
+
 SpyC *SpyC::sInstance = nullptr;
 
 //-------------------------------------------------------------------------------------------------
@@ -97,8 +100,10 @@ void SpyC::registerTypes()
     qmlRegisterType<DroneBase>("Components", 1, 0, "DroneBase");
     qmlRegisterType<MasterController>("Components", 1, 0, "MasterController");
     qmlRegisterType<MissionPlanController>("Components", 1, 0, "MissionPlanController");
+    qmlRegisterType<FlightController>("Components", 1, 0, "FlightController");
     qmlRegisterType<DroneModel>("Components", 1, 0, "DroneModel");
     qmlRegisterType<WayPointModel>("Components", 1, 0, "WayPointModel");
+    qmlRegisterType<AlertModel>("Components", 1, 0, "AlertModel");
 }
 
 //-------------------------------------------------------------------------------------------------

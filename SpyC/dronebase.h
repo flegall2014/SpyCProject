@@ -40,16 +40,20 @@ class DroneBase : public QObject
     Q_ENUMS(Status)
     Q_ENUMS(State)
     Q_ENUMS(EditMode)
+    Q_ENUMS(AlertType)
 
 public:
     //! Define a status
-    enum Status {NOMINAL=Qt::UserRole+1, WARNING, CRITICAL};
+    enum Status {UNDEFINED_STATUS=Qt::UserRole+1, NOMINAL, WARNING, CRITICAL};
 
     //! Define a drone state
-    enum State {IDLE=Qt::UserRole+1, FLYING};
+    enum State {UNDEFINED_STATE=Qt::UserRole+1, IDLE, FLYING};
 
     //! Define a drone mode
     enum EditMode {NONE=Qt::UserRole+1, MISSION_PLAN_EDIT, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT};
+
+    //! Alert type
+    enum AlertType {UNDEFINED_ALERT_TYPE=Qt::UserRole+1, BATTERY, GPS, POSITION};
 
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
@@ -104,8 +108,17 @@ public:
     //! Return battery status
     int batteryStatus() const;
 
+    //! Set battery status
+    void setBatteryStatus(int iBatteryStatus);
+
     //! Return GPS status
     int gpsStatus() const;
+
+    //! Set GPS status
+    void setGPSStatus(int iGPSStatus);
+
+    //! Set global status
+    void setGlobalStatus(const Status &eStatus);
 
     //! Return global status
     int globalStatus() const;
@@ -160,6 +173,13 @@ public:
     Q_INVOKABLE void removeCoordinateFromMissionPlanAtIndex(int iPointIndex);
 
 private:
+    //! Update battery status
+    void updateBatteryStatus();
+
+    //! Update GPS status
+    void updateGPSStatus();
+
+private:
     //! UID
     QString m_sDroneUID = "";
 
@@ -169,8 +189,14 @@ private:
     //! Battery level
     int m_iBatteryLevel = 0;
 
+    //! Battery status
+    Status m_eBatteryStatus = NOMINAL;
+
     //! GPS strength
     int m_iGPSStrength = 0;
+
+    //! GPS status
+    Status m_eGPSStatus = NOMINAL;
 
     //! Original position
     QGeoCoordinate m_initialPosition;
@@ -192,6 +218,13 @@ private:
 
     //! Mode
     EditMode m_eEditMode = PAYLOAD_EDIT;
+
+    //! Global status
+    Status m_eGlobalStatus = Status::NOMINAL;
+
+public slots:
+    //! Global status changed
+    void onGlobalStatusChanged();
 
 signals:
     //! UID changed
