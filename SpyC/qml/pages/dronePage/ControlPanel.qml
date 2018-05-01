@@ -6,8 +6,10 @@ import "../../widgets"
 import "../.."
 
 Rectangle {
+    id: root
     color: Theme.backgroundColor
     width: Theme.controlPanelWidth
+    property variant targetDrone
 
     TabView {
         anchors.fill: parent
@@ -19,54 +21,25 @@ Rectangle {
                 anchors.margins: 8
                 DroneActions {
                     anchors.fill: parent
-                    targetDrone: drone
+                    targetDrone: root.targetDrone
                 }
             }
         }
 
-        /*
         // Alerts tab
         Tab {
             title: qsTr("Alerts")
             Item {
                 anchors.fill: parent
                 anchors.margins: 8
-                ListView {
-                    id: alertView
-                    model: MASTERCONTROLLER.droneAlertModel
+                /*
+                DroneAlertView {
                     anchors.fill: parent
-                    spacing: 3
-                    clip: true
-                    delegate: Item {
-                        width: alertView.width
-                        height: Theme.alertDeleagateHeight
-                        Rectangle {
-                            anchors.fill: parent
-                            color: level
-                            Text {
-                                anchors.left: parent.left
-                                anchors.leftMargin: 4
-                                anchors.verticalCenter: parent.verticalCenter
-                                font.family: Theme.standardFont
-                                font.pixelSize: Theme.standardFontSize
-                                color: Theme.defaultFontColor
-                                text: what
-                            }
-                            Text {
-                                anchors.right: parent.right
-                                anchors.rightMargin: 4
-                                anchors.verticalCenter: parent.verticalCenter
-                                font.family: Theme.standardFont
-                                font.pixelSize: Theme.standardFontSize
-                                color: Theme.defaultFontColor
-                                text: date
-                            }
-                        }
-                    }
+                    targetDrone: root.targetDrone
                 }
+                */
             }
         }
-        */
 
         Tab {
             title: qsTr("Settings")

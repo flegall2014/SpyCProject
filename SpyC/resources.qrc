@@ -77,5 +77,6 @@
         <file>images/img-attitude-pointer.svg</file>
         <file>images/img-cross-hair.svg</file>
         <file>images/img-novideo.jpg</file>
+        <file>qml/pages/dronePage/DroneAlertView.qml</file>
     </qresource>
 </RCC>

@@ -60,7 +60,8 @@ HEADERS += \
     waypointmodel.h \
     mastercontroller.h \
     missionplancontroller.h \
-    dronemodel.h
+    dronemodel.h \
+    flightcontroller.h
 
 SOURCES += \
     main.cpp \
@@ -71,7 +72,10 @@ SOURCES += \
     waypointmodel.cpp \
     mastercontroller.cpp \
     missionplancontroller.cpp \
-    dronemodel.cpp
+    dronemodel.cpp \
+    flightcontroller.cpp
+
+DISTFILES +=
 
 
 

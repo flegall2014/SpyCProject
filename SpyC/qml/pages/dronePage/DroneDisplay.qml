@@ -34,6 +34,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.bottom: commonArea.top
             anchors.top: parent.top
+            targetDrone: drone
         }
 
         Item {
