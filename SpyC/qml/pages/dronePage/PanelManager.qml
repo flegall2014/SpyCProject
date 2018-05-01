@@ -5,6 +5,9 @@ import "../.."
 StackView {
     id: panelMgr
 
+    // Target drone
+    property variant targetDrone
+
     // Depth changed
     onDepthChanged: console.log("--- DEPTH --- " + depth)
 
@@ -100,6 +103,9 @@ StackView {
             console.log("CREATEPANEL ERROR: " + component.errorString())
             return null
         }
+
+        // Set target drone
+        panel.targetDrone = targetDrone
 
         // Initialize panel
         panel.initialize()

@@ -4,6 +4,12 @@ import "./widgets"
 
 Item {
     id: root
+    property variant targetDrone
+
+    function droneValid()
+    {
+        return (typeof targetDrone !== "undefined") && (targetDrone !== null)
+    }
 
     // Background
     Rectangle {

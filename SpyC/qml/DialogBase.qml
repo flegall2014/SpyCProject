@@ -5,6 +5,7 @@ Item {
     anchors.fill: parent
     property alias bottomBarContents: bottomBar.children
     property alias dialogContents: contents.children
+    property variant targetDrone
     signal closeDialog()
     Item {
         id: contents

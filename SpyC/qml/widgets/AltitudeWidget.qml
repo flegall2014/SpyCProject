@@ -5,12 +5,23 @@ Item {
     id: root
 
     property bool showPitch: true
-    property var  drone: null
     property real size
     property bool showHeading: true
 
-    property real rollAngle
-    property real pitchAngle
+    property real rollAngle: 0
+    property real pitchAngle: 360
+    property real heading
+
+    Timer {
+        id: timer
+        interval: 10
+        repeat: true
+        running: true
+        onTriggered: {
+            rollAngle += 1
+            pitchAngle -= 1
+        }
+    }
 
     width:  size
     height: size
@@ -107,7 +118,7 @@ Item {
         color:                      "white"
         visible:                    showHeading
 
-        property string headingString: drone ? drone.heading.rawValue.toFixed(0) : "OFF"
+        property string headingString: heading.toFixed()
         property string headingString2: headingString.length === 1 ? "0" + headingString : headingString
         property string headingString3: headingString2.length === 2 ? "0" + headingString2 : headingString2
     }

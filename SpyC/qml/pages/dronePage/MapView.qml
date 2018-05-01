@@ -14,7 +14,8 @@ Map {
     zoomLevel: 10
     property bool missionPlanVisible: true
     property bool safetyVisible: true
-    gesture.enabled: (drone.editMode !== DroneBase.SAFETY_EDIT) && (drone.editMode !== DroneBase.MISSION_PLAN_EDIT)
+    property variant targetDrone
+    gesture.enabled: (targetDrone.editMode !== DroneBase.SAFETY_EDIT) && (targetDrone.editMode !== DroneBase.MISSION_PLAN_EDIT)
 
     // Map plugin
     Plugin {
@@ -27,7 +28,7 @@ Map {
         id: safetyBlinkTimer
         interval: Theme.standardAnimationDuration
         repeat: true
-        running: (drone.editMode === DroneBase.SAFETY_EDIT)
+        running: (targetDrone.editMode === DroneBase.SAFETY_EDIT)
         onTriggered: mapView.safetyVisible = !mapView.safetyVisible
         onRunningChanged: {
             if (running === false)
@@ -40,7 +41,7 @@ Map {
         id: missionPlanBlinkTimer
         interval: Theme.standardAnimationDuration
         repeat: true
-        running: (drone.editMode === DroneBase.MISSION_PLAN_EDIT)
+        running: (targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT)
         onTriggered: mapView.missionPlanVisible = !mapView.missionPlanVisible
         onRunningChanged: {
             if (running === false)
@@ -53,7 +54,7 @@ Map {
         id: droneMarker
         anchorPoint.x: droneItem.width  / 2
         anchorPoint.y: droneItem.height / 2
-        coordinate: drone.position
+        coordinate: targetDrone.position
 
         sourceItem: Item {
             id: droneItem
@@ -71,7 +72,7 @@ Map {
                 transform: Rotation {
                     origin.x: droneIcon.width /2
                     origin.y: droneIcon.height/2
-                    angle: drone.heading
+                    angle: targetDrone.heading
                 }
             }
         }
@@ -80,7 +81,7 @@ Map {
     // Draw mission plan way points
     MapItemView {
         id: missionPlanWayPoints
-        model: drone.missionPlanModel
+        model: targetDrone.missionPlanModel
         delegate: Component {
             MapCircle {
                 id: circle
@@ -96,11 +97,11 @@ Map {
                     id: circleMouseArea
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent
-                    enabled: drone.editMode === DroneBase.MISSION_PLAN_EDIT
+                    enabled: targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT
                     onClicked: {
                         if (mouse.button === Qt.RightButton)
                         {
-                            drone.removeCoordinateFromMissionPlanAtIndex(index)
+                            targetDrone.removeCoordinateFromMissionPlanAtIndex(index)
                         }
                     }
                     onPressed: {
@@ -110,7 +111,7 @@ Map {
                         if (circle.selected)
                         {
                             var mapped = circleMouseArea.mapToItem(mapView, mouse.x, mouse.y)
-                            drone.setMissionPlanPointPosition(index, mapView.toCoordinate(Qt.point(mapped.x, mapped.y)))
+                            targetDrone.setMissionPlanPointPosition(index, mapView.toCoordinate(Qt.point(mapped.x, mapped.y)))
                         }
                     }
                     onReleased: {
@@ -130,13 +131,13 @@ Map {
         function updatePolyLine()
         {
             var lines = []
-            for(var i=0; i<drone.missionPlanModel.path.size(); i++)
-                lines[i] = drone.missionPlanModel.path.coordinateAt(i)
+            for(var i=0; i<targetDrone.missionPlanModel.path.size(); i++)
+                lines[i] = targetDrone.missionPlanModel.path.coordinateAt(i)
             missionPlanPoly.path = lines
         }
         function onDataChanged()
         {
-            if (drone.missionPlanModel.path.size() === 0)
+            if (targetDrone.missionPlanModel.path.size() === 0)
             {
                 missionPlanPoly.visible = false
                 var lines = []
@@ -150,13 +151,13 @@ Map {
             }
         }
 
-        Component.onCompleted: drone.missionPlanModel.pathChanged.connect(onDataChanged)
+        Component.onCompleted: targetDrone.missionPlanModel.pathChanged.connect(onDataChanged)
     }
 
     // Draw safety way points
     MapItemView {
         id: safetyWayPoints
-        model: drone.safetyModel
+        model: targetDrone.safetyModel
         delegate: Component {
             MapCircle {
                 id: circle
@@ -172,10 +173,10 @@ Map {
                     id: circleMouseArea
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent
-                    enabled: drone.editMode === DroneBase.SAFETY_EDIT
+                    enabled: targetDrone.editMode === DroneBase.SAFETY_EDIT
                     onClicked: {
                         if (mouse.button === Qt.RightButton)
-                            drone.removeCoordinateFromSafetyPlanAtIndex(index)
+                            targetDrone.removeCoordinateFromSafetyPlanAtIndex(index)
                     }
                     onPressed: {
                         circle.selected = true
@@ -184,7 +185,7 @@ Map {
                         if (circle.selected)
                         {
                             var mapped = circleMouseArea.mapToItem(mapView, mouse.x, mouse.y)
-                            drone.setSafetyPointPosition(index, mapView.toCoordinate(Qt.point(mapped.x, mapped.y)))
+                            targetDrone.setSafetyPointPosition(index, mapView.toCoordinate(Qt.point(mapped.x, mapped.y)))
                         }
                     }
                     onReleased: {
@@ -204,13 +205,13 @@ Map {
         function updatePolyLine()
         {
             var lines = []
-            for(var i=0; i<drone.safetyModel.path.size(); i++)
-                lines[i] = drone.safetyModel.path.coordinateAt(i)
+            for(var i=0; i<targetDrone.safetyModel.path.size(); i++)
+                lines[i] = targetDrone.safetyModel.path.coordinateAt(i)
             safetyPoly.path = lines
         }
         function onDataChanged()
         {
-            if (drone.safetyModel.path.size() === 0)
+            if (targetDrone.safetyModel.path.size() === 0)
             {
                 safetyPoly.visible = false
                 var lines = []
@@ -223,22 +224,22 @@ Map {
                 safetyPoly.path = lines
             }
         }
-        Component.onCompleted: drone.safetyModel.pathChanged.connect(onDataChanged)
+        Component.onCompleted: targetDrone.safetyModel.pathChanged.connect(onDataChanged)
     }
 
     // Handle clicks
     MouseArea {
         anchors.fill: parent
-        enabled: (drone.editMode === DroneBase.MISSION_PLAN_EDIT) || (drone.editMode === DroneBase.SAFETY_EDIT)
+        enabled: (targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT) || (targetDrone.editMode === DroneBase.SAFETY_EDIT)
 
         onClicked: {
-            if (drone.editMode === DroneBase.SAFETY_EDIT)
-                drone.addCoordinateToSafety(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+            if (targetDrone.editMode === DroneBase.SAFETY_EDIT)
+                targetDrone.addCoordinateToSafety(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
             else
-            if (drone.editMode === DroneBase.MISSION_PLAN_EDIT)
-                drone.addCoordinateToMissionPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+            if (targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT)
+                targetDrone.addCoordinateToMissionPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
         }
     }
 
-    Component.onCompleted: mapView.center = drone.initialPosition
+    Component.onCompleted: mapView.center = targetDrone.initialPosition
 }

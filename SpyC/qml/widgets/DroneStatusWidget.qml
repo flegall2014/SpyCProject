@@ -5,12 +5,12 @@ import ".."
 // Top container
 Item {
     id: topContainer
-    property variant currentDrone
+    property variant targetDrone
 
     // Drone valid?
     function droneValid()
     {
-        return (typeof currentDrone !== "undefined") && (currentDrone !== null)
+        return (typeof targetDrone !== "undefined") && (targetDrone !== null)
     }
 
     // Drone label
@@ -19,8 +19,8 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 4
         anchors.verticalCenter: parent.verticalCenter
-        color: droneValid() ? ((currentDrone.globalStatus === DroneBase.NOMINAL) ? Theme.nominalColor : (currentDrone.globalStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)) : Theme.defaultButtonColor
-        text: droneValid() ? ("[" + currentDrone.uid + " (" + currentDrone.stateText + ")]") : ""
+        color: droneValid() ? ((targetDrone.globalStatus === DroneBase.NOMINAL) ? Theme.nominalColor : (targetDrone.globalStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)) : Theme.defaultButtonColor
+        text: droneValid() ? ("[" + targetDrone.uid + " (" + targetDrone.stateText + ")]") : ""
         font.pixelSize: Theme.largeFontSize
     }
 
@@ -30,8 +30,8 @@ Item {
         anchors.left: droneLabel.right
         anchors.leftMargin: 4
         anchors.verticalCenter: parent.verticalCenter
-        status: droneValid() ? currentDrone.batteryStatus : DroneBase.NOMINAL
-        level: droneValid() ? currentDrone.batteryLevel : 0
+        status: droneValid() ? targetDrone.batteryStatus : DroneBase.NOMINAL
+        level: droneValid() ? targetDrone.batteryLevel : 0
     }
 
     // GPS status widget
@@ -40,7 +40,7 @@ Item {
         anchors.left: batteryStatusWidget.right
         anchors.leftMargin: 4
         anchors.verticalCenter: parent.verticalCenter
-        status: droneValid() ? currentDrone.gpsStatus : DroneBase.NOMINAL
-        level: droneValid() ? currentDrone.gpsStrength : 0
+        status: droneValid() ? targetDrone.gpsStatus : DroneBase.NOMINAL
+        level: droneValid() ? targetDrone.gpsStrength : 0
     }
 }

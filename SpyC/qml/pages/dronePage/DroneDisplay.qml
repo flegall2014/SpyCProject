@@ -8,9 +8,10 @@ import "../.."
 
 Rectangle {
     id: droneDisplay
-    border.color: (drone.globalStatus === DroneBase.NOMINAL) ? Theme.nominalColor : (drone.globalStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
+    border.color: (targetDrone.globalStatus === DroneBase.NOMINAL) ? Theme.nominalColor : (targetDrone.globalStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
     border.width: 3
     color: Theme.backgroundColor
+    property variant targetDrone
     Item {
         anchors.fill: parent
         anchors.margins: parent.border.width
@@ -22,6 +23,7 @@ Rectangle {
             opacity: 0
             anchors.bottom: parent.bottom
             width: parent.width
+            targetDrone: drone
         }
 
         // Control Panel
@@ -46,7 +48,7 @@ Rectangle {
                 id: droneStatusWidget
                 width: parent.width
                 height: Theme.toolBarHeight
-                currentDrone: drone
+                targetDrone: drone
                 opacity: 1
                 visible: opacity > 0
             }
@@ -62,6 +64,7 @@ Rectangle {
                     width: droneDisplay.state === "expanded" ? parent.width/2 : parent.width
                     height: droneDisplay.state === "expanded" ? parent.height : parent.height/2
                     z: 0
+                    targetDrone: drone
 
                     // Drone display state changed
                     function onDroneDisplayStateChanged()
@@ -82,7 +85,7 @@ Rectangle {
                         states: [
                             State {
                                 name: "missionPlanEdit"
-                                when: drone.editMode === DroneBase.MISSION_PLAN_EDIT
+                                when: targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT
                                 PropertyChanges {
                                     target: toolBarLoader
                                     source: "qrc:/qml/toolbars/MissionPlanToolBar.qml"
@@ -90,13 +93,14 @@ Rectangle {
                             },
                             State {
                                 name: "safetyEdit"
-                                when: drone.editMode === DroneBase.SAFETY_EDIT
+                                when: targetDrone.editMode === DroneBase.SAFETY_EDIT
                                 PropertyChanges {
                                     target: toolBarLoader
                                     source: "qrc:/qml/toolbars/SafetyToolBar.qml"
                                 }
                             }
                         ]
+                        onLoaded: item.targetDrone = targetDrone
                     }
 
                     states: [
@@ -150,6 +154,7 @@ Rectangle {
                 // Video view
                 VideoView {
                     id: videoView
+                    targetDrone: drone
                     x: droneDisplay.state === "expanded" ? mapView.width : 0
                     y: droneDisplay.state === "expanded" ? 0 : mapView.height
                     z: 0
@@ -159,16 +164,16 @@ Rectangle {
                     // Drone state changed
                     function onDroneStateChanged()
                     {
-                        if (drone.state === DroneBase.FLYING)
+                        if (targetDrone.state === DroneBase.FLYING)
                         {
                             videoView.play()
-                            console.log("PLAYING ", drone.videoUrl)
+                            console.log("PLAYING ", targetDrone.videoUrl)
                         }
                         else
                             videoView.stop()
                     }
                     Component.onCompleted: {
-                        drone.stateChanged.connect(onDroneStateChanged)
+                        targetDrone.stateChanged.connect(onDroneStateChanged)
                     }
 
                     // Maximize

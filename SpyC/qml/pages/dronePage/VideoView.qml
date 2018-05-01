@@ -8,6 +8,7 @@ import "../.."
 Rectangle {
     id: videoArea
     color: Theme.videoBkgColor
+    property variant targetDrone
     signal maximizeVideo()
 
     // Play video
@@ -26,10 +27,10 @@ Rectangle {
     Video {
         id: video
         anchors.fill: parent
-        source: drone.videoUrl
+        source: targetDrone.videoUrl
         loops: MediaPlayer.Infinite
         focus: true
-        opacity: drone.state === DroneBase.FLYING ? 1 : 0
+        opacity: targetDrone.state === DroneBase.FLYING ? 1 : 0
         visible: opacity > 0
         Behavior on opacity {
             NumberAnimation {duration: Theme.standardAnimationDuration}
@@ -40,7 +41,7 @@ Rectangle {
     Item {
         id: noVideoImage
         anchors.fill: parent
-        opacity: drone.state !== DroneBase.FLYING ? 1 : 0
+        opacity: targetDrone.state !== DroneBase.FLYING ? 1 : 0
         visible: opacity > 0
         Behavior on opacity {
             NumberAnimation {duration: Theme.standardAnimationDuration}
@@ -57,7 +58,7 @@ Rectangle {
         anchors.bottomMargin: 8
         anchors.right: parent.right
         anchors.rightMargin: 8
-        text: drone.position.latitude.toFixed(2) + " / " + drone.position.longitude.toFixed(2)
+        text: targetDrone.position.latitude.toFixed(2) + " / " + targetDrone.position.longitude.toFixed(2)
         font.pixelSize: Theme.largeFontSize
         font.bold: true
     }

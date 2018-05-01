@@ -20,6 +20,7 @@ ListView {
         width: dronePage.width/MASTERCONTROLLER.droneModel.droneCount
         height: dronePage.height
         clip: true
+        targetDrone: drone
         function onDroneExpandedChanged()
         {
             if ((droneExpanded === false) && (droneDisplay.state === "expanded"))

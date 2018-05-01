@@ -15,7 +15,7 @@ ToolBarBase {
         anchors.verticalCenter: parent.verticalCenter
         label: qsTr("Clear")
         endColor: Theme.defaultButtonColor
-        onClicked: drone.clearMissionPlan()
+        onClicked: targetDrone.clearMissionPlan()
     }
     StandardButton {
         id: cancel
@@ -26,7 +26,7 @@ ToolBarBase {
         anchors.verticalCenter: parent.verticalCenter
         label: qsTr("Cancel")
         endColor: Theme.defaultButtonColor
-        onClicked: drone.editMode = DroneBase.NONE
+        onClicked: targetDrone.editMode = DroneBase.NONE
     }
     StandardButton {
         id: done
@@ -38,10 +38,10 @@ ToolBarBase {
         label: qsTr("Done")
         endColor: Theme.defaultButtonColor
         onClicked: {
-            if (drone.missionPlanModel.pointCount === 0)
-                dialogMgr.showDialog(SpyC.EMPTY_MISSION_PLAN_ERROR, drone.uid)
+            if (targetDrone.missionPlanModel.pointCount === 0)
+                dialogMgr.showDialog(SpyC.EMPTY_MISSION_PLAN_ERROR, targetDrone.uid)
             else
-                dialogMgr.showDialog(SpyC.MISSION_PLAN_VALIDATION, drone.uid)
+                dialogMgr.showDialog(SpyC.MISSION_PLAN_VALIDATION, targetDrone.uid)
         }
     }
 }

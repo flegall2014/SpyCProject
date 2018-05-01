@@ -19,6 +19,7 @@ Rectangle {
                 anchors.margins: 8
                 DroneActions {
                     anchors.fill: parent
+                    targetDrone: drone
                 }
             }
         }

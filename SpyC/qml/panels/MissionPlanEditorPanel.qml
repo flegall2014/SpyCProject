@@ -9,7 +9,7 @@ PanelBase {
         anchors.fill: parent
         WayPointView {
             anchors.fill: parent
-            model: drone.missionPlanModel
+            model: droneValid() ? targetDrone.missionPlanModel : undefined
         }
     }
 }

@@ -16,7 +16,7 @@ DialogBase {
             label: qsTr("OK")
             onClicked: {
                 console.log(MASTERCONTROLLER.missionPlanController.currentDrone)
-                MASTERCONTROLLER.currentDrone.editMode = DroneBase.NONE
+                targetDrone.editMode = DroneBase.NONE
                 closeDialog()
             }
         }

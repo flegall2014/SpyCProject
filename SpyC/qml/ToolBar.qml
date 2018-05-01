@@ -17,11 +17,11 @@ Rectangle {
         height: parent.height
         opacity: showDroneStatus ? 1 : 0
         visible: opacity > 0
-        currentDrone: MASTERCONTROLLER.currentDrone
+        targetDrone: MASTERCONTROLLER.currentDrone
         function onDroneReady()
         {
             if ((typeof MASTERCONTROLLER.currentDrone !== "undefined") && (MASTERCONTROLLER.currentDrone !== null))
-                droneStatusWidget.currentDrone = MASTERCONTROLLER.currentDrone
+                droneStatusWidget.targetDrone = MASTERCONTROLLER.currentDrone
         }
         Component.onCompleted: MASTERCONTROLLER.currentDroneChanged.connect(onDroneReady)
         Behavior on opacity {

@@ -126,6 +126,7 @@ Item {
             anchors.top: titleArea.bottom
             anchors.bottom: parent.bottom
             onLoaded: {
+                item.targetDrone = MASTERCONTROLLER.currentDrone
                 item.closeDialog.connect(onCloseDialog)
             }
         }
