@@ -1,4 +1,7 @@
 import QtQuick 2.5
+import Components 1.0
+import "../.."
+import "../../widgets"
 
 Item {
     anchors.fill: parent
@@ -15,23 +18,19 @@ Item {
             height: Theme.alertDeleagateHeight
             Rectangle {
                 anchors.fill: parent
-                color: level
-                Text {
+                color: "transparent"
+                border.color: (level === DroneBase.NOMINAL) ? Theme.nominalColor : (level === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
+                border.width: 3
+                StandardText {
                     anchors.left: parent.left
                     anchors.leftMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
-                    font.family: Theme.standardFont
-                    font.pixelSize: Theme.standardFontSize
-                    color: Theme.defaultFontColor
                     text: what
                 }
-                Text {
+                StandardText {
                     anchors.right: parent.right
                     anchors.rightMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
-                    font.family: Theme.standardFont
-                    font.pixelSize: Theme.standardFontSize
-                    color: Theme.defaultFontColor
                     text: date
                 }
             }

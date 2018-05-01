@@ -7,6 +7,7 @@
 
 // Application
 class WayPointModel;
+class AlertModel;
 
 class DroneBase : public QObject
 {
@@ -36,6 +37,7 @@ class DroneBase : public QObject
     // Mission plan model and safety model
     Q_PROPERTY(WayPointModel *missionPlanModel READ missionPlanModel NOTIFY missionPlanModelChanged)
     Q_PROPERTY(WayPointModel *safetyModel READ safetyModel NOTIFY safetyModelChanged)
+    Q_PROPERTY(AlertModel *alertModel READ alertModel NOTIFY alertModelChanged)
 
     Q_ENUMS(Status)
     Q_ENUMS(State)
@@ -44,16 +46,16 @@ class DroneBase : public QObject
 
 public:
     //! Define a status
-    enum Status {UNDEFINED_STATUS=Qt::UserRole+1, NOMINAL, WARNING, CRITICAL};
+    enum Status {NOMINAL=Qt::UserRole+1, WARNING, CRITICAL};
 
     //! Define a drone state
-    enum State {UNDEFINED_STATE=Qt::UserRole+1, IDLE, FLYING};
+    enum State {IDLE=Qt::UserRole+1, FLYING};
 
     //! Define a drone mode
     enum EditMode {NONE=Qt::UserRole+1, MISSION_PLAN_EDIT, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT};
 
     //! Alert type
-    enum AlertType {UNDEFINED_ALERT_TYPE=Qt::UserRole+1, BATTERY, GPS, POSITION};
+    enum AlertType {NO_ALERT=Qt::UserRole+1, BATTERY, GPS, POSITION};
 
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
@@ -144,6 +146,9 @@ public:
     //! Return safety model
     WayPointModel *safetyModel() const;
 
+    //! Return alert model
+    AlertModel *alertModel() const;
+
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------
@@ -222,6 +227,9 @@ private:
     //! Global status
     Status m_eGlobalStatus = Status::NOMINAL;
 
+    //! Alert model
+    AlertModel *m_pAlertModel = nullptr;
+
 public slots:
     //! Global status changed
     void onGlobalStatusChanged();
@@ -268,6 +276,9 @@ signals:
 
     //! Safety model changed
     void safetyModelChanged();
+
+    //! Alert model changed
+    void alertModelChanged();
 
     //! Edit mode changed
     void editModeChanged();

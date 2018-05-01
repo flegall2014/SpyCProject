@@ -32,12 +32,10 @@ Rectangle {
             Item {
                 anchors.fill: parent
                 anchors.margins: 8
-                /*
                 DroneAlertView {
                     anchors.fill: parent
                     targetDrone: root.targetDrone
                 }
-                */
             }
         }
 

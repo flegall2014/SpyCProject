@@ -5,6 +5,7 @@
 #include "dronebase.h"
 #include <drone.h>
 #include "waypointmodel.h"
+#include "alertmodel.h"
 using namespace Model;
 
 //-------------------------------------------------------------------------------------------------
@@ -14,6 +15,7 @@ DroneBase::DroneBase(QObject *parent) : QObject(parent)
     // Mission plan model
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
+    m_pAlertModel = new AlertModel(this);
     connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
     connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
     connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
@@ -27,6 +29,7 @@ DroneBase::DroneBase(const QString &sDroneUID, const QString &sVideoUrl, const Q
     // Mission plan model
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
+    m_pAlertModel = new AlertModel(this);
     connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
     connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
     connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
@@ -129,9 +132,13 @@ int DroneBase::batteryStatus() const
     return m_eBatteryStatus;
 }
 
+//-------------------------------------------------------------------------------------------------
+
 void DroneBase::setBatteryStatus(int iBatteryStatus)
 {
     m_eBatteryStatus = (Status)iBatteryStatus;
+    if ((m_eBatteryStatus == DroneBase::WARNING) || (m_eBatteryStatus == DroneBase::CRITICAL))
+        m_pAlertModel->addAlert(Alert(BATTERY, m_eBatteryStatus, m_eBatteryStatus == DroneBase::WARNING ? tr("Low battery level") : tr("Critical battery level")));
     emit batteryStatusChanged();
 }
 
@@ -147,6 +154,8 @@ int DroneBase::gpsStatus() const
 void DroneBase::setGPSStatus(int iGPSStatus)
 {
     m_eGPSStatus = (Status)iGPSStatus;
+    if ((m_eGPSStatus == DroneBase::WARNING) || (m_eGPSStatus == DroneBase::CRITICAL))
+        m_pAlertModel->addAlert(Alert(BATTERY, m_eGPSStatus, m_eGPSStatus == DroneBase::WARNING ? tr("Low GPS strength") : tr("Critical GPS strength")));
     emit gpsStatusChanged();
 }
 
@@ -216,6 +225,13 @@ WayPointModel *DroneBase::missionPlanModel() const
 WayPointModel *DroneBase::safetyModel() const
 {
     return m_pSafetyModel;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+AlertModel *DroneBase::alertModel() const
+{
+    return m_pAlertModel;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -313,8 +329,8 @@ void DroneBase::updateGPSStatus()
     if ((m_iGPSStrength > 33) && (m_iGPSStrength <= 66))
         eGPSStatus = WARNING;
     else
-    if (m_iGPSStrength <= 33)
-        eGPSStatus = CRITICAL;
+        if (m_iGPSStrength <= 33)
+            eGPSStatus = CRITICAL;
     if (eGPSStatus != m_eGPSStatus)
         setGPSStatus(eGPSStatus);
 }

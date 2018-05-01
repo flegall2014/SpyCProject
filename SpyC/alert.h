@@ -43,10 +43,10 @@ public:
 
 private:
     //! Type
-    DroneBase::AlertType m_eType = DroneBase::UNDEFINED_ALERT_TYPE;
+    DroneBase::AlertType m_eType = DroneBase::NO_ALERT;
 
     //! Level
-    DroneBase::Status m_eLevel = DroneBase::UNDEFINED_STATUS;
+    DroneBase::Status m_eLevel = DroneBase::NOMINAL;
 
     //! Message
     QString m_sWhat = "";

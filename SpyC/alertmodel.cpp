@@ -36,9 +36,14 @@ QVariant AlertModel::data(const QModelIndex &index, int iRole) const
     if ((index.row() < 0) || (index.row() > (m_vAlerts.size()-1)))
         return QVariant();
     if (iRole == AlertType)
-    {
         return m_vAlerts[index.row()].type();
-    }
+    if (iRole == AlertLevel)
+        return m_vAlerts[index.row()].level();
+    if (iRole == AlertMsg)
+        return m_vAlerts[index.row()].what();
+    if (iRole == AlertDate)
+        return m_vAlerts[index.row()].dateTime();
+
     return QVariant();
 }
 
@@ -57,7 +62,7 @@ QHash<int, QByteArray> AlertModel::roleNames() const
     QHash<int, QByteArray> hRoleNames;
     hRoleNames[AlertType] = "type";
     hRoleNames[AlertLevel] = "level";
-    hRoleNames[AlertMsg] = "msg";
+    hRoleNames[AlertMsg] = "what";
     hRoleNames[AlertDate] = "date";
 
     return hRoleNames;
