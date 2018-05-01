@@ -46,6 +46,5 @@ void BatterySimulator::onTimeOut()
 
 void BatterySimulator::stop()
 {
-    m_iBatteryLevel = 0;
     m_timer.stop();
 }

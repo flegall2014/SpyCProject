@@ -46,6 +46,5 @@ void GPSSimulator::onTimeOut()
 
 void GPSSimulator::stop()
 {
-    m_iGPSStrength = 0;
     m_timer.stop();
 }
