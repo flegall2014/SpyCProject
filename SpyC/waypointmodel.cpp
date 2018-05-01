@@ -99,9 +99,9 @@ int WayPointModel::pointCount() const
 
 void WayPointModel::addCoordinate(const QGeoCoordinate &coordinate)
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    beginResetModel();
     m_geoPath.addCoordinate(coordinate);
-    endInsertRows();
+    endResetModel();
     emit pathChanged();
 }
 
@@ -111,9 +111,9 @@ void WayPointModel::removeCoordinateAtIndex(int iCoordIndex)
 {
     if ((iCoordIndex >= 0) && (iCoordIndex < rowCount()))
     {
-        beginRemoveRows(QModelIndex(), iCoordIndex, iCoordIndex);
+        beginResetModel();
         m_geoPath.removeCoordinate(iCoordIndex);
-        endRemoveRows();
+        endResetModel();
         emit pathChanged();
     }
 }

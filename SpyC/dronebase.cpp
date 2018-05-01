@@ -266,6 +266,7 @@ void DroneBase::removeCoordinateFromSafetyPlanAtIndex(int iPointIndex)
 
 void DroneBase::removeCoordinateFromMissionPlanAtIndex(int iPointIndex)
 {
+    qDebug() << "NEED TO REMOVE " << iPointIndex;
     if (m_pMissionPlanModel != nullptr)
         m_pMissionPlanModel->removeCoordinateAtIndex(iPointIndex);
 }

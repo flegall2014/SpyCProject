@@ -21,7 +21,7 @@ ApplicationWindow {
     visible: true
 
     // Visibility
-    visibility: Window.FullScreen
+    visibility: Window.Maximized
 
     Rectangle {
         anchors.fill: parent

@@ -29,9 +29,9 @@ Item {
     property int commonAreaHeight: 316
     property int buttonSize: toolBarHeight-8
     property int alertDeleagateHeight: 32
-    property int wayPointDelegateHeight: 48
     property int mapOrVideoThumbnailSize: 256
     property int goNextIconSize: 160
+    property int wayPointDelegateHeight: 64
 
     // Font
     property string standardFont: "Segoe UI"

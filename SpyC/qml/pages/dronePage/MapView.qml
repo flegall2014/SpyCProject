@@ -14,7 +14,6 @@ Map {
     zoomLevel: 10
     property bool missionPlanVisible: true
     property bool safetyVisible: true
-    gesture.enabled: (drone.editMode !== DroneBase.SAFETY_EDIT) && (drone.editMode !== DroneBase.MISSION_PLAN_EDIT)
 
     // Map plugin
     Plugin {
@@ -98,15 +97,14 @@ Map {
                     anchors.fill: parent
                     enabled: drone.editMode === DroneBase.MISSION_PLAN_EDIT
                     onClicked: {
-                        console.log("TOTO")
-                        if (circleMouseArea.button === Qt.RightButton)
+                        if (mouse.button === Qt.RightButton)
                         {
-                            console.log("VRAI")
                             drone.removeCoordinateFromMissionPlanAtIndex(index)
                         }
                     }
                     onPressed: {
                         circle.selected = true
+                        mapView.gesture.enabled = false
                     }
                     onPositionChanged: {
                         if (circle.selected)
@@ -117,6 +115,7 @@ Map {
                     }
                     onReleased: {
                         circle.selected = false
+                        mapView.gesture.enabled = false
                     }
                 }
             }
@@ -176,11 +175,12 @@ Map {
                     anchors.fill: parent
                     enabled: drone.editMode === DroneBase.SAFETY_EDIT
                     onClicked: {
-                        if (circleMouseArea.button === Qt.RightButton)
-                            drone.removeCoordinateFromSafetyAtIndex(index)
+                        if (mouse.button === Qt.RightButton)
+                            drone.removeCoordinateFromSafetyPlanAtIndex(index)
                     }
                     onPressed: {
                         circle.selected = true
+                        mapView.gesture.enabled = false
                     }
                     onPositionChanged: {
                         if (circle.selected)
@@ -191,6 +191,7 @@ Map {
                     }
                     onReleased: {
                         circle.selected = false
+                        mapView.gesture.enabled = true
                     }
                 }
             }
