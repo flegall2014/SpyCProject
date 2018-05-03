@@ -43,22 +43,6 @@ Rectangle {
             title: qsTr("Settings")
         }
 
-        style: TabViewStyle {
-            frameOverlap: 1
-            tab: Rectangle {
-                color: styleData.selected ? "steelblue" :"lightsteelblue"
-                border.color:  "steelblue"
-                implicitWidth: Math.max(text.width + 4, 80)
-                implicitHeight: 48
-                radius: 2
-                Text {
-                    id: text
-                    anchors.centerIn: parent
-                    text: styleData.title
-                    color: styleData.selected ? Theme.defaultFontColor : Theme.invertDefaultFontColor
-                }
-            }
-            frame: Rectangle { color: "steelblue" }
-        }
+        style: Theme.controlPanelTabViewStyle
     }
 }

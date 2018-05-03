@@ -109,7 +109,7 @@ private:
 
 private:
     //! Application title
-    QString m_sApplicationTitle = tr("Spy'C by THALES");
+    QString m_sApplicationTitle = tr("Welcome to Spy'C ground station");
 
     //! Drone manager
     Model::DroneManager *m_pDroneManager = nullptr;

@@ -70,5 +70,11 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Theme.standardMargin
         source: "qrc:/icons/ico-snapshot.svg"
+        onClicked: {
+            video.grabToImage(function(image) {
+                console.log("Called...", arguments)
+                image.saveToFile("d:/tmp/screen.png"); // save happens here
+            });
+        }
     }
 }

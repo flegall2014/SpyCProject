@@ -46,4 +46,43 @@ Item {
 
     // Margins
     property int standardMargin: 4
+
+    // Tab view style (control panel)
+    property Component controlPanelTabViewStyle: TabViewStyle {
+        frameOverlap: 1
+        tab: Rectangle {
+            color: styleData.selected ? "steelblue" : "lightsteelblue"
+            border.color:  "steelblue"
+            implicitWidth: Math.max(text1.width + 4, 80)
+            implicitHeight: 48
+            radius: 2
+            Text {
+                id: text1
+                anchors.centerIn: parent
+                text: styleData.title
+                color: styleData.selected ? Theme.defaultFontColor : Theme.invertDefaultFontColor
+            }
+        }
+        frame: Rectangle { color: "steelblue" }
+    }
+
+    // Tab view style (login page)
+    property Component loginPageTabViewStyle: TabViewStyle {
+        frameOverlap: 1
+        tab: Rectangle {
+            color: backgroundColor
+            border.color:  "steelblue"
+            implicitWidth: Math.max(text2.width + 8, 120)
+            implicitHeight: buttonSize
+            radius: 2
+            StandardText {
+                id: text2
+                anchors.centerIn: parent
+                text: styleData.title
+                font.pixelSize: veryLargeFontSize
+                color: styleData.selected ? Theme.defaultFontColor : Theme.invertDefaultFontColor
+            }
+        }
+        frame: Rectangle { color: backgroundColor }
+    }
 }

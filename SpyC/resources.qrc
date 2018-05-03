@@ -78,5 +78,13 @@
         <file>icons/ico-snapshot.svg</file>
         <file>images/img-novideo.jpg</file>
         <file>qml/toolbars/DroneEditToolBar.qml</file>
+        <file>qml/pages/loginPage/LoginTab.qml</file>
+        <file>images/img-spyranger.png</file>
+        <file>qml/pages/loginPage/SettingsTab.qml</file>
+        <file>icons/ico-open.svg</file>
+        <file>qml/widgets/FileSelectorWidget.qml</file>
+        <file>icons/ico-french-flag.png</file>
+        <file>icons/ico-saudi-flag.png</file>
+        <file>icons/ico-us-flag.png</file>
     </qresource>
 </RCC>
