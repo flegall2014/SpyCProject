@@ -46,6 +46,7 @@ Item {
 
     // Margins
     property int standardMargin: 4
+    property int standardSpacing: 8
 
     // Tab view style (control panel)
     property Component controlPanelTabViewStyle: TabViewStyle {

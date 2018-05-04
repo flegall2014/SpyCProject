@@ -11,7 +11,7 @@ Item {
     // Main container
     Rectangle {
         id: mainContainer
-        width: parent.width/2
+        width: parent.width
         height: parent.height-2*Theme.toolBarHeight
         anchors.centerIn: parent
         color: "transparent"
@@ -103,76 +103,4 @@ Item {
             }
         }
     }
-
-    // SpyRanger
-    Item {
-        id: leftArea
-        anchors.left: parent.left
-        anchors.right: mainContainer.left
-        height: parent.height
-        Image {
-            id: spyRangerImg
-            source: "qrc:/images/img-spyranger.png"
-            anchors.centerIn: parent
-            scale: .5
-            StandardText {
-                anchors.top: parent.bottom
-                anchors.topMargin: Theme.standardMargin
-                text: qsTr("Spy'Ranger by THALES")
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: Theme.largeFontSize
-                font.bold: true
-            }
-            states: State {
-                name: "maximized"
-                PropertyChanges {
-                    target: spyRangerImg
-                    scale: 1
-                    rotation: 360
-                }
-            }
-            transitions: Transition {
-                // Make the state changes smooth
-                NumberAnimation {
-                    duration: 2*Theme.standardAnimationDuration
-                    properties: "scale, rotation"
-                }
-            }
-        }
-    }
-
-    // Go next
-    Item {
-        id: rightArea
-        anchors.left: mainContainer.right
-        anchors.right: parent.right
-        height: parent.height
-
-        // Go next
-        ImageButton {
-            id: goNext
-            anchors.centerIn: parent
-            source: "qrc:/icons/ico-go-right.svg"
-            enabled: appWindow.goNextEnabled
-            width: Theme.goNextIconSize
-            height: Theme.goNextIconSize
-            onClicked: {
-                MASTERCONTROLLER.updateApplicationTitle(mapTextField.text, missionTextField.text, missionTextField.text, operatorTextField.text)
-                loginClicked()
-            }
-        }
-    }
-
-    states: State {
-        name: "hidden"
-        PropertyChanges {
-            target: loginPage
-            opacity: 0
-        }
-    }
-    transitions: Transition {
-        NumberAnimation {duration: Theme.standardAnimationDuration; properties: "opacity"}
-    }
-
-    Component.onCompleted: spyRangerImg.state = "maximized"
 }

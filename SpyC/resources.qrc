@@ -86,5 +86,6 @@
         <file>icons/ico-french-flag.png</file>
         <file>icons/ico-saudi-flag.png</file>
         <file>icons/ico-us-flag.png</file>
+        <file>qml/widgets/LangWidget.qml</file>
     </qresource>
 </RCC>

@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
+import Components 1.0
 import "../../widgets"
 import "../.."
 
@@ -9,13 +10,16 @@ Item {
     visible: opacity > 0
     property bool goNextEnabled: (armyTextField.text.length > 0) && (unitTextField.text.length > 0) &&
              (missionTextField.text.length > 0) && (operatorTextField.text.length > 0)
-    onGoNextEnabledChanged: appWindow.goNextEnabled = loginPage.goNextEnabled
+    property alias armyText: armyTextField.text
+    property alias unitText: unitTextField.text
+    property alias missionText: missionTextField.text
+    property alias operatorText: operatorTextField.text
     signal loginClicked()
 
     // Main container
     Rectangle {
         id: mainContainer
-        width: parent.width/2
+        width: parent.width
         height: parent.height-2*Theme.toolBarHeight
         anchors.centerIn: parent
         color: "transparent"
@@ -74,7 +78,7 @@ Item {
                     horizontalAlignment: Text.AlignLeft
                     font.pixelSize: Theme.veryLargeFontSize
                     text: qsTr("Army")
-                    width: 256
+                    width: 224
                 }
                 TextField {
                     id: armyTextField
@@ -83,6 +87,7 @@ Item {
                     height: parent.height
                     font.pixelSize: Theme.veryLargeFontSize
                     placeholderText: "NAVY"
+                    onTextChanged: MASTERCONTROLLER.settingController.army = text
                 }
             }
 
@@ -100,7 +105,7 @@ Item {
                     horizontalAlignment: Text.AlignLeft
                     font.pixelSize: Theme.veryLargeFontSize
                     text: qsTr("Unit")
-                    width: 256
+                    width: 224
                 }
                 TextField {
                     id: unitTextField
@@ -109,6 +114,7 @@ Item {
                     height: parent.height
                     font.pixelSize: Theme.veryLargeFontSize
                     placeholderText: "TX-304"
+                    onTextChanged: MASTERCONTROLLER.settingController.unit = text
                 }
             }
 
@@ -126,7 +132,7 @@ Item {
                     horizontalAlignment: Text.AlignLeft
                     font.pixelSize: Theme.veryLargeFontSize
                     text: qsTr("Mission")
-                    width: 256
+                    width: 224
                 }
                 TextField {
                     id: missionTextField
@@ -135,6 +141,7 @@ Item {
                     height: parent.height
                     font.pixelSize: Theme.veryLargeFontSize
                     placeholderText: "MALI"
+                    onTextChanged: MASTERCONTROLLER.settingController.mission = text
                 }
             }
 
@@ -152,7 +159,7 @@ Item {
                     horizontalAlignment: Text.AlignLeft
                     font.pixelSize: Theme.veryLargeFontSize
                     text: qsTr("Operator")
-                    width: 256
+                    width: 224
                 }
                 TextField {
                     id: operatorTextField
@@ -161,69 +168,9 @@ Item {
                     height: parent.height
                     font.pixelSize: Theme.veryLargeFontSize
                     placeholderText: "Will SMITH"
+                    onTextChanged: MASTERCONTROLLER.settingController.operatorName = text
                 }
             }
         }
     }
-
-    // SpyRanger
-    Item {
-        id: leftArea
-        anchors.left: parent.left
-        anchors.right: mainContainer.left
-        height: parent.height
-        Image {
-            id: spyRangerImg
-            source: "qrc:/images/img-spyranger.png"
-            anchors.centerIn: parent
-            scale: .5
-            StandardText {
-                anchors.top: parent.bottom
-                anchors.topMargin: Theme.standardMargin
-                text: qsTr("Spy'Ranger by THALES")
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: Theme.largeFontSize
-                font.bold: true
-            }
-            states: State {
-                name: "maximized"
-                PropertyChanges {
-                    target: spyRangerImg
-                    scale: 1
-                    rotation: 360
-                }
-            }
-            transitions: Transition {
-                // Make the state changes smooth
-                NumberAnimation {
-                    duration: 2*Theme.standardAnimationDuration
-                    properties: "scale, rotation"
-                }
-            }
-        }
-    }
-
-    // Go next
-    Item {
-        id: rightArea
-        anchors.left: mainContainer.right
-        anchors.right: parent.right
-        height: parent.height
-
-        // Go next
-        ImageButton {
-            id: goNext
-            anchors.centerIn: parent
-            source: "qrc:/icons/ico-go-right.svg"
-            enabled: goNextEnabled
-            width: Theme.goNextIconSize
-            height: Theme.goNextIconSize
-            onClicked: {
-                MASTERCONTROLLER.updateApplicationTitle(armyTextField.text, unitTextField.text, missionTextField.text, operatorTextField.text)
-                loginClicked()
-            }
-        }
-    }
-
-    Component.onCompleted: spyRangerImg.state = "maximized"
 }

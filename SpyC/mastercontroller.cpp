@@ -6,6 +6,7 @@
 #include "mastercontroller.h"
 #include "pluginloader.h"
 #include "dronemodel.h"
+#include "settingcontroller.h"
 #include "missionplancontroller.h"
 #include "flightcontroller.h"
 #include "dronebase.h"
@@ -25,6 +26,10 @@ MasterController::MasterController(QObject *pParent) : QObject(pParent)
     // Setup flight controller
     m_pFlightController = new FlightController(this);
     m_pFlightController->setMasterController(this);
+
+    // Setup setting controller
+    m_pSettingController = new SettingController(this);
+    m_pSettingController->setMasterController(this);
 
     // Speech management
     m_pSpeech = new QTextToSpeech(this);
@@ -129,6 +134,13 @@ MissionPlanController *MasterController::missionPlanController() const
 FlightController *MasterController::flightController() const
 {
     return m_pFlightController;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+SettingController *MasterController::settingController() const
+{
+    return m_pSettingController;
 }
 
 //-------------------------------------------------------------------------------------------------

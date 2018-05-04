@@ -6,6 +6,8 @@
 #include <drone.h>
 #include "waypointmodel.h"
 #include "alertmodel.h"
+#include "snapshotmodel.h"
+#include "settingcontroller.h"
 using namespace Model;
 
 //-------------------------------------------------------------------------------------------------
@@ -16,6 +18,7 @@ DroneBase::DroneBase(QObject *parent) : QObject(parent)
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
     m_pAlertModel = new AlertModel(this);
+    m_pSnapShotModel = new SnapShotModelFilter(this);
     connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
     connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
     connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
@@ -30,6 +33,7 @@ DroneBase::DroneBase(const QString &sDroneUID, const QString &sVideoUrl, const Q
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
     m_pAlertModel = new AlertModel(this);
+    m_pSnapShotModel = new SnapShotModelFilter(this);
     connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
     connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
     connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
@@ -232,6 +236,13 @@ WayPointModel *DroneBase::safetyModel() const
 AlertModel *DroneBase::alertModel() const
 {
     return m_pAlertModel;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+SnapShotModelFilter *DroneBase::snapShotModel() const
+{
+    return m_pSnapShotModel;
 }
 
 //-------------------------------------------------------------------------------------------------

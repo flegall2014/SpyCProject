@@ -6,8 +6,10 @@
 #include <QGeoCoordinate>
 
 // Application
+#include "settingcontroller.h"
 class WayPointModel;
 class AlertModel;
+class SnapShotModelFilter;
 
 class DroneBase : public QObject
 {
@@ -38,6 +40,7 @@ class DroneBase : public QObject
     Q_PROPERTY(WayPointModel *missionPlanModel READ missionPlanModel NOTIFY missionPlanModelChanged)
     Q_PROPERTY(WayPointModel *safetyModel READ safetyModel NOTIFY safetyModelChanged)
     Q_PROPERTY(AlertModel *alertModel READ alertModel NOTIFY alertModelChanged)
+    Q_PROPERTY(SnapShotModelFilter *snapShotModel NOTIFY snapShotModelChanged)
 
     Q_ENUMS(Status)
     Q_ENUMS(State)
@@ -149,6 +152,9 @@ public:
     //! Return alert model
     AlertModel *alertModel() const;
 
+    //! Snapshot model
+    SnapShotModelFilter *snapShotModel() const;
+
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------
@@ -212,12 +218,6 @@ private:
     //! Heading
     double m_dHeading = 0;
 
-    //! Mission plan model
-    WayPointModel *m_pMissionPlanModel = nullptr;
-
-    //! Safety model
-    WayPointModel *m_pSafetyModel = nullptr;
-
     //! State
     State m_eState = IDLE;
 
@@ -227,8 +227,20 @@ private:
     //! Global status
     Status m_eGlobalStatus = Status::NOMINAL;
 
+    //! Mission plan model
+    WayPointModel *m_pMissionPlanModel = nullptr;
+
+    //! Safety model
+    WayPointModel *m_pSafetyModel = nullptr;
+
     //! Alert model
     AlertModel *m_pAlertModel = nullptr;
+
+    //! Snapshot model
+    SnapShotModelFilter *m_pSnapShotModel = nullptr;
+
+    //! Setting controller
+    SettingController m_settingController;
 
 public slots:
     //! Global status changed

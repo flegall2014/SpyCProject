@@ -20,9 +20,6 @@ ApplicationWindow {
     // Set visible
     visible: true
 
-    // Go next enabled?
-    property bool goNextEnabled: true
-
     // Visibility
     visibility: Window.FullScreen
 
@@ -100,5 +97,7 @@ ApplicationWindow {
                                 dialogMgr.showDialog(SpyC.NOT_ENOUGH_POINT_IN_MISSION_PLAN, droneUID)
             }
         }
+
+        Component.onCompleted: MASTERCONTROLLER.say(MASTERCONTROLLER.applicationTitle)
     }
 }

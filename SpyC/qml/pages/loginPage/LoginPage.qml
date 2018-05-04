@@ -9,32 +9,117 @@ Rectangle {
     id: root
     color: Theme.backgroundColor
     width: Theme.controlPanelWidth
+    property bool goNextEnabled: false
+    property string armyText: ""
+    property string unitText: ""
+    property string missionText: ""
+    property string operatorText: ""
     signal loginClicked()
 
-    TabView {
-        anchors.fill: parent
-        // Login tab
-        Tab {
-            title: qsTr("Login")
-            LoginTab {
-                id: loginTab
-                anchors.fill: parent
-                anchors.margins: 8
-                onLoginClicked: root.loginClicked()
+    Item {
+        id: tabViewContainer
+        width: parent.width/2
+        height: parent.height
+        anchors.centerIn: parent
+
+        // Main tab view
+        TabView {
+            id: tabView
+            anchors.fill: parent
+
+            // Login tab
+            Tab {
+                title: qsTr("Login")
+                LoginTab {
+                    id: loginTab
+                    anchors.fill: parent
+                    anchors.margins: 8
+                    onLoginClicked: root.loginClicked()
+                    onGoNextEnabledChanged: root.goNextEnabled = loginTab.goNextEnabled
+                    onArmyTextChanged: root.armyText = loginTab.armyText
+                    onUnitTextChanged: root.unitText = loginTab.unitText
+                    onMissionTextChanged: root.missionText = loginTab.missionText
+                    onOperatorTextChanged: root.operatorText = loginTab.operatorText
+                }
             }
+
+            // Settings
+            Tab {
+                title: qsTr("Settings")
+                SettingsTab {
+                    id: settingsTab
+                    anchors.fill: parent
+                    anchors.margins: 8
+                }
+            }
+
+            style: Theme.loginPageTabViewStyle
         }
 
-        // Settings
-        Tab {
-            title: qsTr("Settings")
-            SettingsTab {
-                id: settingsTab
-                anchors.fill: parent
-                anchors.margins: 8
+        // Language
+        LangWidget {
+            anchors.right: parent.right
+            anchors.top: parent.top
+        }
+    }
+
+    // SpyRanger
+    Item {
+        id: leftArea
+        anchors.left: parent.left
+        anchors.right: tabViewContainer.left
+        height: parent.height
+        Image {
+            id: spyRangerImg
+            source: "qrc:/images/img-spyranger.png"
+            anchors.centerIn: parent
+            scale: .5
+            StandardText {
+                anchors.top: parent.bottom
+                anchors.topMargin: Theme.standardMargin
+                text: qsTr("Spy'Ranger by THALES")
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: Theme.largeFontSize
+                font.bold: true
+            }
+            states: State {
+                name: "maximized"
+                PropertyChanges {
+                    target: spyRangerImg
+                    scale: 1
+                    rotation: 360
+                }
+            }
+            transitions: Transition {
+                // Make the state changes smooth
+                NumberAnimation {
+                    duration: 2*Theme.standardAnimationDuration
+                    properties: "scale, rotation"
+                }
             }
         }
+    }
 
-        style: Theme.loginPageTabViewStyle
+    // Go next
+    Item {
+        id: rightArea
+        anchors.left: tabViewContainer.right
+        anchors.right: parent.right
+        height: parent.height
+
+        // Go next
+        ImageButton {
+            id: goNext
+            anchors.centerIn: parent
+            source: "qrc:/icons/ico-go-right.svg"
+            enabled: root.goNextEnabled
+            width: Theme.goNextIconSize
+            height: Theme.goNextIconSize
+            onClicked: {
+                MASTERCONTROLLER.updateApplicationTitle(root.armyText, root.unitText, root.missionText, root.operatorText)
+                loginClicked()
+            }
+        }
     }
 
     states: State {
@@ -47,4 +132,6 @@ Rectangle {
     transitions: Transition {
         NumberAnimation {duration: Theme.standardAnimationDuration; properties: "opacity"}
     }
+
+    Component.onCompleted: spyRangerImg.state = "maximized"
 }

@@ -6,10 +6,10 @@ import ".."
 Item {
     property alias title: label.text
     height: Theme.buttonSize
-
     FolderDialog {
         id: folderDialog
         folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+        onAccepted: input.text = folderDialog.currentFolder
     }
     StandardText {
         id: label
@@ -18,7 +18,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: Theme.veryLargeFontSize
         text: qsTr("Snapshots")
-        width: 256
+        width: 224
     }
     TextField {
         id: input

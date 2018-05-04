@@ -16,12 +16,14 @@ class DroneManager;
 }
 class MissionPlanController;
 class FlightController;
+class SettingController;
 typedef QList<DroneBase *> DroneList;
 
 class MasterController : public QObject, public IService
 {
     Q_OBJECT
     Q_PROPERTY(DroneModel *droneModel READ droneModel NOTIFY droneModelChanged)
+    Q_PROPERTY(SettingController *settingController READ settingController NOTIFY settingControllerChanged)
     Q_PROPERTY(MissionPlanController *missionPlanController READ missionPlanController NOTIFY missionPlanControllerChanged)
     Q_PROPERTY(FlightController *flightController READ flightController NOTIFY flightControllerChanged)
     Q_PROPERTY(DroneBase *currentDrone READ currentDrone WRITE setCurrentDrone NOTIFY currentDroneChanged)
@@ -104,6 +106,9 @@ private:
     //! Return flight controller
     FlightController *flightController() const;
 
+    //! Return setting controller
+    SettingController *settingController() const;
+
     //! Return drone by UID
     DroneBase *getDrone(const QString &sDroneUID) const;
 
@@ -128,6 +133,9 @@ private:
 
     //! Flight controller
     FlightController *m_pFlightController = nullptr;
+
+    //! Setting controller
+    SettingController *m_pSettingController = nullptr;
 
     //! Text to speech
     QTextToSpeech *m_pSpeech = nullptr;
@@ -163,6 +171,9 @@ signals:
 
     //! Drone model view changed
     void droneModelChanged();
+
+    //! Setting controller changed
+    void settingControllerChanged();
 
     //! Mission plan controller changed
     void missionPlanControllerChanged();
