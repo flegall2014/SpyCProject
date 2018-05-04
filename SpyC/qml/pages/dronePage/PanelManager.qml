@@ -61,6 +61,11 @@ StackView {
             "name": "FlightEditor",
             "displayName": "Flight Editor",
             "url": "qrc:/qml/panels/FlightEditor.qml"
+        },
+        {
+            "name": "SnapShotEditor",
+            "displayName": "Snapshot Editor",
+            "url": "qrc:/qml/panels/SnapShotPanel.qml"
         }
     ]
 

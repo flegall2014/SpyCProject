@@ -3,7 +3,6 @@
         <file>qml/main.qml</file>
         <file>qml/Theme.qml</file>
         <file>qml/qmldir</file>
-        <file>json/panels/panels.json</file>
         <file>qml/JSONParser.qml</file>
         <file>icons/ico-battery.svg</file>
         <file>icons/ico-drone.svg</file>
@@ -87,5 +86,6 @@
         <file>icons/ico-saudi-flag.png</file>
         <file>icons/ico-us-flag.png</file>
         <file>qml/widgets/LangWidget.qml</file>
+        <file>qml/panels/SnapShotPanel.qml</file>
     </qresource>
 </RCC>
