@@ -52,6 +52,12 @@ private:
     MasterController *m_pMasterController=nullptr;
 
 public slots:
+    //! Mission plan changed
+    void onMissionPlanChanged(const QString &sDroneUID);
+
+    //! Safety changed
+    void onSafetyChanged(const QString &sDroneUID);
+
     //! Mission plan error
     void onMissionPlanError(const Model::Drone::DroneError &eError, const QString &sDroneUID);
 

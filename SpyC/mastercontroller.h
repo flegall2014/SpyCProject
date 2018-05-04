@@ -153,12 +153,6 @@ public slots:
     //! GPS strength changed
     void onGPSStrengthChanged(int iStrength, const QString &sDroneUID);
 
-    //! Mission plan changed
-    void onMissionPlanChanged(const QString &sDroneUID);
-
-    //! Safety changed
-    void onSafetyChanged(const QString &sDroneUID);
-
     //! Drone global status changed
     void onDroneGlobalStatusChanged();
 

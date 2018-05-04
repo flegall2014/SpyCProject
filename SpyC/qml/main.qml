@@ -87,14 +87,14 @@ ApplicationWindow {
                 if (error === MissionPlanController.EMPTY_SAFETY)
                     dialogMgr.showDialog(SpyC.EMPTY_SAFETY_ERROR, droneUID)
                 else
-                    if (error === MissionPlanController.NOT_ENOUGH_POINTS_IN_SAFETY)
-                        dialogMgr.showDialog(SpyC.NOT_ENOUGH_POINT_IN_SAFETY, droneUID)
-                    else
-                        if (error === MissionPlanController.EMPTY_MISSION_PLAN)
-                            dialogMgr.showDialog(SpyC.EMPTY_MISSION_PLAN_ERROR, droneUID)
-                        else
-                            if (error === MissionPlanController.NOT_ENOUGH_POINTS_IN_MISSION_PLAN)
-                                dialogMgr.showDialog(SpyC.NOT_ENOUGH_POINT_IN_MISSION_PLAN, droneUID)
+                if (error === MissionPlanController.NOT_ENOUGH_POINTS_IN_SAFETY)
+                    dialogMgr.showDialog(SpyC.NOT_ENOUGH_POINT_IN_SAFETY, droneUID)
+                else
+                if (error === MissionPlanController.EMPTY_MISSION_PLAN)
+                    dialogMgr.showDialog(SpyC.EMPTY_MISSION_PLAN_ERROR, droneUID)
+                else
+                if (error === MissionPlanController.NOT_ENOUGH_POINTS_IN_MISSION_PLAN)
+                    dialogMgr.showDialog(SpyC.NOT_ENOUGH_POINT_IN_MISSION_PLAN, droneUID)
             }
         }
 

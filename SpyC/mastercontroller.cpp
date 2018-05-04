@@ -69,8 +69,8 @@ void MasterController::setModel(Model::DroneManager *pDroneManager)
         connect(m_pDroneManager, &Model::DroneManager::positionChanged, this, &MasterController::onPositionChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::batteryLevelChanged, this, &MasterController::onBatteryLevelChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::gpsStrengthChanged, this, &MasterController::onGPSStrengthChanged, Qt::QueuedConnection);
-        connect(m_pDroneManager, &Model::DroneManager::missionPlanChanged, this, &MasterController::onMissionPlanChanged, Qt::QueuedConnection);
-        connect(m_pDroneManager, &Model::DroneManager::safetyChanged, this, &MasterController::onSafetyChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::missionPlanChanged, m_pMissionPlanController, &MissionPlanController::onMissionPlanChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::safetyChanged, m_pMissionPlanController, &MissionPlanController::onSafetyChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::droneError, m_pMissionPlanController, &MissionPlanController::onMissionPlanError, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::failSafeDone, m_pMissionPlanController, &MissionPlanController::onFailSafeDone, Qt::QueuedConnection);
 
@@ -192,26 +192,6 @@ void MasterController::onPositionChanged(const QGeoCoordinate &position, double 
             pDrone->setState(DroneBase::FLYING);
         pDrone->setPosition(position);
         pDrone->setHeading(dHeading);
-    }
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void MasterController::onMissionPlanChanged(const QString &sDroneUID)
-{
-    DroneBase *pDrone = getDrone(sDroneUID);
-    if (pDrone != nullptr)
-        pDrone->setState(DroneBase::IDLE);
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void MasterController::onSafetyChanged(const QString &sDroneUID)
-{
-    DroneBase *pDrone = getDrone(sDroneUID);
-    if (pDrone != nullptr)
-    {
-        pDrone->setState(DroneBase::IDLE);
     }
 }
 

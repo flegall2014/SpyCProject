@@ -78,6 +78,32 @@ void MissionPlanController::validateSafety(const QString &sDroneUID)
 
 //-------------------------------------------------------------------------------------------------
 
+void MissionPlanController::onMissionPlanChanged(const QString &sDroneUID)
+{
+    if (m_pMasterController != nullptr)
+    {
+        DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
+        if (pDrone != nullptr)
+            pDrone->setState(DroneBase::IDLE);
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MissionPlanController::onSafetyChanged(const QString &sDroneUID)
+{
+    if (m_pMasterController != nullptr)
+    {
+        DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
+        if (pDrone != nullptr)
+        {
+            pDrone->setState(DroneBase::IDLE);
+        }
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void MissionPlanController::onMissionPlanError(const Model::Drone::DroneError &eError, const QString &sDroneUID)
 {
     if (eError == Model::Drone::NO_SAFETY)
