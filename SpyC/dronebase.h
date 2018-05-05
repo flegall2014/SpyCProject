@@ -9,7 +9,7 @@
 #include "settingcontroller.h"
 class WayPointModel;
 class AlertModel;
-class SnapShotModelFilter;
+class GalleryModel;
 
 class DroneBase : public QObject
 {
@@ -40,7 +40,7 @@ class DroneBase : public QObject
     Q_PROPERTY(WayPointModel *missionPlanModel READ missionPlanModel NOTIFY missionPlanModelChanged)
     Q_PROPERTY(WayPointModel *safetyModel READ safetyModel NOTIFY safetyModelChanged)
     Q_PROPERTY(AlertModel *alertModel READ alertModel NOTIFY alertModelChanged)
-    Q_PROPERTY(SnapShotModelFilter *snapShotModel NOTIFY snapShotModelChanged)
+    Q_PROPERTY(GalleryModel *galleryModel READ galleryModel NOTIFY galleryModelChanged)
 
     Q_ENUMS(Status)
     Q_ENUMS(State)
@@ -152,12 +152,15 @@ public:
     //! Return alert model
     AlertModel *alertModel() const;
 
-    //! Snapshot model
-    SnapShotModelFilter *snapShotModel() const;
+    //! Gallery model
+    GalleryModel *galleryModel() const;
 
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------
+
+    //! Initialize
+    void initialize(const QMap<int, QVariant> &mSettings);
 
     //! Clear mission plan
     Q_INVOKABLE void clearMissionPlan();
@@ -191,6 +194,9 @@ private:
     void updateGPSStatus();
 
 private:
+    //! Settings
+    QMap<int, QVariant> m_mSettings;
+
     //! UID
     QString m_sDroneUID = "";
 
@@ -236,8 +242,8 @@ private:
     //! Alert model
     AlertModel *m_pAlertModel = nullptr;
 
-    //! Snapshot model
-    SnapShotModelFilter *m_pSnapShotModel = nullptr;
+    //! Gallery model
+    GalleryModel *m_pGalleryModel = nullptr;
 
     //! Setting controller
     SettingController m_settingController;
@@ -291,6 +297,9 @@ signals:
 
     //! Alert model changed
     void alertModelChanged();
+
+    //! Gallery model changed
+    void galleryModelChanged();
 
     //! Edit mode changed
     void editModeChanged();

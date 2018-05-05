@@ -81,9 +81,9 @@ Grid {
         ImageButton {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
-            source: "qrc:/icons/ico-geometry.svg"
+            source: "qrc:/icons/ico-gallery.svg"
             enabled: false
-            label: qsTr("Geometry")
+            label: qsTr("Gallery")
             textPosition: "below"
         }
     }
@@ -107,7 +107,7 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-ground.svg"
             enabled: false
-            label: qsTr("Test")
+            label: qsTr("GoTo")
             textPosition: "below"
         }
     }

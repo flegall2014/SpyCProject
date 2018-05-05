@@ -47,6 +47,7 @@ MasterController::~MasterController()
 
 bool MasterController::startup(const QStringList &lArgs)
 {
+    Q_UNUSED(lArgs);
     return true;
 }
 
@@ -158,6 +159,7 @@ DroneBase *MasterController::getDrone(const QString &sDroneUID) const
 void MasterController::onNewDroneAvailable(const QString &sVideoUrl, const QGeoCoordinate &initialPosition, const QString &sDroneUID)
 {
     DroneBase *pDrone = new DroneBase(sDroneUID, sVideoUrl, initialPosition, this);
+    pDrone->initialize(m_pSettingController->allSettings());
     connect(pDrone, &DroneBase::globalStatusChanged, this, &MasterController::onDroneGlobalStatusChanged);
     m_vDrones << pDrone;
     m_pDroneModel->addDrone(pDrone);

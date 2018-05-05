@@ -17,11 +17,19 @@ class SettingController : public QObject
     Q_PROPERTY(QString operatorName READ operatorName WRITE setOperatorName NOTIFY operatorNameChanged)
     Q_PROPERTY(int language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QString langString READ langString WRITE setLangString NOTIFY langStringChanged)
+    Q_PROPERTY(QString mapPath READ mapPath NOTIFY mapPathChanged)
+    Q_PROPERTY(QString missionPath READ missionPath NOTIFY missionPathChanged)
+    Q_PROPERTY(QString logPath READ logPath NOTIFY logPathChanged)
+    Q_PROPERTY(QString alertPath READ alertPath NOTIFY alertPathChanged)
+    Q_PROPERTY(QString galleryPath READ galleryPath NOTIFY galleryPathChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
+
+    enum Setting {ARMY=Qt::UserRole+1, UNIT, MISSION, OPERATOR, LANGUAGE, LANGUAGE_STRING,
+                 MAP_PATH, MISSION_PATH, LOG_PATH, ALERT_PATH, GALLERY_PATH};
 
     //! Constructor
     SettingController(QObject *pParent=nullptr);
@@ -38,6 +46,9 @@ public:
 
     //! Apply language
     Q_INVOKABLE void applyLanguage(const QString &sLang);
+
+    //! Return a gallery path given a drone UID
+    Q_INVOKABLE QString droneGalleryShotPath(const QString &sDroneUID) const;
 
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
@@ -103,11 +114,14 @@ public:
     //! Set alert path
     void setAlertPath(const QString &sAlertPath);
 
-    //! Return snapshot path
-    const QString &snapShotPath() const;
+    //! Return gallery path
+    const QString &galleryPath() const;
 
-    //! Set snapshot path
-    void setSnapShotPath(const QString &sSnapShotPath);
+    //! Set gallery path
+    void setGalleryPath(const QString &sGalleryPath);
+
+    //! Return all settings
+    QMap<int, QVariant> allSettings();
 
 private:
     //! Master controller
@@ -143,8 +157,8 @@ private:
     //! Alert path
     QString m_sAlertPath = "";
 
-    //! Snapshot path
-    QString m_sSnapShotPath = "";
+    //! Gallery path
+    QString m_sGalleryPath = "";
 
 signals:
     //! Army changed
@@ -177,8 +191,8 @@ signals:
     //! Alert path changed
     void alertPathChanged();
 
-    //! Snapshot path changed
-    void snapShotPathChanged();
+    //! Gallery path changed
+    void galleryPathChanged();
 };
 
 #endif // SETTINGCONTROLLER_H

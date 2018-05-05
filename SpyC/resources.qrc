@@ -41,7 +41,6 @@
         <file>qml/panels/PayloadEditorPanel.qml</file>
         <file>qml/panels/SafetyEditorPanel.qml</file>
         <file>qml/dialogs/ConfirmTakeOffDialog.qml</file>
-        <file>qml/panels/FlightEditor.qml</file>
         <file>qml/widgets/BatteryStatusWidget.qml</file>
         <file>qml/widgets/GPSStatusWidget.qml</file>
         <file>qml/widgets/DroneStatusWidget.qml</file>
@@ -86,8 +85,10 @@
         <file>icons/ico-saudi-flag.png</file>
         <file>icons/ico-us-flag.png</file>
         <file>qml/widgets/LangWidget.qml</file>
-        <file>qml/panels/SnapShotPanel.qml</file>
         <file>sounds/sound_take_pic.mp3</file>
         <file>qml/widgets/SnapShotButton.qml</file>
+        <file>qml/panels/FlightEditorPanel.qml</file>
+        <file>qml/panels/GalleryEditorPanel.qml</file>
+        <file>icons/ico-gallery.svg</file>
     </qresource>
 </RCC>

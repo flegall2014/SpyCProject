@@ -72,8 +72,9 @@ Rectangle {
         source: "qrc:/icons/ico-snapshot.svg"
         onClicked: {
             video.grabToImage(function(image) {
-                console.log("Called...", arguments)
-                image.saveToFile("d:/tmp/screen.png"); // save happens here
+                var snapShotPath = MASTERCONTROLLER.settingController.droneSnapShotPath(targetDrone.uid)
+                image.saveToFile(snapShotPath); // save happens here
+                targetDrone.galleryModel.addSnapShot(snapShotPath)
             });
         }
     }

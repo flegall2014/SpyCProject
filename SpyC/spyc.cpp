@@ -15,7 +15,7 @@
 #include "dronebase.h"
 #include "waypointmodel.h"
 #include "alertmodel.h"
-#include "snapshotmodel.h"
+#include "gallerymodel.h"
 
 SpyC *SpyC::sInstance = nullptr;
 
@@ -107,7 +107,7 @@ void SpyC::registerTypes()
     qmlRegisterType<DroneModel>("Components", 1, 0, "DroneModel");
     qmlRegisterType<WayPointModel>("Components", 1, 0, "WayPointModel");
     qmlRegisterType<AlertModel>("Components", 1, 0, "AlertModel");
-    qmlRegisterType<SnapShotModelFilter>("Components", 1, 0, "SnapShotModel");
+    qmlRegisterType<GalleryModel>("Components", 1, 0, "GalleryModel");
 }
 
 //-------------------------------------------------------------------------------------------------

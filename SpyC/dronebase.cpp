@@ -6,7 +6,7 @@
 #include <drone.h>
 #include "waypointmodel.h"
 #include "alertmodel.h"
-#include "snapshotmodel.h"
+#include "gallerymodel.h"
 #include "settingcontroller.h"
 using namespace Model;
 
@@ -14,14 +14,7 @@ using namespace Model;
 
 DroneBase::DroneBase(QObject *parent) : QObject(parent)
 {
-    // Mission plan model
-    m_pMissionPlanModel = new WayPointModel(this);
-    m_pSafetyModel = new WayPointModel(this);
-    m_pAlertModel = new AlertModel(this);
-    m_pSnapShotModel = new SnapShotModelFilter(this);
-    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
+
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -29,14 +22,7 @@ DroneBase::DroneBase(QObject *parent) : QObject(parent)
 DroneBase::DroneBase(const QString &sDroneUID, const QString &sVideoUrl, const QGeoCoordinate &initialPosition, QObject *parent) :
     QObject(parent), m_sDroneUID(sDroneUID), m_sVideoUrl(sVideoUrl), m_initialPosition(initialPosition), m_position(initialPosition)
 {
-    // Mission plan model
-    m_pMissionPlanModel = new WayPointModel(this);
-    m_pSafetyModel = new WayPointModel(this);
-    m_pAlertModel = new AlertModel(this);
-    m_pSnapShotModel = new SnapShotModelFilter(this);
-    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
-    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
+
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -44,6 +30,23 @@ DroneBase::DroneBase(const QString &sDroneUID, const QString &sVideoUrl, const Q
 DroneBase::~DroneBase()
 {
 
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::initialize(const QMap<int, QVariant> &mSettings)
+{
+    // Set settings
+    m_mSettings = mSettings;
+
+    // Mission plan model
+    m_pMissionPlanModel = new WayPointModel(this);
+    m_pSafetyModel = new WayPointModel(this);
+    m_pAlertModel = new AlertModel(this);
+    m_pGalleryModel = new GalleryModel(m_mSettings[SettingController::GALLERY_PATH].toString(), this);
+    connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
+    connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -240,9 +243,9 @@ AlertModel *DroneBase::alertModel() const
 
 //-------------------------------------------------------------------------------------------------
 
-SnapShotModelFilter *DroneBase::snapShotModel() const
+GalleryModel *DroneBase::galleryModel() const
 {
-    return m_pSnapShotModel;
+    return m_pGalleryModel;
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -24,6 +24,7 @@ PluginLoader::~PluginLoader()
 
 bool PluginLoader::startup(const QStringList &lArgs)
 {
+    Q_UNUSED(lArgs);
     loadPlugins();
     return true;
 }

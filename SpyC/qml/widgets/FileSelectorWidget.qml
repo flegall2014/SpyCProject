@@ -17,7 +17,7 @@ Item {
         horizontalAlignment: Text.AlignLeft
         anchors.verticalCenter: parent.verticalCenter
         font.pixelSize: Theme.veryLargeFontSize
-        text: qsTr("Snapshots")
+        text: qsTr("Gallery")
         width: 224
     }
     TextField {

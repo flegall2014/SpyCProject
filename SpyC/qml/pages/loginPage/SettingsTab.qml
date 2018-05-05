@@ -86,9 +86,9 @@ Item {
                 }
             }
 
-            // Snapshots
+            // Gallery
             Item {
-                id: snapShotGroup
+                id: galleryGroup
                 width: parent.width
                 height: Theme.toolBarHeight
                 anchors.top: alertGroup.bottom
@@ -98,7 +98,7 @@ Item {
                 FileSelectorWidget {
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    title: qsTr("Snapshots")
+                    title: qsTr("Gallery")
                 }
             }
         }

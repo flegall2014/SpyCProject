@@ -1,5 +1,7 @@
 // Qt
 #include <QDebug>
+#include <QDir>
+#include <QDateTime>
 
 // Application
 #include "settingcontroller.h"
@@ -38,6 +40,21 @@ void SettingController::applyLanguage(const QString &sLang)
     else
     if (sLang == "SD")
         setLanguage(QLocale::Arabic);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+QString SettingController::droneGalleryShotPath(const QString &sDroneUID) const
+{
+    QDateTime curDateTime = QDateTime::currentDateTime();
+    QString sTimeStamp = QString("%1_%2_%3_%4_%5_%6").arg(curDateTime.date().day()).arg(curDateTime.date().month()).
+            arg(curDateTime.date().year()).arg(curDateTime.time().hour()).arg(curDateTime.time().minute()).
+            arg(curDateTime.time().second());
+    QDir dGalleryDir = QDir(m_sGalleryPath).absoluteFilePath(sDroneUID);
+    dGalleryDir.mkpath(".");
+    QString sGalleryFile = dGalleryDir.absoluteFilePath("snapshot_%1_%2.jpg").arg(sDroneUID).arg(sTimeStamp);
+    sGalleryFile.replace(" ", "_");
+    return sGalleryFile;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -191,15 +208,34 @@ void SettingController::setAlertPath(const QString &sAlertPath)
 
 //-------------------------------------------------------------------------------------------------
 
-const QString &SettingController::snapShotPath() const
+const QString &SettingController::galleryPath() const
 {
-    return m_sSnapShotPath;
+    return m_sGalleryPath;
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void SettingController::setSnapShotPath(const QString &sSnapShotPath)
+void SettingController::setGalleryPath(const QString &sGalleryPath)
 {
-    m_sSnapShotPath = sSnapShotPath;
-    emit snapShotPathChanged();
+    m_sGalleryPath = sGalleryPath;
+    emit galleryPathChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+QMap<int, QVariant> SettingController::allSettings()
+{
+    QMap<int, QVariant> mAllSettings;
+    mAllSettings[ARMY] = m_sArmy;
+    mAllSettings[UNIT] = m_sUnit;
+    mAllSettings[MISSION] = m_sMission;
+    mAllSettings[OPERATOR] = m_sOperator;
+    mAllSettings[LANGUAGE] = m_eLanguage;
+    mAllSettings[LANGUAGE_STRING] = m_sLangString;
+    mAllSettings[MAP_PATH] = m_sMapPath;
+    mAllSettings[MISSION_PATH] = m_sMissionPath;
+    mAllSettings[LOG_PATH] = m_sLogPath;
+    mAllSettings[ALERT_PATH] = m_sAlertPath;
+    mAllSettings[GALLERY_PATH] = m_sGalleryPath;
+    return mAllSettings;
 }

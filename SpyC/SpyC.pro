@@ -64,7 +64,7 @@ HEADERS += \
     flightcontroller.h \
     alertmodel.h \
     settingcontroller.h \
-    snapshotmodel.h
+    gallerymodel.h
 
 SOURCES += \
     main.cpp \
@@ -79,7 +79,7 @@ SOURCES += \
     flightcontroller.cpp \
     alertmodel.cpp \
     settingcontroller.cpp \
-    snapshotmodel.cpp
+    gallerymodel.cpp
 
 DISTFILES +=
 
