@@ -17,11 +17,11 @@ class SettingController : public QObject
     Q_PROPERTY(QString operatorName READ operatorName WRITE setOperatorName NOTIFY operatorNameChanged)
     Q_PROPERTY(int language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QString langString READ langString WRITE setLangString NOTIFY langStringChanged)
-    Q_PROPERTY(QString mapPath READ mapPath NOTIFY mapPathChanged)
-    Q_PROPERTY(QString missionPath READ missionPath NOTIFY missionPathChanged)
-    Q_PROPERTY(QString logPath READ logPath NOTIFY logPathChanged)
-    Q_PROPERTY(QString alertPath READ alertPath NOTIFY alertPathChanged)
-    Q_PROPERTY(QString galleryPath READ galleryPath NOTIFY galleryPathChanged)
+    Q_PROPERTY(QString mapPath READ mapPath WRITE setMapPath NOTIFY mapPathChanged)
+    Q_PROPERTY(QString missionPath READ missionPath WRITE setMissionPath NOTIFY missionPathChanged)
+    Q_PROPERTY(QString logPath READ logPath WRITE setLogPath NOTIFY logPathChanged)
+    Q_PROPERTY(QString alertPath READ alertPath WRITE setAlertPath NOTIFY alertPathChanged)
+    Q_PROPERTY(QString galleryPath READ galleryPath WRITE setGalleryPath NOTIFY galleryPathChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------

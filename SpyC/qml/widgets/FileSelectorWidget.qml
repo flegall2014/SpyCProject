@@ -6,6 +6,8 @@ import ".."
 Item {
     property alias title: label.text
     height: Theme.buttonSize
+    property alias selectedFolder: input.text
+
     FolderDialog {
         id: folderDialog
         folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]

@@ -158,6 +158,7 @@ DroneBase *MasterController::getDrone(const QString &sDroneUID) const
 
 void MasterController::onNewDroneAvailable(const QString &sVideoUrl, const QGeoCoordinate &initialPosition, const QString &sDroneUID)
 {
+    qDebug() << "********************************************* " << m_pSettingController->allSettings()[SettingController::GALLERY_PATH].toString();
     DroneBase *pDrone = new DroneBase(sDroneUID, sVideoUrl, initialPosition, this);
     pDrone->initialize(m_pSettingController->allSettings());
     connect(pDrone, &DroneBase::globalStatusChanged, this, &MasterController::onDroneGlobalStatusChanged);
