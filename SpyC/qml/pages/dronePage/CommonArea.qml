@@ -42,6 +42,9 @@ Rectangle {
         if (targetDrone.editMode === DroneBase.PAYLOAD_EDIT)
             panelMgr.loadPanel("PayloadEditor")
         else
+        if (targetDrone.editMode === DroneBase.GALLERY_EDIT)
+            panelMgr.loadPanel("GalleryEditor")
+        else
             panelMgr.loadPanel("PayloadEditor")
     }
 

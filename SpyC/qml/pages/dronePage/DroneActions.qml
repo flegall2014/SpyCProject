@@ -82,9 +82,10 @@ Grid {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
             source: "qrc:/icons/ico-gallery.svg"
-            enabled: false
+            enabled: true
             label: qsTr("Gallery")
             textPosition: "below"
+            onClicked: targetDrone.editMode = DroneBase.GALLERY_EDIT
         }
     }
     Item {

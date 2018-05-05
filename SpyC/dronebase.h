@@ -55,7 +55,7 @@ public:
     enum State {IDLE=Qt::UserRole+1, FLYING};
 
     //! Define a drone mode
-    enum EditMode {NONE=Qt::UserRole+1, MISSION_PLAN_EDIT, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT};
+    enum EditMode {NONE=Qt::UserRole+1, MISSION_PLAN_EDIT, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT, GALLERY_EDIT};
 
     //! Alert type
     enum AlertType {NO_ALERT=Qt::UserRole+1, BATTERY, GPS, POSITION};
