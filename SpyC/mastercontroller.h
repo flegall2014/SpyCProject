@@ -144,15 +144,6 @@ public slots:
     //! New drone available
     void onNewDroneAvailable(const QString &sVideoUrl, const QGeoCoordinate &initialPosition, const QString &sDroneUID);
 
-    //! Position changed
-    void onPositionChanged(const QGeoCoordinate &position, double dHeading, const QString &sDroneUID);
-
-    //! Battery level changed
-    void onBatteryLevelChanged(int iLevel, const QString &sDroneUID);
-
-    //! GPS strength changed
-    void onGPSStrengthChanged(int iStrength, const QString &sDroneUID);
-
     //! Drone global status changed
     void onDroneGlobalStatusChanged();
 

@@ -62,3 +62,43 @@ void FlightController::onFailSafeDone(const QString &sDroneUID)
     }
 }
 
+//-------------------------------------------------------------------------------------------------
+
+void FlightController::onBatteryLevelChanged(int iLevel, const QString &sDroneUID)
+{
+    if (m_pMasterController != nullptr)
+    {
+        DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
+        if (pDrone != nullptr)
+            pDrone->setBatteryLevel(iLevel);
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void FlightController::onGPSStrengthChanged(int iStrength, const QString &sDroneUID)
+{
+    if (m_pMasterController != nullptr)
+    {
+        DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
+        if (pDrone != nullptr)
+            pDrone->setGPSStrength(iStrength);
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void FlightController::onPositionChanged(const QGeoCoordinate &position, double dHeading, const QString &sDroneUID)
+{
+    if (m_pMasterController != nullptr)
+    {
+        DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
+        if (pDrone != nullptr)
+        {
+            if (pDrone->state() != DroneBase::FLYING)
+                pDrone->setState(DroneBase::FLYING);
+            pDrone->setPosition(position);
+            pDrone->setHeading(dHeading);
+        }
+    }
+}

@@ -64,7 +64,7 @@ Rectangle {
     }
 
     // Snapshot
-    ImageButton {
+    SnapShotButton {
         anchors.left: parent.left
         anchors.leftMargin: Theme.standardMargin
         anchors.bottom: parent.bottom

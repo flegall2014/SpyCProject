@@ -87,5 +87,7 @@
         <file>icons/ico-us-flag.png</file>
         <file>qml/widgets/LangWidget.qml</file>
         <file>qml/panels/SnapShotPanel.qml</file>
+        <file>sounds/sound_take_pic.mp3</file>
+        <file>qml/widgets/SnapShotButton.qml</file>
     </qresource>
 </RCC>

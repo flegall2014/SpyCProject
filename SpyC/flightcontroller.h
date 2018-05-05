@@ -3,6 +3,7 @@
 
 // Qt
 #include <QObject>
+#include <QGeoCoordinate>
 
 // Application
 class MasterController;
@@ -39,7 +40,16 @@ private:
     //! Master controller
     MasterController *m_pMasterController = nullptr;
 
-public slots:
+public slots:    
+    //! Position changed
+    void onPositionChanged(const QGeoCoordinate &position, double dHeading, const QString &sDroneUID);
+
+    //! Battery level changed
+    void onBatteryLevelChanged(int iLevel, const QString &sDroneUID);
+
+    //! GPS strength changed
+    void onGPSStrengthChanged(int iStrength, const QString &sDroneUID);
+
     //! Fail safe done
     void onFailSafeDone(const QString &sDroneUID);
 

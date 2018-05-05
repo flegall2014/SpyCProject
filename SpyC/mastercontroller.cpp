@@ -66,9 +66,9 @@ void MasterController::setModel(Model::DroneManager *pDroneManager)
     {
         // From model to view
         connect(m_pDroneManager, &Model::DroneManager::newDroneAvailable, this, &MasterController::onNewDroneAvailable, Qt::QueuedConnection);
-        connect(m_pDroneManager, &Model::DroneManager::positionChanged, this, &MasterController::onPositionChanged, Qt::QueuedConnection);
-        connect(m_pDroneManager, &Model::DroneManager::batteryLevelChanged, this, &MasterController::onBatteryLevelChanged, Qt::QueuedConnection);
-        connect(m_pDroneManager, &Model::DroneManager::gpsStrengthChanged, this, &MasterController::onGPSStrengthChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::positionChanged, m_pFlightController, &FlightController::onPositionChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::batteryLevelChanged, m_pFlightController, &FlightController::onBatteryLevelChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::gpsStrengthChanged, m_pFlightController, &FlightController::onGPSStrengthChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::missionPlanChanged, m_pMissionPlanController, &MissionPlanController::onMissionPlanChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::safetyChanged, m_pMissionPlanController, &MissionPlanController::onSafetyChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::droneError, m_pMissionPlanController, &MissionPlanController::onMissionPlanError, Qt::QueuedConnection);
@@ -161,38 +161,6 @@ void MasterController::onNewDroneAvailable(const QString &sVideoUrl, const QGeoC
     connect(pDrone, &DroneBase::globalStatusChanged, this, &MasterController::onDroneGlobalStatusChanged);
     m_vDrones << pDrone;
     m_pDroneModel->addDrone(pDrone);
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void MasterController::onBatteryLevelChanged(int iLevel, const QString &sDroneUID)
-{
-    DroneBase *pDrone = getDrone(sDroneUID);
-    if (pDrone != nullptr)
-        pDrone->setBatteryLevel(iLevel);
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void MasterController::onGPSStrengthChanged(int iStrength, const QString &sDroneUID)
-{
-    DroneBase *pDrone = getDrone(sDroneUID);
-    if (pDrone != nullptr)
-        pDrone->setGPSStrength(iStrength);
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void MasterController::onPositionChanged(const QGeoCoordinate &position, double dHeading, const QString &sDroneUID)
-{
-    DroneBase *pDrone = getDrone(sDroneUID);
-    if (pDrone != nullptr)
-    {
-        if (pDrone->state() != DroneBase::FLYING)
-            pDrone->setState(DroneBase::FLYING);
-        pDrone->setPosition(position);
-        pDrone->setHeading(dHeading);
-    }
 }
 
 //-------------------------------------------------------------------------------------------------
