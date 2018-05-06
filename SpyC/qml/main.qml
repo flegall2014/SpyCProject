@@ -21,7 +21,7 @@ ApplicationWindow {
     visible: true
 
     // Visibility
-    visibility: Window.FullScreen
+    visibility: Window.Maximized
 
     Rectangle {
         anchors.fill: parent
@@ -34,7 +34,7 @@ ApplicationWindow {
             height: Theme.toolBarHeight
             anchors.top: parent.top
             enabled: dialogMgr.state === ""
-            showDroneStatus: dronePage.droneExpanded
+            showDroneStatus: MASTERCONTROLLER.currentDrone !== null
         }
 
         // Login page
@@ -65,12 +65,8 @@ ApplicationWindow {
             width: parent.width
             height: Theme.toolBarHeight
             anchors.bottom: parent.bottom
-            windowsButtonVisible: dronePage.droneExpanded
             enabled: dialogMgr.state === ""
-            onWindowsButtonClicked: {
-                dronePage.droneExpanded = false
-                MASTERCONTROLLER.setAllDroneState(DroneBase.IDLE)
-            }
+            onWindowsButtonClicked: MASTERCONTROLLER.currentDrone = null
         }
 
         // Dialog manager

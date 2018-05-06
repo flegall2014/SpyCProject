@@ -52,21 +52,6 @@ Rectangle {
                 targetDrone: drone
                 opacity: 1
                 visible: opacity > 0
-                onMaximizeButtonClicked: {
-                    if (droneDisplay.state === "")
-                    {
-                        droneDisplay.state = "expanded"
-                        dronePage.droneExpanded = true
-                        MASTERCONTROLLER.currentDrone = drone
-                    }
-                    else
-                    {
-                        if (mapView.state === "")
-                            mapView.state = "mapMaximized"
-                        else
-                            mapView.state = ""
-                    }
-                }
             }
 
             Item {
@@ -82,14 +67,6 @@ Rectangle {
                     z: 0
                     targetDrone: drone
 
-                    // Drone display state changed
-                    function onDroneDisplayStateChanged()
-                    {
-                        if (dronePage.droneExpanded === false)
-                            mapView.state = ""
-                    }
-                    Component.onCompleted: dronePage.droneExpandedChanged.connect(onDroneDisplayStateChanged)
-
                     // Toolbar loader
                     Loader {
                         id: toolBarLoader
@@ -100,15 +77,15 @@ Rectangle {
                         states: [
                             State {
                                 name: "default"
-                                when: ((targetDrone.editMode === DroneBase.NONE) || (targetDrone.editMode === DroneBase.PAYLOAD_EDIT)) && (droneDisplay.state === "expanded") && (mapView.state !== "mapMinimized")
+                                when: (targetDrone.workMode === DroneBase.NONE)
                                 PropertyChanges {
                                     target: toolBarLoader
-                                    source: "qrc:/qml/toolbars/DroneEditToolBar.qml"
+                                    source: "qrc:/qml/toolbars/DroneDefaultToolBar.qml"
                                 }
                             },
                             State {
                                 name: "missionPlanEdit"
-                                when: targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT
+                                when: targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT
                                 PropertyChanges {
                                     target: toolBarLoader
                                     source: "qrc:/qml/toolbars/MissionPlanToolBar.qml"
@@ -116,7 +93,7 @@ Rectangle {
                             },
                             State {
                                 name: "safetyEdit"
-                                when: targetDrone.editMode === DroneBase.SAFETY_EDIT
+                                when: targetDrone.workMode === DroneBase.SAFETY_EDIT
                                 PropertyChanges {
                                     target: toolBarLoader
                                     source: "qrc:/qml/toolbars/SafetyToolBar.qml"
@@ -223,6 +200,7 @@ Rectangle {
     states: [
         State {
             name: "expanded"
+            when: MASTERCONTROLLER.currentDrone === targetDrone
             PropertyChanges {
                 target: commonArea
                 height: Theme.commonAreaHeight

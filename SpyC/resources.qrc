@@ -75,7 +75,6 @@
         <file>qml/pages/dronePage/DroneAlertView.qml</file>
         <file>icons/ico-snapshot.svg</file>
         <file>images/img-novideo.jpg</file>
-        <file>qml/toolbars/DroneEditToolBar.qml</file>
         <file>qml/pages/loginPage/LoginTab.qml</file>
         <file>images/img-spyranger.png</file>
         <file>qml/pages/loginPage/SettingsTab.qml</file>
@@ -90,5 +89,6 @@
         <file>qml/panels/FlightEditorPanel.qml</file>
         <file>qml/panels/GalleryEditorPanel.qml</file>
         <file>icons/ico-gallery.svg</file>
+        <file>icons/ico-unlock.svg</file>
     </qresource>
 </RCC>

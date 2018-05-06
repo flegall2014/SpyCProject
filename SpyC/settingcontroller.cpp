@@ -44,16 +44,19 @@ void SettingController::applyLanguage(const QString &sLang)
 
 //-------------------------------------------------------------------------------------------------
 
-QString SettingController::droneGalleryShotPath(const QString &sDroneUID) const
+QString SettingController::snapShotPath(const QString &sDroneUID) const
 {
     QDateTime curDateTime = QDateTime::currentDateTime();
     QString sTimeStamp = QString("%1_%2_%3_%4_%5_%6").arg(curDateTime.date().day()).arg(curDateTime.date().month()).
             arg(curDateTime.date().year()).arg(curDateTime.time().hour()).arg(curDateTime.time().minute()).
             arg(curDateTime.time().second());
-    QDir dGalleryDir = QDir(m_sGalleryPath).absoluteFilePath(sDroneUID);
-    dGalleryDir.mkpath(".");
+    QString sGalleryDir = QDir(m_sGalleryPath).absoluteFilePath(sDroneUID);
+    sGalleryDir.replace(" ", "_");
+    QDir dGalleryDir(sGalleryDir);
+    dGalleryDir.mkpath(dGalleryDir.absolutePath());
     QString sGalleryFile = dGalleryDir.absoluteFilePath("snapshot_%1_%2.jpg").arg(sDroneUID).arg(sTimeStamp);
-    sGalleryFile.replace(" ", "_");
+
+    qDebug() << "EOEO: " << sGalleryFile;
     return sGalleryFile;
 }
 

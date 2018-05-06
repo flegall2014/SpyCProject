@@ -207,17 +207,32 @@ void DroneBase::setState(int iState)
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneBase::setEditMode(int iMode)
+void DroneBase::setWorkMode(int iMode)
 {
-    m_eEditMode = (DroneBase::EditMode)iMode;
+    m_eWorkMode = (DroneBase::WorkMode)iMode;
+    emit workModeChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool DroneBase::editMode() const
+{
+    return m_bEditMode;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::setEditMode(bool bEditMode)
+{
+    m_bEditMode = bEditMode;
     emit editModeChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
 
-int DroneBase::editMode() const
+int DroneBase::workMode() const
 {
-    return (int)m_eEditMode;
+    return (int)m_eWorkMode;
 }
 
 //-------------------------------------------------------------------------------------------------

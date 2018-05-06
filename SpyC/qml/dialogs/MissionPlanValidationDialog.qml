@@ -15,7 +15,7 @@ DialogBase {
             anchors.verticalCenter: parent.verticalCenter
             label: qsTr("Cancel")
             onClicked: {
-                targetDrone.editMode = DroneBase.NONE
+                targetDrone.workMode = DroneBase.NONE
                 closeDialog()
             }
         }
@@ -29,7 +29,7 @@ DialogBase {
             label: qsTr("OK")
             onClicked: {
                 MASTERCONTROLLER.missionPlanController.validateMissionPlan(targetDrone.uid)
-                targetDrone.editMode = DroneBase.NONE
+                targetDrone.workMode = DroneBase.NONE
                 closeDialog()
             }
         }

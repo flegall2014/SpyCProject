@@ -81,7 +81,7 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Set current drone
-    void setCurrentDrone(DroneBase *pDrone);
+    void setCurrentDrone(DroneBase *pCurrentDrone);
 
     //! Return current drone
     DroneBase *currentDrone() const;

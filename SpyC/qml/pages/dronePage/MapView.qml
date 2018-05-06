@@ -15,7 +15,7 @@ Map {
     property bool missionPlanVisible: true
     property bool safetyVisible: true
     property variant targetDrone
-    gesture.enabled: (targetDrone.editMode !== DroneBase.SAFETY_EDIT) && (targetDrone.editMode !== DroneBase.MISSION_PLAN_EDIT)
+    gesture.enabled: (targetDrone.workMode !== DroneBase.SAFETY_EDIT) && (targetDrone.workMode !== DroneBase.MISSION_PLAN_EDIT)
 
     // Map plugin
     Plugin {
@@ -28,7 +28,7 @@ Map {
         id: safetyBlinkTimer
         interval: Theme.standardAnimationDuration
         repeat: true
-        running: (targetDrone.editMode === DroneBase.SAFETY_EDIT)
+        running: (targetDrone.workMode === DroneBase.SAFETY_EDIT)
         onTriggered: mapView.safetyVisible = !mapView.safetyVisible
         onRunningChanged: {
             if (running === false)
@@ -41,7 +41,7 @@ Map {
         id: missionPlanBlinkTimer
         interval: Theme.standardAnimationDuration
         repeat: true
-        running: (targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT)
+        running: (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
         onTriggered: mapView.missionPlanVisible = !mapView.missionPlanVisible
         onRunningChanged: {
             if (running === false)
@@ -97,7 +97,7 @@ Map {
                     id: circleMouseArea
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent
-                    enabled: targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT
+                    enabled: targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT
                     onClicked: {
                         if (mouse.button === Qt.RightButton)
                         {
@@ -173,7 +173,7 @@ Map {
                     id: circleMouseArea
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     anchors.fill: parent
-                    enabled: targetDrone.editMode === DroneBase.SAFETY_EDIT
+                    enabled: targetDrone.workMode === DroneBase.SAFETY_EDIT
                     onClicked: {
                         if (mouse.button === Qt.RightButton)
                             targetDrone.removeCoordinateFromSafetyPlanAtIndex(index)
@@ -230,13 +230,13 @@ Map {
     // Handle clicks
     MouseArea {
         anchors.fill: parent
-        enabled: (targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT) || (targetDrone.editMode === DroneBase.SAFETY_EDIT)
+        enabled: (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT) || (targetDrone.workMode === DroneBase.SAFETY_EDIT)
 
         onClicked: {
-            if (targetDrone.editMode === DroneBase.SAFETY_EDIT)
+            if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
                 targetDrone.addCoordinateToSafety(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
             else
-            if (targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT)
+            if (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
                 targetDrone.addCoordinateToMissionPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
         }
     }

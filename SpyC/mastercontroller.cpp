@@ -193,9 +193,17 @@ void MasterController::onDroneGlobalStatusChanged()
 
 //-------------------------------------------------------------------------------------------------
 
-void MasterController::setCurrentDrone(DroneBase *pDrone)
+void MasterController::setCurrentDrone(DroneBase *pCurrentDrone)
 {
-    m_pCurrentDrone = pDrone;
+    m_pCurrentDrone = pCurrentDrone;
+    if (m_pCurrentDrone == nullptr)
+    {
+        foreach (DroneBase *pDrone, m_vDrones)
+            pDrone->setEditMode(false);
+    }
+    else
+    foreach (DroneBase *pDrone, m_vDrones)
+        m_pCurrentDrone->setEditMode(pCurrentDrone == pDrone);
     emit currentDroneChanged();
 }
 

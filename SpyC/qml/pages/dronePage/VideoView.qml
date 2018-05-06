@@ -72,7 +72,7 @@ Rectangle {
         source: "qrc:/icons/ico-snapshot.svg"
         onClicked: {
             video.grabToImage(function(image) {
-                var snapShotPath = MASTERCONTROLLER.settingController.droneSnapShotPath(targetDrone.uid)
+                var snapShotPath = MASTERCONTROLLER.settingController.snapShotPath(targetDrone.uid)
                 image.saveToFile(snapShotPath); // save happens here
                 targetDrone.galleryModel.addSnapShot(snapShotPath)
             });

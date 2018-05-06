@@ -37,7 +37,7 @@ public:
     ~GalleryModel();
 
     //! Data
-    virtual QVariant data(const QModelIndex &index, int role) const;
+    virtual QVariant data(const QModelIndex &index, int iRole) const;
 
     //! Role names
     virtual QHash<int, QByteArray> roleNames() const;

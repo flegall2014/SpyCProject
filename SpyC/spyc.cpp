@@ -88,6 +88,21 @@ void SpyC::shutdown()
 
 //-------------------------------------------------------------------------------------------------
 
+QString SpyC::toLocalFile(const QString &sInput)
+{
+    QUrl url(sInput);
+    return url.toLocalFile();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+QString SpyC::fromLocalFile(const QString &sInput)
+{
+    return QUrl::fromLocalFile(sInput).toString();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void SpyC::launchUI()
 {
     m_engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
@@ -114,5 +129,6 @@ void SpyC::registerTypes()
 
 void SpyC::setContextProperties()
 {
+    m_engine.rootContext()->setContextProperty("SPYC", this);
     m_engine.rootContext()->setContextProperty("MASTERCONTROLLER", m_pMasterController);
 }

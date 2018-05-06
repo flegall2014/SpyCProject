@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import Qt.labs.platform 1.0
+import Components 1.0
 import ".."
 
 Item {
@@ -11,7 +12,9 @@ Item {
     FolderDialog {
         id: folderDialog
         folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
-        onAccepted: input.text = folderDialog.currentFolder
+        onAccepted: {
+            input.text = SPYC.toLocalFile(folderDialog.folder)
+        }
     }
     StandardText {
         id: label

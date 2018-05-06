@@ -15,7 +15,7 @@ DialogBase {
             anchors.verticalCenter: parent.verticalCenter
             label: qsTr("OK")
             onClicked: {
-                targetDrone.editMode = DroneBase.NONE
+                targetDrone.workMode = DroneBase.NONE
                 closeDialog()
             }
         }

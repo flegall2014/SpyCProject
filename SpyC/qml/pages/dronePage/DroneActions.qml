@@ -15,8 +15,8 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-safety.svg"
             checkable: true
-            checked: targetDrone.editMode === DroneBase.SAFETY_EDIT
-            onClicked: targetDrone.editMode = DroneBase.SAFETY_EDIT
+            checked: targetDrone.workMode === DroneBase.SAFETY_EDIT
+            onClicked: targetDrone.workMode = DroneBase.SAFETY_EDIT
             enabled: targetDrone.state !== DroneBase.FLYING
             label: qsTr("Safety")
             textPosition: "below"
@@ -30,8 +30,8 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-missionplan.svg"
             checkable: true
-            checked: targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT
-            onClicked: targetDrone.editMode = DroneBase.MISSION_PLAN_EDIT
+            checked: targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT
+            onClicked: targetDrone.workMode = DroneBase.MISSION_PLAN_EDIT
             enabled: targetDrone.state !== DroneBase.FLYING
             label: qsTr("Mission plan")
             textPosition: "below"
@@ -85,7 +85,7 @@ Grid {
             enabled: true
             label: qsTr("Gallery")
             textPosition: "below"
-            onClicked: targetDrone.editMode = DroneBase.GALLERY_EDIT
+            onClicked: targetDrone.workMode = DroneBase.GALLERY_EDIT
         }
     }
     Item {

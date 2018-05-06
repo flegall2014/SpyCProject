@@ -48,7 +48,7 @@ public:
     Q_INVOKABLE void applyLanguage(const QString &sLang);
 
     //! Return a gallery path given a drone UID
-    Q_INVOKABLE QString droneGalleryShotPath(const QString &sDroneUID) const;
+    Q_INVOKABLE QString snapShotPath(const QString &sDroneUID) const;
 
     //-------------------------------------------------------------------------------------------------
     // Getters & setters

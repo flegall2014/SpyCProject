@@ -12,7 +12,8 @@ ListView {
     clip: true
     opacity: 0
     visible: opacity > 0
-    property bool droneExpanded: false
+
+    onContentXChanged: console.log("****************** ",contentX)
 
     // Drone display
     delegate: DroneDisplay {
@@ -21,14 +22,6 @@ ListView {
         height: dronePage.height
         clip: true
         targetDrone: drone
-        function onDroneExpandedChanged()
-        {
-            if ((droneExpanded === false) && (droneDisplay.state === "expanded"))
-                droneDisplay.state = ""
-        }
-        Component.onCompleted: {
-            dronePage.droneExpandedChanged.connect(onDroneExpandedChanged)
-        }
     }
 
     states: State {

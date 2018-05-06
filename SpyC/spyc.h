@@ -49,6 +49,12 @@ public:
     //! Stop server
     virtual void shutdown();
 
+    //! To local file
+    Q_INVOKABLE QString toLocalFile(const QString &sInput);
+
+    //! From local file
+    Q_INVOKABLE QString fromLocalFile(const QString &sInput);
+
 private:
     //! Register types
     void registerTypes();

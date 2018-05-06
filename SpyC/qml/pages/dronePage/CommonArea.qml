@@ -27,22 +27,22 @@ Rectangle {
             panelMgr.loadPanel("PayloadEditor")
     }
 
-    // Listen to drone edit mode changed
-    function onEditModeChanged()
+    // Listen to drone work mode changed
+    function onWorkModeChanged()
     {
-        if (targetDrone.editMode === DroneBase.MISSION_PLAN_EDIT)
+        if (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
             panelMgr.loadPanel("MissionPlanEditor")
         else
-        if (targetDrone.editMode === DroneBase.SAFETY_EDIT)
+        if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
             panelMgr.loadPanel("SafetyPlanEditor")
         else
-        if (targetDrone.editMode === DroneBase.CARTO_EDIT)
+        if (targetDrone.workMode === DroneBase.CARTO_EDIT)
             panelMgr.loadPanel("CartoEditor")
         else
-        if (targetDrone.editMode === DroneBase.PAYLOAD_EDIT)
+        if (targetDrone.workMode === DroneBase.PAYLOAD_EDIT)
             panelMgr.loadPanel("PayloadEditor")
         else
-        if (targetDrone.editMode === DroneBase.GALLERY_EDIT)
+        if (targetDrone.workMode === DroneBase.GALLERY_EDIT)
             panelMgr.loadPanel("GalleryEditor")
         else
             panelMgr.loadPanel("PayloadEditor")
@@ -50,6 +50,6 @@ Rectangle {
 
     Component.onCompleted: {
         targetDrone.stateChanged.connect(onDroneStateChanged)
-        targetDrone.editModeChanged.connect(onEditModeChanged)
+        targetDrone.workModeChanged.connect(onWorkModeChanged)
     }
 }

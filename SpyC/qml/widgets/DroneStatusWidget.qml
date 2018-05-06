@@ -6,7 +6,6 @@ import ".."
 Item {
     id: topContainer
     property variant targetDrone
-    signal maximizeButtonClicked()
 
     // Drone valid?
     function droneValid()
@@ -45,14 +44,14 @@ Item {
         level: droneValid() ? targetDrone.gpsStrength : 0
     }
 
-    // Maximize
+    // Unlock
     ImageButton {
+        id: unlockButton
         anchors.right: parent.right
         anchors.rightMargin: 4
         anchors.top: parent.top
         anchors.topMargin: 4
-        source: "qrc:/icons/ico-maximized.png"
-        onClicked: maximizeButtonClicked()
-        visible: dronePage.droneExpanded === false
+        source: "qrc:/icons/ico-unlock.svg"
+        onClicked: MASTERCONTROLLER.currentDrone = drone
     }
 }

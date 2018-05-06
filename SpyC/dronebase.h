@@ -24,10 +24,11 @@ class DroneBase : public QObject
     Q_PROPERTY(QGeoCoordinate position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(double heading READ heading WRITE setHeading NOTIFY headingChanged)
 
-    // State, edit mode and global status
+    // State, edit mode, work mode and global status
     Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
     Q_PROPERTY(QString stateText READ stateText NOTIFY stateChanged)
-    Q_PROPERTY(int editMode READ editMode WRITE setEditMode NOTIFY editModeChanged)
+    Q_PROPERTY(bool editMode READ editMode WRITE setEditMode NOTIFY editModeChanged)
+    Q_PROPERTY(int workMode READ workMode WRITE setWorkMode NOTIFY workModeChanged)
     Q_PROPERTY(int globalStatus READ globalStatus NOTIFY globalStatusChanged)
 
     // Battery and GPS level/status
@@ -44,7 +45,7 @@ class DroneBase : public QObject
 
     Q_ENUMS(Status)
     Q_ENUMS(State)
-    Q_ENUMS(EditMode)
+    Q_ENUMS(WorkMode)
     Q_ENUMS(AlertType)
 
 public:
@@ -55,7 +56,7 @@ public:
     enum State {IDLE=Qt::UserRole+1, FLYING};
 
     //! Define a drone mode
-    enum EditMode {NONE=Qt::UserRole+1, MISSION_PLAN_EDIT, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT, GALLERY_EDIT};
+    enum WorkMode {NONE=Qt::UserRole+1, MISSION_PLAN_EDIT, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT, GALLERY_EDIT};
 
     //! Alert type
     enum AlertType {NO_ALERT=Qt::UserRole+1, BATTERY, GPS, POSITION};
@@ -138,10 +139,16 @@ public:
     void setState(int iState);
 
     //! Return edit mode
-    int editMode() const;
+    bool editMode() const;
 
     //! Set edit mode
-    void setEditMode(int iMode);
+    void setEditMode(bool bEditMode);
+
+    //! Return edit mode
+    int workMode() const;
+
+    //! Set edit mode
+    void setWorkMode(int iMode);
 
     //! Return mission plan model
     WayPointModel *missionPlanModel() const;
@@ -227,8 +234,11 @@ private:
     //! State
     State m_eState = IDLE;
 
+    //! Edit mode (true/false)
+    bool m_bEditMode = false;
+
     //! Mode
-    EditMode m_eEditMode = PAYLOAD_EDIT;
+    WorkMode m_eWorkMode = PAYLOAD_EDIT;
 
     //! Global status
     Status m_eGlobalStatus = Status::NOMINAL;
@@ -303,6 +313,9 @@ signals:
 
     //! Edit mode changed
     void editModeChanged();
+
+    //! Edit mode changed
+    void workModeChanged();
 };
 
 Q_DECLARE_METATYPE(DroneBase::State)

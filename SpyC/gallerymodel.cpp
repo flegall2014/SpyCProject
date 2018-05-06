@@ -1,6 +1,7 @@
 // Qt
 #include <QImage>
 #include <QDir>
+#include <QDebug>
 
 // Application
 #include "gallerymodel.h"
@@ -39,18 +40,18 @@ QHash<int, QByteArray> GalleryModel::roleNames() const
 
 //-------------------------------------------------------------------------------------------------
 
-QVariant GalleryModel::data(const QModelIndex &index, int role) const
+QVariant GalleryModel::data(const QModelIndex &index, int iRole) const
 {
-    if (index.isValid())
+    if (!index.isValid())
         return QVariant();
     if ((index.row() < 0) || (index.row() > (rowCount()-1)))
         return QVariant();
     SnapShot snapShot = m_vSnaps[index.row()];
     QFileInfo fi(snapShot.filePath);
 
-    if (role == FileNameRole)
+    if (iRole == FileNameRole)
         return fi.baseName();
-    if (role == FilePathRole)
+    if (iRole == FilePathRole)
         return fi.absoluteFilePath();
 
     return QVariant();
@@ -71,6 +72,7 @@ void GalleryModel::addSnapShot(const QString &sSnapShotPath)
     QImage img(sSnapShotPath);
     if (!img.isNull())
     {
+        qDebug() << "ADDING: " << sSnapShotPath;
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
         m_vSnaps << SnapShot(sSnapShotPath);
         endInsertRows();
