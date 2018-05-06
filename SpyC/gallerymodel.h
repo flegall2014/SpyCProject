@@ -31,7 +31,7 @@ public:
     GalleryModel(QObject *pParent=nullptr);
 
     //! Constructor
-    GalleryModel(const QString &sDroneSnapDir, QObject *pParent=nullptr);
+    GalleryModel(const QString &sSnapShotDir, QObject *pParent=nullptr);
 
     //! Destructor
     ~GalleryModel();
@@ -52,15 +52,18 @@ public:
     //! Add snapshot
     Q_INVOKABLE void addSnapShot(const QString &sDroneSnapDir);
 
+    //! Return next snapshot name
+    Q_INVOKABLE QString getNextSnapShotName(const QString &sDroneUID);
+
     //! Initialize
-    void initialize();
+    Q_INVOKABLE void initialize();
 
 private:
     //! Snaps
     QVector<SnapShot> m_vSnaps;
 
     //! Drone snap dir
-    QString m_sDroneSnapDir = "";
+    QString m_sSnapShotDir = "";
 };
 
 #endif // GALLERYMODEL_H

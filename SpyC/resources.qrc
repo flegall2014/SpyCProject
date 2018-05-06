@@ -94,5 +94,6 @@
         <file>icons/ico-edit.svg</file>
         <file>icons/ico-swap.svg</file>
         <file>qml/toolbars/DefaultToolBar.qml</file>
+        <file>icons/ico-spinner.svg</file>
     </qresource>
 </RCC>

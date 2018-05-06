@@ -32,6 +32,7 @@ Item {
     property int mapOrVideoThumbnailSize: 256
     property int goNextIconSize: 160
     property int wayPointDelegateHeight: 64
+    property int busyIndicatorSize: 64
 
     // Font
     property string standardFont: "Segoe UI"
@@ -86,4 +87,22 @@ Item {
         }
         frame: Rectangle { color: backgroundColor }
     }
+
+    // Busy indicator style
+    property Component busyIndicatorSytle: BusyIndicatorStyle {
+        indicator: Image {
+            visible: control.running
+            source: "qrc:/icons/ico-spinner.svg"
+            width: busyIndicatorSize
+            height: busyIndicatorSize
+            fillMode: Image.PreserveAspectFit
+            RotationAnimator on rotation {
+                running: control.running
+                loops: Animation.Infinite
+                duration: 2000
+                from: 0 ; to: 360
+            }
+        }
+    }
+
 }

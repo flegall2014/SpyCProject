@@ -10,6 +10,7 @@ Rectangle {
     color: Theme.backgroundColor
     width: Theme.controlPanelWidth
     property variant targetDrone
+    signal takeSnapShot()
 
     TabView {
         anchors.fill: parent
@@ -22,6 +23,7 @@ Rectangle {
                 DroneActions {
                     anchors.fill: parent
                     targetDrone: root.targetDrone
+                    onTakeSnapShot: root.takeSnapShot()
                 }
             }
         }

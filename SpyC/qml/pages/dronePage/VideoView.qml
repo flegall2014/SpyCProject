@@ -23,6 +23,15 @@ Rectangle {
         video.stop()
     }
 
+    // Take snapshot
+    function takeSnapShot()
+    {
+        video.grabToImage(function(image) {
+            image.saveToFile(snapShotPath)
+            targetDrone.galleryModel.addSnapShot(snapShotPath)
+        });
+    }
+
     // Video
     Video {
         id: video
@@ -61,21 +70,5 @@ Rectangle {
         text: targetDrone.position.latitude.toFixed(2) + " / " + targetDrone.position.longitude.toFixed(2)
         font.pixelSize: Theme.largeFontSize
         font.bold: true
-    }
-
-    // Snapshot
-    SnapShotButton {
-        anchors.left: parent.left
-        anchors.leftMargin: Theme.standardMargin
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: Theme.standardMargin
-        source: "qrc:/icons/ico-snapshot.svg"
-        onClicked: {
-            video.grabToImage(function(image) {
-                var snapShotPath = MASTERCONTROLLER.settingController.snapShotPath(targetDrone.uid)
-                image.saveToFile(snapShotPath); // save happens here
-                targetDrone.galleryModel.addSnapShot(snapShotPath)
-            });
-        }
     }
 }

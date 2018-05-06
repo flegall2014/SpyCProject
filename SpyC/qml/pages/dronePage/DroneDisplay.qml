@@ -35,6 +35,7 @@ Rectangle {
             anchors.bottom: commonArea.top
             anchors.top: parent.top
             targetDrone: drone
+            onTakeSnapShot: videoView.takeSnapShot()
         }
 
         Item {
@@ -128,7 +129,7 @@ Rectangle {
                         if (droneDisplay.state === "map_minimized")
                              droneDisplay.state = "map_maximized"
                         if (MASTERCONTROLLER.currentDrone !== null)
-                            MASTERCONTROLLER.currentDrone.setDefaultWorkMode()
+                            MASTERCONTROLLER.currentDrone.setDefaultWorkMode
                     }
                 }
             }

@@ -10,15 +10,15 @@
 
 GalleryModel::GalleryModel(QObject *pParent) : QAbstractListModel(pParent)
 {
-    initialize();
+
 }
 
 //-------------------------------------------------------------------------------------------------
 
-GalleryModel::GalleryModel(const QString &sDroneSnapDir, QObject *pParent) : QAbstractListModel(pParent),
-    m_sDroneSnapDir(sDroneSnapDir)
+GalleryModel::GalleryModel(const QString &sSnapShotDir, QObject *pParent) : QAbstractListModel(pParent),
+    m_sSnapShotDir(sSnapShotDir)
 {
-    initialize();
+
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -69,6 +69,7 @@ int GalleryModel::rowCount(const QModelIndex &parent) const
 
 void GalleryModel::addSnapShot(const QString &sSnapShotPath)
 {
+    qDebug() << "ADDING: " << sSnapShotPath;
     QImage img(sSnapShotPath);
     if (!img.isNull())
     {
@@ -81,15 +82,32 @@ void GalleryModel::addSnapShot(const QString &sSnapShotPath)
 
 //-------------------------------------------------------------------------------------------------
 
+QString GalleryModel::getNextSnapShotName(const QString &sDroneUID)
+{
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    int iYear = currentDateTime.date().year();
+    int iMonth = currentDateTime.date().month();
+    int iDay = currentDateTime.date().day();
+    int iHour = currentDateTime.time().hour();
+    int iMin = currentDateTime.time().minute();
+    int iSec = currentDateTime.time().second();
+    QString sUniqueName = QString("%1_%2_%3_%4_%5_%6_%7.jpg").arg(sDroneUID).arg(iYear).arg(iMonth).arg(iDay).arg(iHour).arg(iMin).arg(iSec);
+    sUniqueName.replace(" ", "_");
+    return QDir(m_sSnapShotDir).absoluteFilePath(sUniqueName);
+}
+//-------------------------------------------------------------------------------------------------
+
 void GalleryModel::initialize()
 {
     beginResetModel();
-    QStringList lImages = QDir(m_sDroneSnapDir).entryList(QStringList() << "*", QDir::Files);
+    m_vSnaps.clear();
+    QStringList lImages = QDir(m_sSnapShotDir).entryList(QStringList() << "*", QDir::Files);
     foreach (QString sImagePath, lImages)
     {
-        QImage img(sImagePath);
+        QString sFullImagePath = QDir(m_sSnapShotDir).absoluteFilePath(sImagePath);
+        QImage img(sFullImagePath);
         if (!img.isNull())
-            m_vSnaps << SnapShot(sImagePath);
+            m_vSnaps << SnapShot(sFullImagePath);
     }
     endResetModel();
 }
