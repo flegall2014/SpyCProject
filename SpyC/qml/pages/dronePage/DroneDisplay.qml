@@ -127,6 +127,8 @@ Rectangle {
                         else
                         if (droneDisplay.state === "map_minimized")
                              droneDisplay.state = "map_maximized"
+                        if (MASTERCONTROLLER.currentDrone !== null)
+                            MASTERCONTROLLER.currentDrone.setDefaultWorkMode()
                     }
                 }
             }
