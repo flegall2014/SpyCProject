@@ -16,7 +16,7 @@ ImageButton {
     }
 
     onClicked: {
-        console.log("playin: ", playSound.source)
+        console.log("playing: ", playSound.source)
         playSound.play()
     }
 }

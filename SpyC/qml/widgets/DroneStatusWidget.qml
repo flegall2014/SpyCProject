@@ -51,7 +51,12 @@ Item {
         anchors.rightMargin: 4
         anchors.top: parent.top
         anchors.topMargin: 4
-        source: "qrc:/icons/ico-unlock.svg"
-        onClicked: MASTERCONTROLLER.currentDrone = drone
+        source: droneValid() ? ((MASTERCONTROLLER.currentDrone === null) ? "qrc:/icons/ico-locked.svg" : "qrc:/icons/ico-unlocked.svg") : ""
+        onClicked: {
+            if (MASTERCONTROLLER.currentDrone === null)
+                MASTERCONTROLLER.currentDrone = targetDrone
+            else
+                MASTERCONTROLLER.currentDrone = null
+        }
     }
 }

@@ -14,7 +14,7 @@ using namespace Model;
 
 DroneBase::DroneBase(QObject *parent) : QObject(parent)
 {
-
+    m_eWorkMode = m_eDefaultWorkMode;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ DroneBase::DroneBase(QObject *parent) : QObject(parent)
 DroneBase::DroneBase(const QString &sDroneUID, const QString &sVideoUrl, const QGeoCoordinate &initialPosition, QObject *parent) :
     QObject(parent), m_sDroneUID(sDroneUID), m_sVideoUrl(sVideoUrl), m_initialPosition(initialPosition), m_position(initialPosition)
 {
-
+    m_eWorkMode = m_eDefaultWorkMode;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -207,6 +207,13 @@ void DroneBase::setState(int iState)
 
 //-------------------------------------------------------------------------------------------------
 
+int DroneBase::workMode() const
+{
+    return (int)m_eWorkMode;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void DroneBase::setWorkMode(int iMode)
 {
     m_eWorkMode = (DroneBase::WorkMode)iMode;
@@ -215,24 +222,17 @@ void DroneBase::setWorkMode(int iMode)
 
 //-------------------------------------------------------------------------------------------------
 
-bool DroneBase::editMode() const
+int DroneBase::defaultWorkMode() const
 {
-    return m_bEditMode;
+    return (int)m_eDefaultWorkMode;
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneBase::setEditMode(bool bEditMode)
+void DroneBase::setDefaultWorkMode()
 {
-    m_bEditMode = bEditMode;
-    emit editModeChanged();
-}
-
-//-------------------------------------------------------------------------------------------------
-
-int DroneBase::workMode() const
-{
-    return (int)m_eWorkMode;
+    m_eWorkMode = m_eDefaultWorkMode;
+    emit workModeChanged();
 }
 
 //-------------------------------------------------------------------------------------------------

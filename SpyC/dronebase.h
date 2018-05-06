@@ -27,8 +27,8 @@ class DroneBase : public QObject
     // State, edit mode, work mode and global status
     Q_PROPERTY(int state READ state WRITE setState NOTIFY stateChanged)
     Q_PROPERTY(QString stateText READ stateText NOTIFY stateChanged)
-    Q_PROPERTY(bool editMode READ editMode WRITE setEditMode NOTIFY editModeChanged)
     Q_PROPERTY(int workMode READ workMode WRITE setWorkMode NOTIFY workModeChanged)
+    Q_PROPERTY(int defaultWorkMode READ defaultWorkMode NOTIFY defaultWorkModeChanged)
     Q_PROPERTY(int globalStatus READ globalStatus NOTIFY globalStatusChanged)
 
     // Battery and GPS level/status
@@ -56,7 +56,7 @@ public:
     enum State {IDLE=Qt::UserRole+1, FLYING};
 
     //! Define a drone mode
-    enum WorkMode {NONE=Qt::UserRole+1, MISSION_PLAN_EDIT, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT, GALLERY_EDIT};
+    enum WorkMode {MISSION_PLAN_EDIT, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT, GALLERY_EDIT};
 
     //! Alert type
     enum AlertType {NO_ALERT=Qt::UserRole+1, BATTERY, GPS, POSITION};
@@ -138,17 +138,17 @@ public:
     //! Set state
     void setState(int iState);
 
-    //! Return edit mode
-    bool editMode() const;
-
-    //! Set edit mode
-    void setEditMode(bool bEditMode);
-
-    //! Return edit mode
+    //! Return work mode
     int workMode() const;
 
-    //! Set edit mode
+    //! Set work mode
     void setWorkMode(int iMode);
+
+    //! Return default work mode
+    int defaultWorkMode() const;
+
+    //! Set default work mode
+    Q_INVOKABLE void setDefaultWorkMode();
 
     //! Return mission plan model
     WayPointModel *missionPlanModel() const;
@@ -234,11 +234,11 @@ private:
     //! State
     State m_eState = IDLE;
 
-    //! Edit mode (true/false)
-    bool m_bEditMode = false;
-
-    //! Mode
+    //! Work mode
     WorkMode m_eWorkMode = PAYLOAD_EDIT;
+
+    //! Default work mode
+    WorkMode m_eDefaultWorkMode = PAYLOAD_EDIT;
 
     //! Global status
     Status m_eGlobalStatus = Status::NOMINAL;
@@ -312,10 +312,10 @@ signals:
     void galleryModelChanged();
 
     //! Edit mode changed
-    void editModeChanged();
-
-    //! Edit mode changed
     void workModeChanged();
+
+    //! Default work mode changed
+    void defaultWorkModeChanged();
 };
 
 Q_DECLARE_METATYPE(DroneBase::State)

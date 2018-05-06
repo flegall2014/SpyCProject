@@ -77,7 +77,7 @@ Rectangle {
                         states: [
                             State {
                                 name: "default"
-                                when: (targetDrone.workMode === DroneBase.NONE)
+                                when: (MASTERCONTROLLER.currentDrone !== null) && (targetDrone.workMode === targetDrone.defaultWorkMode)
                                 PropertyChanges {
                                     target: toolBarLoader
                                     source: "qrc:/qml/toolbars/DroneDefaultToolBar.qml"
@@ -165,10 +165,7 @@ Rectangle {
                     function onDroneStateChanged()
                     {
                         if (targetDrone.state === DroneBase.FLYING)
-                        {
                             videoView.play()
-                            console.log("PLAYING ", targetDrone.videoUrl)
-                        }
                         else
                             videoView.stop()
                     }

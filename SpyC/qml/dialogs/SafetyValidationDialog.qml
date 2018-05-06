@@ -15,7 +15,7 @@ DialogBase {
             anchors.verticalCenter: parent.verticalCenter
             label: qsTr("Cancel")
             onClicked: {
-                targetDrone.workMode = DroneBase.NONE
+                targetDrone.setDefaultWorkMode()
                 closeDialog()
             }
         }
@@ -29,7 +29,7 @@ DialogBase {
             label: qsTr("OK")
             onClicked: {
                 MASTERCONTROLLER.missionPlanController.validateSafety(targetDrone.uid)
-                targetDrone.workMode = DroneBase.NONE
+                targetDrone.setDefaultWorkMode()
                 closeDialog()
             }
         }

@@ -15,8 +15,7 @@ DialogBase {
             anchors.verticalCenter: parent.verticalCenter
             label: qsTr("OK")
             onClicked: {
-                console.log(MASTERCONTROLLER.missionPlanController.currentDrone)
-                targetDrone.workMode = DroneBase.NONE
+                targetDrone.setDefaultWorkMode()
                 closeDialog()
             }
         }

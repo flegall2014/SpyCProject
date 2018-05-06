@@ -89,6 +89,8 @@
         <file>qml/panels/FlightEditorPanel.qml</file>
         <file>qml/panels/GalleryEditorPanel.qml</file>
         <file>icons/ico-gallery.svg</file>
-        <file>icons/ico-unlock.svg</file>
+        <file>qml/toolbars/DroneDefaultToolBar.qml</file>
+        <file>icons/ico-locked.svg</file>
+        <file>icons/ico-unlocked.svg</file>
     </qresource>
 </RCC>

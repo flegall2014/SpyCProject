@@ -13,8 +13,6 @@ ListView {
     opacity: 0
     visible: opacity > 0
 
-    onContentXChanged: console.log("****************** ",contentX)
-
     // Drone display
     delegate: DroneDisplay {
         id: droneDisplay
