@@ -74,33 +74,18 @@ Rectangle {
                         height: Theme.toolBarHeight
                         z: 1000
                         anchors.top: parent.top
-                        states: [
-                            State {
-                                name: "default"
-                                when: (MASTERCONTROLLER.currentDrone !== null) && (targetDrone.workMode === targetDrone.defaultWorkMode)
-                                PropertyChanges {
-                                    target: toolBarLoader
-                                    source: "qrc:/qml/toolbars/DroneDefaultToolBar.qml"
-                                }
-                            },
-                            State {
-                                name: "missionPlanEdit"
-                                when: targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT
-                                PropertyChanges {
-                                    target: toolBarLoader
-                                    source: "qrc:/qml/toolbars/MissionPlanToolBar.qml"
-                                }
-                            },
-                            State {
-                                name: "safetyEdit"
-                                when: targetDrone.workMode === DroneBase.SAFETY_EDIT
-                                PropertyChanges {
-                                    target: toolBarLoader
-                                    source: "qrc:/qml/toolbars/SafetyToolBar.qml"
-                                }
-                            }
-                        ]
                         onLoaded: item.targetDrone = targetDrone
+                        function onWorkModeChanged()
+                        {
+                            if (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
+                                toolBarLoader.source = "qrc:/qml/toolbars/MissionPlanToolBar.qml"
+                            else
+                            if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
+                                toolBarLoader.source =  "qrc:/qml/toolbars/SafetyToolBar.qml"
+                            else
+                                toolBarLoader.source = ""
+                        }
+                        Component.onCompleted: targetDrone.workModeChanged.connect(onWorkModeChanged)
                     }
                 }
 
@@ -124,6 +109,24 @@ Rectangle {
                     }
                     Component.onCompleted: {
                         targetDrone.stateChanged.connect(onDroneStateChanged)
+                    }
+                }
+
+                // Swith carto/video
+                ImageButton {
+                    id: switchButton
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 4
+                    source: "qrc:/icons/ico-swap.svg"
+                    visible: (MASTERCONTROLLER.currentDrone !== null) && (targetDrone === MASTERCONTROLLER.currentDrone)
+                    onClicked: {
+                        if (droneDisplay.state === "map_maximized")
+                            droneDisplay.state = "map_minimized"
+                        else
+                        if (droneDisplay.state === "map_minimized")
+                             droneDisplay.state = "map_maximized"
                     }
                 }
             }
@@ -176,7 +179,7 @@ Rectangle {
             }
         },
         State {
-            name: "map_maminimzed"
+            name: "map_minimized"
             PropertyChanges {
                 target: commonArea
                 height: Theme.commonAreaHeight
@@ -235,6 +238,7 @@ Rectangle {
             if (targetDrone === MASTERCONTROLLER.currentDrone)
                 droneDisplay.state = "map_maximized"
         }
+        else droneDisplay.state = ""
     }
 
     Component.onCompleted: MASTERCONTROLLER.currentDroneChanged.connect(onCurrentDroneChanged)
