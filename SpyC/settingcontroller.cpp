@@ -22,6 +22,21 @@ SettingController::~SettingController()
 
 //-------------------------------------------------------------------------------------------------
 
+bool SettingController::startup(const QStringList &lArgs)
+{
+    Q_UNUSED(lArgs);
+    return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void SettingController::shutdown()
+{
+
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void SettingController::setMasterController(MasterController *pMasterController)
 {
     m_pMasterController = pMasterController;

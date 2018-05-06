@@ -6,9 +6,10 @@
 #include <QGeoCoordinate>
 
 // Application
+#include "iservice.h"
 class MasterController;
 
-class FlightController : public QObject
+class FlightController : public QObject, public IService
 {
     Q_OBJECT
 
@@ -22,6 +23,16 @@ public:
 
     //! Destructor
     ~FlightController();
+
+    //-------------------------------------------------------------------------------------------------
+    // IService interface
+    //-------------------------------------------------------------------------------------------------
+
+    //! Startup
+    virtual bool startup(const QStringList &lArgs);
+
+    //! Shutdown
+    virtual void shutdown();
 
     //-------------------------------------------------------------------------------------------------
     // Control methods

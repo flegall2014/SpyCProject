@@ -47,7 +47,12 @@ MasterController::~MasterController()
 
 bool MasterController::startup(const QStringList &lArgs)
 {
-    Q_UNUSED(lArgs);
+    if (!m_pMissionPlanController->startup(lArgs))
+        return false;
+    if (!m_pFlightController->startup(lArgs))
+        return false;
+    if (!m_pSettingController->startup(lArgs))
+        return false;
     return true;
 }
 

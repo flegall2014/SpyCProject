@@ -23,6 +23,21 @@ MissionPlanController::~MissionPlanController()
 
 //-------------------------------------------------------------------------------------------------
 
+bool MissionPlanController::startup(const QStringList &lArgs)
+{
+    Q_UNUSED(lArgs);
+    return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MissionPlanController::shutdown()
+{
+
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void MissionPlanController::setMasterController(MasterController *pMasterController)
 {
     m_pMasterController = pMasterController;

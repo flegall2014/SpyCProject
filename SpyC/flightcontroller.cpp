@@ -21,6 +21,21 @@ FlightController::~FlightController()
 
 //-------------------------------------------------------------------------------------------------
 
+bool FlightController::startup(const QStringList &lArgs)
+{
+    Q_UNUSED(lArgs);
+    return true;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void FlightController::shutdown()
+{
+
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void FlightController::setMasterController(MasterController *pMasterController)
 {
     m_pMasterController = pMasterController;

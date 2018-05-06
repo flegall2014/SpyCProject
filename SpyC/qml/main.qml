@@ -66,7 +66,10 @@ ApplicationWindow {
             height: Theme.toolBarHeight
             anchors.bottom: parent.bottom
             enabled: dialogMgr.state === ""
-            onWindowsButtonClicked: MASTERCONTROLLER.currentDrone = null
+            onWindowsButtonClicked: {
+                MASTERCONTROLLER.currentDrone.setDefaultWorkMode()
+                MASTERCONTROLLER.currentDrone = null
+            }
             windowsButtonVisible: MASTERCONTROLLER.currentDrone !== null
         }
 
