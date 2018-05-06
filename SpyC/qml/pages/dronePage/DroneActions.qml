@@ -16,7 +16,9 @@ Grid {
             source: "qrc:/icons/ico-safety.svg"
             checkable: true
             checked: targetDrone.workMode === DroneBase.SAFETY_EDIT
-            onClicked: targetDrone.workMode = DroneBase.SAFETY_EDIT
+            onClicked: {
+                targetDrone.workMode = DroneBase.SAFETY_EDIT
+            }
             enabled: targetDrone.state !== DroneBase.FLYING
             label: qsTr("Safety")
             textPosition: "below"

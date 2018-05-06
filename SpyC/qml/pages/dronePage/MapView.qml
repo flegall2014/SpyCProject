@@ -233,6 +233,7 @@ Map {
         enabled: (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT) || (targetDrone.workMode === DroneBase.SAFETY_EDIT)
 
         onClicked: {
+            //console.log("TEST ", targetDrone, targetDrone.workMode)
             if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
                 targetDrone.addCoordinateToSafety(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
             else

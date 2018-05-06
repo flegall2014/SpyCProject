@@ -51,7 +51,12 @@ Item {
         anchors.rightMargin: 4
         anchors.top: parent.top
         anchors.topMargin: 4
-        source: droneValid() ? ((MASTERCONTROLLER.currentDrone === null) ? "qrc:/icons/ico-locked.svg" : "qrc:/icons/ico-unlocked.svg") : ""
+        source: "qrc:/icons/ico-edit.svg"
+        opacity: MASTERCONTROLLER.currentDrone === null ? 1 : 0
+        visible: opacity > 0
+        Behavior on opacity {
+            NumberAnimation {duration: Theme.standardAnimationDuration}
+        }
         onClicked: {
             if (MASTERCONTROLLER.currentDrone === null)
                 MASTERCONTROLLER.currentDrone = targetDrone

@@ -7,11 +7,24 @@ import "./widgets"
 Rectangle {
     id: statusBar
     color: Theme.statusBarColor
+    property bool windowsButtonVisible: false
+    signal windowsButtonClicked()
+
+    // Windows button
+    ImageButton {
+        id: windowsButton
+        visible: windowsButtonVisible
+        anchors.left: parent.left
+        anchors.leftMargin: Theme.standardMargin
+        anchors.verticalCenter: parent.verticalCenter
+        source: "qrc:/icons/ico-windows.svg"
+        onClicked: windowsButtonClicked()
+    }
 
     // Other drone display
     Item {
         id: otherDroneDisplay
-        anchors.left: parent.left
+        anchors.left: windowsButton.right
         anchors.leftMargin: Theme.standardMargin
         width: 512
         height: parent.height

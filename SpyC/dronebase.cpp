@@ -216,6 +216,7 @@ int DroneBase::workMode() const
 
 void DroneBase::setWorkMode(int iMode)
 {
+    //qDebug() << "SETTING WORK MODE TO " << iMode;
     m_eWorkMode = (DroneBase::WorkMode)iMode;
     emit workModeChanged();
 }
@@ -231,6 +232,7 @@ int DroneBase::defaultWorkMode() const
 
 void DroneBase::setDefaultWorkMode()
 {
+    qDebug() << "SETTING DEFAULT WORK MODE";
     m_eWorkMode = m_eDefaultWorkMode;
     emit workModeChanged();
 }
