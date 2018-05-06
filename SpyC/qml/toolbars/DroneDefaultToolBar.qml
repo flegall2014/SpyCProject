@@ -8,32 +8,24 @@ ToolBarBase {
     Item {
         id: droneStatus
         anchors.left: parent.left
-        anchors.right: maximizeButton.left
+        anchors.right: switchButton.left
         height: parent.height
     }
 
-    // Maximize
+    // Swith carto/video
     ImageButton {
-        id: maximizeButton
+        id: switchButton
         anchors.right: parent.right
         anchors.rightMargin: 4
         anchors.top: parent.top
         anchors.topMargin: 4
-        source: mapView.state === "" ? "qrc:/icons/ico-maximized.png" : "qrc:/icons/ico-minimized.png"
+        source: "qrc:/icons/ico-maximized.png"
         onClicked: {
-            if (droneDisplay.state === "")
-            {
-                droneDisplay.state = "expanded"
-                dronePage.droneExpanded = true
-                MASTERCONTROLLER.currentDrone = drone
-            }
+            if (mapView.state === "mapMinimized")
+                mapView.state = "mapMaximized"
             else
-            {
-                if (mapView.state === "")
-                    mapView.state = "mapMaximized"
-                else
-                    mapView.state = ""
-            }
+            if (mapView.state === "mapMaximized")
+                 mapView.state = "mapMinimized"
         }
     }
 }

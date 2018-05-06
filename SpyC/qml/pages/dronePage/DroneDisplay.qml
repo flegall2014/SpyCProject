@@ -62,8 +62,8 @@ Rectangle {
                 // Map view
                 MapView {
                     id: mapView
-                    width: droneDisplay.state === "expanded" ? parent.width/2 : parent.width
-                    height: droneDisplay.state === "expanded" ? parent.height : parent.height/2
+                    width: parent.width
+                    height: parent.height/2
                     z: 0
                     targetDrone: drone
 
@@ -102,64 +102,17 @@ Rectangle {
                         ]
                         onLoaded: item.targetDrone = targetDrone
                     }
-
-                    states: [
-                        State {
-                            name: "mapMaximized"
-                            PropertyChanges {
-                                target: mapView
-                                width: root.width
-                                x: 0
-                                y: 0
-                                z: 0
-                            }
-                            PropertyChanges {
-                                target: videoView
-                                width: Theme.mapOrVideoThumbnailSize
-                                height: Theme.mapOrVideoThumbnailSize
-                                x: mapView.width-Theme.mapOrVideoThumbnailSize
-                                y: mapView.height-Theme.mapOrVideoThumbnailSize
-                                z: 1000
-                            }
-                        },
-                        State {
-                            name: "mapMinimized"
-                            PropertyChanges {
-                                target: mapView
-                                width: Theme.mapOrVideoThumbnailSize
-                                height: Theme.mapOrVideoThumbnailSize
-                                x: videoView.width-Theme.mapOrVideoThumbnailSize
-                                y: videoView.height-Theme.mapOrVideoThumbnailSize
-                                z: 1000
-                            }
-                            PropertyChanges {
-                                target: videoView
-                                width: root.width
-                                x: 0
-                                y: 0
-                                z: 0
-                            }
-                        }
-                    ]
-
-                    transitions: Transition {
-                        // Make the state changes smooth
-                        NumberAnimation {
-                            duration: Theme.standardAnimationDuration
-                            properties: "x, y, width, height, opacity"
-                        }
-                    }
                 }
 
                 // Video view
                 VideoView {
                     id: videoView
                     targetDrone: drone
-                    x: droneDisplay.state === "expanded" ? mapView.width : 0
-                    y: droneDisplay.state === "expanded" ? 0 : mapView.height
+                    x: 0
+                    y: mapView.height
                     z: 0
-                    width: droneDisplay.state === "expanded" ? parent.width/2 : parent.width
-                    height: droneDisplay.state === "expanded" ? parent.height : parent.height/2
+                    width: parent.width
+                    height: parent.height/2
 
                     // Drone state changed
                     function onDroneStateChanged()
@@ -172,22 +125,6 @@ Rectangle {
                     Component.onCompleted: {
                         targetDrone.stateChanged.connect(onDroneStateChanged)
                     }
-
-                    // Maximize
-                    ImageButton {
-                        anchors.right: parent.right
-                        anchors.rightMargin: 4
-                        anchors.top: parent.top
-                        anchors.topMargin: 4
-                        visible: droneDisplay.state === "expanded" && mapView.state !== "mapMaximized"
-                        source: mapView.state === "" ? "qrc:/icons/ico-maximized.png" : "qrc:/icons/ico-minimized.png"
-                        onClicked: {
-                            if (mapView.state === "")
-                                mapView.state = "mapMinimized"
-                            else
-                                mapView.state = ""
-                        }
-                    }
                 }
             }
         }
@@ -196,8 +133,7 @@ Rectangle {
     // States
     states: [
         State {
-            name: "expanded"
-            when: MASTERCONTROLLER.currentDrone === targetDrone
+            name: "map_maximized"
             PropertyChanges {
                 target: commonArea
                 height: Theme.commonAreaHeight
@@ -222,6 +158,65 @@ Rectangle {
                 height: 0
                 opacity: 0
             }
+            PropertyChanges {
+                target: mapView
+                width: root.width
+                height: parent.height
+                x: 0
+                y: 0
+                z: 0
+            }
+            PropertyChanges {
+                target: videoView
+                width: Theme.mapOrVideoThumbnailSize
+                height: Theme.mapOrVideoThumbnailSize
+                x: mapView.width-Theme.mapOrVideoThumbnailSize
+                y: mapView.height-Theme.mapOrVideoThumbnailSize
+                z: 1000
+            }
+        },
+        State {
+            name: "map_maminimzed"
+            PropertyChanges {
+                target: commonArea
+                height: Theme.commonAreaHeight
+                opacity: 1
+            }
+            PropertyChanges {
+                target: controlPanel
+                width: Theme.controlPanelWidth
+                opacity: 1
+            }
+            PropertyChanges {
+                target: droneDisplay
+                width: dronePage.width
+            }
+            PropertyChanges {
+                target: dronePage
+                explicit: true
+                contentX: droneDisplay.x
+            }
+            PropertyChanges {
+                target: droneStatusWidget
+                height: 0
+                opacity: 0
+            }
+            PropertyChanges {
+                target: mapView
+                width: Theme.mapOrVideoThumbnailSize
+                height: Theme.mapOrVideoThumbnailSize
+                x: videoView.width-Theme.mapOrVideoThumbnailSize
+                y: videoView.height-Theme.mapOrVideoThumbnailSize
+                z: 1000
+            }
+            PropertyChanges {
+                target: videoView
+                width: root.width
+                height: parent.height
+                x: 0
+                y: 0
+                z: 0
+            }
         }
     ]
 
@@ -229,7 +224,18 @@ Rectangle {
         // Make the state changes smooth
         NumberAnimation {
             duration: Theme.standardAnimationDuration
-            properties: "width, height, contentX, opacity"
+            properties: "x, y, width, height, contentX, opacity"
         }
     }
+
+    function onCurrentDroneChanged()
+    {
+        if (MASTERCONTROLLER.currentDrone !== null)
+        {
+            if (targetDrone === MASTERCONTROLLER.currentDrone)
+                droneDisplay.state = "map_maximized"
+        }
+    }
+
+    Component.onCompleted: MASTERCONTROLLER.currentDroneChanged.connect(onCurrentDroneChanged)
 }
