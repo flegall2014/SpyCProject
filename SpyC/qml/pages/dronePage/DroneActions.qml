@@ -7,6 +7,7 @@ Grid {
     id: droneActions
     columns: 3
     property variant targetDrone
+    signal takeSnapShot()
     Item {
         width: parent.width/3
         height: width
@@ -16,9 +17,7 @@ Grid {
             source: "qrc:/icons/ico-safety.svg"
             checkable: true
             checked: targetDrone.workMode === DroneBase.SAFETY_EDIT
-            onClicked: {
-                targetDrone.workMode = DroneBase.SAFETY_EDIT
-            }
+            onClicked: targetDrone.workMode = DroneBase.SAFETY_EDIT
             enabled: targetDrone.state !== DroneBase.FLYING
             label: qsTr("Safety")
             textPosition: "below"
@@ -83,11 +82,27 @@ Grid {
         ImageButton {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
+            source: "qrc:/icons/ico-snapshot.svg"
+            enabled: targetDrone.state === DroneBase.FLYING
+            label: qsTr("Snapshot")
+            textPosition: "below"
+            onClicked: takeSnapShot()
+        }
+    }
+    Item {
+        width: parent.width/3
+        height: width
+        ImageButton {
+            endColor: Theme.defaultButtonColor
+            anchors.centerIn: parent
             source: "qrc:/icons/ico-gallery.svg"
             enabled: true
             label: qsTr("Gallery")
             textPosition: "below"
-            onClicked: targetDrone.workMode = DroneBase.GALLERY_EDIT
+            onClicked: {
+                targetDrone.galleryModel.initialize()
+                targetDrone.workMode = DroneBase.GALLERY_EDIT
+            }
         }
     }
     Item {

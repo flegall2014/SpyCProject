@@ -27,6 +27,7 @@ Rectangle {
     function takeSnapShot()
     {
         video.grabToImage(function(image) {
+            var snapShotPath = targetDrone.galleryModel.getNextSnapShotName(targetDrone.uid)
             image.saveToFile(snapShotPath)
             targetDrone.galleryModel.addSnapShot(snapShotPath)
         });
