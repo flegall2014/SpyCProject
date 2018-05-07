@@ -60,7 +60,9 @@ bool MasterController::startup(const QStringList &lArgs)
 
 void MasterController::shutdown()
 {
-
+    m_pMissionPlanController->shutdown();
+    m_pFlightController->shutdown();
+    m_pSettingController->shutdown();
 }
 
 //-------------------------------------------------------------------------------------------------
