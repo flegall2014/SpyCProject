@@ -32,7 +32,8 @@ Item {
         anchors.right: selectButton.left
         anchors.rightMargin: 2*Theme.standardMargin
         height: parent.height
-        font.pixelSize: Theme.veryLargeFontSize
+        font.pixelSize: Theme.largeFontSize
+        enabled: false
     }
     ImageButton {
         id: selectButton

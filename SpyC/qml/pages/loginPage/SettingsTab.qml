@@ -35,6 +35,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     title: qsTr("Maps")
+                    selectedFolder: MASTERCONTROLLER.settingController.mapPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.mapPath = selectedFolder
                 }
             }
@@ -52,6 +53,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     title: qsTr("Mission")
+                    selectedFolder: MASTERCONTROLLER.settingController.missionPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.missionPath = selectedFolder
                 }
             }
@@ -69,6 +71,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     title: qsTr("Logs")
+                    selectedFolder: MASTERCONTROLLER.settingController.logPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.logPath = selectedFolder
                 }
             }
@@ -86,6 +89,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     title: qsTr("Alerts")
+                    selectedFolder: MASTERCONTROLLER.settingController.alertPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.alertPath = selectedFolder
                 }
             }
@@ -103,6 +107,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     title: qsTr("Gallery")
+                    selectedFolder: MASTERCONTROLLER.settingController.galleryPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.galleryPath = selectedFolder
                 }
             }

@@ -2,6 +2,9 @@
 #include <QDebug>
 #include <QDir>
 #include <QDateTime>
+#include <QStandardPaths>
+#include <QSettings>
+#include <QLocale>
 
 // Application
 #include "settingcontroller.h"
@@ -25,6 +28,8 @@ SettingController::~SettingController()
 bool SettingController::startup(const QStringList &lArgs)
 {
     Q_UNUSED(lArgs);
+
+    loadSettings();
     return true;
 }
 
@@ -70,8 +75,6 @@ QString SettingController::snapShotPath(const QString &sDroneUID) const
     QDir dGalleryDir(sGalleryDir);
     dGalleryDir.mkpath(dGalleryDir.absolutePath());
     QString sGalleryFile = dGalleryDir.absoluteFilePath("snapshot_%1_%2.jpg").arg(sDroneUID).arg(sTimeStamp);
-
-    qDebug() << "EOEO: " << sGalleryFile;
     return sGalleryFile;
 }
 
@@ -86,8 +89,11 @@ const QString &SettingController::army() const
 
 void SettingController::setArmy(const QString &sArmy)
 {
-    m_sArmy = sArmy;
-    emit armyChanged();
+    if (sArmy != m_sArmy)
+    {
+        m_sArmy = sArmy;
+        emit armyChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -101,8 +107,11 @@ const QString &SettingController::unit() const
 
 void SettingController::setUnit(const QString &sUnit)
 {
-    m_sUnit = sUnit;
-    emit unitChanged();
+    if (sUnit != m_sUnit)
+    {
+        m_sUnit = sUnit;
+        emit unitChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -116,8 +125,11 @@ const QString &SettingController::mission() const
 
 void SettingController::setMission(const QString &sMission)
 {
-    m_sMission = sMission;
-    emit missionChanged();
+    if (sMission != m_sMission)
+    {
+        m_sMission = sMission;
+        emit missionChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -131,8 +143,11 @@ const QString &SettingController::operatorName() const
 
 void SettingController::setOperatorName(const QString &sName)
 {
-    m_sOperator = sName;
-    emit operatorNameChanged();
+    if (sName != m_sOperator)
+    {
+        m_sOperator = sName;
+        emit operatorNameChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -146,7 +161,11 @@ int SettingController::language() const
 
 void SettingController::setLanguage(int iLanguage)
 {
-    m_eLanguage = (QLocale::Language)iLanguage;
+    if ((QLocale::Language)iLanguage != m_eLanguage)
+    {
+        m_eLanguage = (QLocale::Language)iLanguage;
+        emit languageChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -160,8 +179,11 @@ const QString &SettingController::langString() const
 
 void SettingController::setLangString(const QString &sLangString)
 {
-    m_sLangString = sLangString;
-    emit langStringChanged();
+    if (sLangString != m_sLangString)
+    {
+        m_sLangString = sLangString;
+        emit langStringChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -175,8 +197,11 @@ const QString &SettingController::mapPath() const
 
 void SettingController::setMapPath(const QString &sMapPath)
 {
-    m_sMapPath = sMapPath;
-    emit mapPathChanged();
+    if (sMapPath != m_sMapPath)
+    {
+        m_sMapPath = sMapPath;
+        emit mapPathChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -190,8 +215,11 @@ const QString &SettingController::missionPath() const
 
 void SettingController::setMissionPath(const QString &sMissionPath)
 {
-    m_sMissionPath = sMissionPath;
-    emit missionPathChanged();
+    if (sMissionPath != m_sMissionPath)
+    {
+        m_sMissionPath = sMissionPath;
+        emit missionPathChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -205,8 +233,11 @@ const QString &SettingController::logPath() const
 
 void SettingController::setLogPath(const QString &sLogPath)
 {
-    m_sLogPath = sLogPath;
-    emit logPathChanged();
+    if (sLogPath != m_sLogPath)
+    {
+        m_sLogPath = sLogPath;
+        emit logPathChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -220,8 +251,11 @@ const QString &SettingController::alertPath() const
 
 void SettingController::setAlertPath(const QString &sAlertPath)
 {
-    m_sAlertPath = sAlertPath;
-    emit alertPathChanged();
+    if (sAlertPath != m_sAlertPath)
+    {
+        m_sAlertPath = sAlertPath;
+        emit alertPathChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -235,8 +269,11 @@ const QString &SettingController::galleryPath() const
 
 void SettingController::setGalleryPath(const QString &sGalleryPath)
 {
-    m_sGalleryPath = sGalleryPath;
-    emit galleryPathChanged();
+    if (sGalleryPath != m_sGalleryPath)
+    {
+        m_sGalleryPath = sGalleryPath;
+        emit galleryPathChanged();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -256,4 +293,62 @@ QMap<int, QVariant> SettingController::allSettings()
     mAllSettings[ALERT_PATH] = m_sAlertPath;
     mAllSettings[GALLERY_PATH] = m_sGalleryPath;
     return mAllSettings;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void SettingController::loadSettings()
+{
+    QDir baseDir = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+
+    QSettings settings;
+    QString sArmy = settings.value("/user/army").toString();
+    if (sArmy.simplified().isEmpty())
+        sArmy = tr("Army");
+    m_sArmy = sArmy;
+
+    QString sUnit = settings.value("/user/unit").toString();
+    if (sUnit.simplified().isEmpty())
+        sUnit = tr("Unit");
+    m_sUnit = sUnit;
+
+    QString sMission = settings.value("/user/mission").toString();
+    if (sMission.simplified().isEmpty())
+        sMission = tr("Mission");
+    m_sMission = sMission;
+
+    QString sOperator = settings.value("/user/operator").toString();
+    if (sOperator.simplified().isEmpty())
+        sOperator = tr("Operator");
+    m_sOperator = sOperator;
+
+    QString sLangString = settings.value("/user/language").toString();
+    if (sLangString.simplified().isEmpty())
+        sLangString = "FR";
+    applyLanguage(sLangString);
+
+    QString sMapPath = settings.value("/user/maps").toString();
+    if (sMapPath.simplified().isEmpty())
+        sMapPath = baseDir.absoluteFilePath("maps");
+    m_sMapPath = sMapPath;
+
+    QString sMissionPath = settings.value("/user/mission").toString();
+    if (sMissionPath.simplified().isEmpty())
+        sMissionPath = baseDir.absoluteFilePath("mission");
+    m_sMissionPath = sMissionPath;
+
+    QString sLogPath = settings.value("/user/logs").toString();
+    if (sLogPath.simplified().isEmpty())
+        sLogPath = baseDir.absoluteFilePath("logs");
+    m_sLogPath = sLogPath;
+
+    QString sAlertPath = settings.value("/user/alerts").toString();
+    if (sAlertPath.simplified().isEmpty())
+        sAlertPath = baseDir.absoluteFilePath("alerts");
+    m_sAlertPath = sAlertPath;
+
+    QString sGalleryPath = settings.value("/user/gallery").toString();
+    if (sGalleryPath.simplified().isEmpty())
+        sGalleryPath = baseDir.absoluteFilePath("gallery");
+    m_sGalleryPath = sGalleryPath;
 }

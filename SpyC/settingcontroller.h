@@ -134,6 +134,10 @@ public:
     QMap<int, QVariant> allSettings();
 
 private:
+    //! Load settings
+    void loadSettings();
+
+private:
     //! Master controller
     MasterController *m_pMasterController = nullptr;
 

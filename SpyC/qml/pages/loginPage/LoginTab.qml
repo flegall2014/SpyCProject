@@ -86,7 +86,7 @@ Item {
                     anchors.right: parent.right
                     height: parent.height
                     font.pixelSize: Theme.veryLargeFontSize
-                    placeholderText: "NAVY"
+                    text: MASTERCONTROLLER.settingController.army
                     onTextChanged: MASTERCONTROLLER.settingController.army = text
                 }
             }
@@ -113,7 +113,7 @@ Item {
                     anchors.right: parent.right
                     height: parent.height
                     font.pixelSize: Theme.veryLargeFontSize
-                    placeholderText: "TX-304"
+                    text: MASTERCONTROLLER.settingController.unit
                     onTextChanged: MASTERCONTROLLER.settingController.unit = text
                 }
             }
@@ -140,7 +140,7 @@ Item {
                     anchors.right: parent.right
                     height: parent.height
                     font.pixelSize: Theme.veryLargeFontSize
-                    placeholderText: "MALI"
+                    text: MASTERCONTROLLER.settingController.mission
                     onTextChanged: MASTERCONTROLLER.settingController.mission = text
                 }
             }
@@ -167,7 +167,7 @@ Item {
                     anchors.right: parent.right
                     height: parent.height
                     font.pixelSize: Theme.veryLargeFontSize
-                    placeholderText: "Will SMITH"
+                    text: MASTERCONTROLLER.settingController.operatorName
                     onTextChanged: MASTERCONTROLLER.settingController.operatorName = text
                 }
             }
