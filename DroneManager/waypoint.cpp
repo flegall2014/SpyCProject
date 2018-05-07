@@ -32,6 +32,13 @@ const QGeoCoordinate &WayPoint::geoCoord() const
 
 //-------------------------------------------------------------------------------------------------
 
+void WayPoint::setGeoCoord(const QGeoCoordinate &geoCoord)
+{
+    m_geoCoord = geoCoord;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 const WayPoint::Type &WayPoint::type() const
 {
     return m_eType;

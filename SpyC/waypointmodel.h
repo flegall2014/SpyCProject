@@ -51,7 +51,7 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Return path
-    const QGeoPath &path() const;
+    QGeoPath path();
 
     //! Return point count
     int pointCount() const;
@@ -70,9 +70,6 @@ public:
     void clear();
 
 private:
-    //! Geo points
-    QGeoPath m_geoPath;
-
     //! Way points
     QVector<Model::WayPoint> m_vWayPoints;
 

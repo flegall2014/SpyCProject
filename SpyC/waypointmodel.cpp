@@ -23,7 +23,7 @@ WayPointModel::~WayPointModel()
 int WayPointModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return m_geoPath.size();
+    return m_vWayPoints.size();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -42,15 +42,15 @@ QVariant WayPointModel::data(const QModelIndex &index, int iRole) const
 
     // Return way point at index
     if (iRole == WayPointCoordinate)
-        return QVariant::fromValue(m_geoPath.coordinateAt(index.row()));
+        return QVariant::fromValue(m_vWayPoints[index.row()].geoCoord());
 
     // Return way point latitude
     if (iRole == WayPointLatitude)
-        return m_geoPath.coordinateAt(index.row()).latitude();
+        return m_vWayPoints[index.row()].geoCoord().latitude();
 
     // Return way point at index
     if (iRole == WayPointLongitude)
-        return m_geoPath.coordinateAt(index.row()).longitude();
+        return m_vWayPoints[index.row()].geoCoord().longitude();
 
     // Return way point type
     if (iRole == WayPointType)
@@ -66,7 +66,9 @@ void WayPointModel::setPointPosition(int iIndex, const QGeoCoordinate &geoCoord)
     QModelIndex srcIndex = index(iIndex, 0, QModelIndex());
     if (srcIndex.isValid())
     {
-        m_geoPath.replaceCoordinate(iIndex, geoCoord);
+        Model::WayPoint currentWayPoint = m_vWayPoints[iIndex];
+        currentWayPoint.setGeoCoord(geoCoord);
+        m_vWayPoints.replace(iIndex, currentWayPoint);
         emit dataChanged(srcIndex, srcIndex);
         emit pathChanged();
     }
@@ -88,16 +90,19 @@ QHash<int, QByteArray> WayPointModel::roleNames() const
 
 //-------------------------------------------------------------------------------------------------
 
-const QGeoPath &WayPointModel::path() const
+QGeoPath WayPointModel::path()
 {
-    return m_geoPath;
+    QGeoPath geoPath;
+    foreach (Model::WayPoint wayPoint, m_vWayPoints)
+        geoPath.addCoordinate(wayPoint.geoCoord());
+    return geoPath;
 }
 
 //-------------------------------------------------------------------------------------------------
 
 int WayPointModel::pointCount() const
 {
-    return m_geoPath.size();
+    return m_vWayPoints.size();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -106,7 +111,6 @@ void WayPointModel::addCoordinate(const QGeoCoordinate &coordinate)
 {
     beginResetModel();
     m_vWayPoints << Model::WayPoint(coordinate);
-    m_geoPath.addCoordinate(coordinate);
     endResetModel();
     emit pathChanged();
 }
@@ -119,7 +123,6 @@ void WayPointModel::removeCoordinateAtIndex(int iCoordIndex)
     {
         beginResetModel();
         m_vWayPoints.removeAt(iCoordIndex);
-        m_geoPath.removeCoordinate(iCoordIndex);
         endResetModel();
         emit pathChanged();
     }
@@ -130,8 +133,7 @@ void WayPointModel::removeCoordinateAtIndex(int iCoordIndex)
 void WayPointModel::clear()
 {
     beginResetModel();
-    while (!m_geoPath.isEmpty())
-        m_geoPath.removeCoordinate(0);
+    m_vWayPoints.clear();
     endResetModel();
     emit pathChanged();
 }

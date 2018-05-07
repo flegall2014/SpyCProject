@@ -33,6 +33,9 @@ public:
     //! Return geoCoord
     const QGeoCoordinate &geoCoord() const;
 
+    //! Set geoCoord
+    void setGeoCoord(const QGeoCoordinate &geoCoord);
+
     //! Return type
     const Type &type() const;
 
