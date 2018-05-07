@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QTimer>
 
+namespace Model {
 class BaseSimulator : public QObject
 {
     Q_OBJECT
@@ -41,5 +42,6 @@ public slots:
     //! Time out
     virtual void onTimeOut() {}
 };
+}
 
 #endif // BASESIMULATOR_H

@@ -7,6 +7,9 @@
 #include <QGeoCoordinate>
 #include <QGeoPath>
 
+// Application
+#include <waypoint.h>
+
 class WayPointModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -19,7 +22,7 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Define roles
-    enum Roles {WayPointIndex=Qt::UserRole+1, WayPointCoordinate, WayPointLatitude, WayPointLongitude};
+    enum Roles {WayPointIndex=Qt::UserRole+1, WayPointCoordinate, WayPointLatitude, WayPointLongitude, WayPointType};
 
     //! Constructor
     WayPointModel(QObject *pParent=nullptr);
@@ -69,6 +72,9 @@ public:
 private:
     //! Geo points
     QGeoPath m_geoPath;
+
+    //! Way points
+    QVector<Model::WayPoint> m_vWayPoints;
 
 signals:
     //! Path changed

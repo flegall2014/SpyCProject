@@ -52,6 +52,10 @@ QVariant WayPointModel::data(const QModelIndex &index, int iRole) const
     if (iRole == WayPointLongitude)
         return m_geoPath.coordinateAt(index.row()).longitude();
 
+    // Return way point type
+    if (iRole == WayPointType)
+        return (int)m_vWayPoints[index.row()].type();
+
     return QVariant();
 }
 
@@ -77,6 +81,7 @@ QHash<int, QByteArray> WayPointModel::roleNames() const
     hRoleNames[WayPointCoordinate] = "wayPointCoordinate";
     hRoleNames[WayPointLatitude] = "wayPointLatitude";
     hRoleNames[WayPointLongitude] = "wayPointLongitude";
+    hRoleNames[WayPointType] = "wayPointType";
 
     return hRoleNames;
 }
@@ -100,6 +105,7 @@ int WayPointModel::pointCount() const
 void WayPointModel::addCoordinate(const QGeoCoordinate &coordinate)
 {
     beginResetModel();
+    m_vWayPoints << Model::WayPoint(coordinate);
     m_geoPath.addCoordinate(coordinate);
     endResetModel();
     emit pathChanged();
@@ -112,6 +118,7 @@ void WayPointModel::removeCoordinateAtIndex(int iCoordIndex)
     if ((iCoordIndex >= 0) && (iCoordIndex < rowCount()))
     {
         beginResetModel();
+        m_vWayPoints.removeAt(iCoordIndex);
         m_geoPath.removeCoordinate(iCoordIndex);
         endResetModel();
         emit pathChanged();
