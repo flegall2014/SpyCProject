@@ -3,10 +3,8 @@
 
 // Qt
 #include <QGeoCoordinate>
-#include "drone_manager_global.h"
 
-namespace Model {
-class DRONEMANAGERSHARED_EXPORT WayPoint
+class WayPoint
 {
     Q_ENUMS(Type)
 
@@ -46,6 +44,5 @@ private:
     //! Point type
     Type m_eType = POINT;
 };
-}
 
 #endif // WAYPOINT_H

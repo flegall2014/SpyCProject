@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Layouts 1.2
 import "../widgets"
+import ".."
 
 Item {
     id: pointEditor

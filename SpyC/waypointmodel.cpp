@@ -66,7 +66,7 @@ void WayPointModel::setPointPosition(int iIndex, const QGeoCoordinate &geoCoord)
     QModelIndex srcIndex = index(iIndex, 0, QModelIndex());
     if (srcIndex.isValid())
     {
-        Model::WayPoint currentWayPoint = m_vWayPoints[iIndex];
+        WayPoint currentWayPoint = m_vWayPoints[iIndex];
         currentWayPoint.setGeoCoord(geoCoord);
         m_vWayPoints.replace(iIndex, currentWayPoint);
         emit dataChanged(srcIndex, srcIndex);
@@ -93,7 +93,7 @@ QHash<int, QByteArray> WayPointModel::roleNames() const
 QGeoPath WayPointModel::path()
 {
     QGeoPath geoPath;
-    foreach (Model::WayPoint wayPoint, m_vWayPoints)
+    foreach (WayPoint wayPoint, m_vWayPoints)
         geoPath.addCoordinate(wayPoint.geoCoord());
     return geoPath;
 }
@@ -125,7 +125,7 @@ void WayPointModel::setCurrentPointIndex(int iIndex)
 void WayPointModel::addCoordinate(const QGeoCoordinate &coordinate)
 {
     beginResetModel();
-    m_vWayPoints << Model::WayPoint(coordinate);
+    m_vWayPoints << WayPoint(coordinate);
     endResetModel();
     emit pathChanged();
 }

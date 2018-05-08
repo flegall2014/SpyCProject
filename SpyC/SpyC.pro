@@ -66,7 +66,8 @@ HEADERS += \
     settingcontroller.h \
     gallerymodel.h \
     batterycontroller.h \
-    gpscontroller.h
+    gpscontroller.h \
+    waypoint.h
 
 SOURCES += \
     main.cpp \
@@ -83,7 +84,8 @@ SOURCES += \
     settingcontroller.cpp \
     gallerymodel.cpp \
     batterycontroller.cpp \
-    gpscontroller.cpp
+    gpscontroller.cpp \
+    waypoint.cpp
 
 DISTFILES +=
 

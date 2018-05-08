@@ -8,7 +8,7 @@
 #include <QGeoPath>
 
 // Application
-#include <waypoint.h>
+#include "waypoint.h"
 
 class WayPointModel : public QAbstractListModel
 {
@@ -78,7 +78,7 @@ public:
 
 private:
     //! Way points
-    QVector<Model::WayPoint> m_vWayPoints;
+    QVector<WayPoint> m_vWayPoints;
 
     //! Current point index
     int m_iCurrentPointIndex = 0;

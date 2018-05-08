@@ -48,8 +48,7 @@ SOURCES += \
     drone.cpp \
     batterysimulator.cpp \
     gpssimulator.cpp \
-    basesimulator.cpp \
-    waypoint.cpp
+    basesimulator.cpp
 
 HEADERS +=\
     ibaseplugin.h \
@@ -59,6 +58,5 @@ HEADERS +=\
     drone.h \
     batterysimulator.h \
     gpssimulator.h \
-    basesimulator.h \
-    waypoint.h
+    basesimulator.h
 

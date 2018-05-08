@@ -12,7 +12,7 @@ PanelBase {
         // Way point view
         WayPointView {
             anchors.left: parent.left
-            anchors.right: pointEditor.left
+            anchors.right: singlePointEditor.left
             height: parent.height
             model: droneValid() ? targetDrone.missionPlanModel : undefined
         }
