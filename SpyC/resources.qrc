@@ -99,5 +99,6 @@
         <file>qml/ToolBar.qml</file>
         <file>qml/ToolBarBase.qml</file>
         <file>sounds/sound_take_pic.mp3</file>
+        <file>qml/panels/SinglePointEditor.qml</file>
     </qresource>
 </RCC>
