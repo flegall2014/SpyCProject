@@ -107,6 +107,21 @@ int WayPointModel::pointCount() const
 
 //-------------------------------------------------------------------------------------------------
 
+int WayPointModel::currentPointIndex() const
+{
+    return m_iCurrentPointIndex;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void WayPointModel::setCurrentPointIndex(int iIndex)
+{
+    m_iCurrentPointIndex = iIndex;
+    emit currentPointIndexChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void WayPointModel::addCoordinate(const QGeoCoordinate &coordinate)
 {
     beginResetModel();

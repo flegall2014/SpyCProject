@@ -29,6 +29,7 @@ PanelBase {
                     height: Theme.toolBarHeight
                     RowLayout {
                         anchors.centerIn: parent
+                        Layout.fillWidth: true
                         ImageButton {
                             source: "qrc:/icons/ico-point.svg"
                         }

@@ -105,6 +105,7 @@ Map {
                         }
                     }
                     onPressed: {
+                        targetDrone.missionPlanModel.currentPointIndex = index
                         circle.selected = true
                     }
                     onPositionChanged: {
@@ -179,6 +180,7 @@ Map {
                             targetDrone.removeCoordinateFromSafetyPlanAtIndex(index)
                     }
                     onPressed: {
+                        targetDrone.safetyModel.currentPointIndex = index
                         circle.selected = true
                     }
                     onPositionChanged: {

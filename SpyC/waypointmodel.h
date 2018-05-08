@@ -15,6 +15,7 @@ class WayPointModel : public QAbstractListModel
     Q_OBJECT
     Q_PROPERTY(QGeoPath path READ path NOTIFY pathChanged)
     Q_PROPERTY(int pointCount READ pointCount NOTIFY pathChanged)
+    Q_PROPERTY(int currentPointIndex READ currentPointIndex WRITE setCurrentPointIndex NOTIFY currentPointIndexChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -56,6 +57,12 @@ public:
     //! Return point count
     int pointCount() const;
 
+    //! Return current point index
+    int currentPointIndex() const;
+
+    //! Set current point index
+    void setCurrentPointIndex(int iIndex);
+
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------
@@ -73,9 +80,15 @@ private:
     //! Way points
     QVector<Model::WayPoint> m_vWayPoints;
 
+    //! Current point index
+    int m_iCurrentPointIndex = 0;
+
 signals:
     //! Path changed
     void pathChanged();
+
+    //! Current point index changed
+    void currentPointIndexChanged();
 };
 
 #endif // WAYPOINTMODEL_H

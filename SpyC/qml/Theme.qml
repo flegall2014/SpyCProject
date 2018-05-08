@@ -22,6 +22,7 @@ Item {
     property color missionPlanColor: "green"
     property color videoBkgColor: "black"
     property color defaultButtonColor: "steelblue"
+    property color selectedColor: "orange"
 
     // Sizes
     property int toolBarHeight: 64

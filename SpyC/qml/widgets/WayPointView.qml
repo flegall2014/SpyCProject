@@ -41,6 +41,7 @@ ListView {
                 width: listView.width/columnTitles.length
                 height: parent.height
                 text: wayPointIndex
+                color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
             }
 
             // Latitude delegate
@@ -48,6 +49,7 @@ ListView {
                 width: listView.width/columnTitles.length
                 height: parent.height
                 text: wayPointLatitude
+                color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
             }
 
             // Longitude delegate
@@ -55,6 +57,7 @@ ListView {
                 width: listView.width/columnTitles.length
                 height: parent.height
                 text: wayPointLongitude
+                color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
             }
 
             // Altitude delegate
@@ -62,6 +65,7 @@ ListView {
                 width: listView.width/columnTitles.length
                 height: parent.height
                 text: "0"
+                color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
             }
 
             // Ground height deleagate
@@ -69,6 +73,7 @@ ListView {
                 width: listView.width/columnTitles.length
                 height: parent.height
                 text: "0"
+                color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
             }
         }
 
@@ -91,7 +96,7 @@ ListView {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: listView.currentIndex = index
+            onClicked: listView.model.currentPointIndex = index
         }
     }
 }
