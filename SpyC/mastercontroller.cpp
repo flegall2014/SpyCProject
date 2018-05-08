@@ -9,6 +9,8 @@
 #include "settingcontroller.h"
 #include "missionplancontroller.h"
 #include "flightcontroller.h"
+#include "batterycontroller.h"
+#include "gpscontroller.h"
 #include "dronebase.h"
 #include <dronemanager.h>
 
@@ -16,7 +18,7 @@
 
 MasterController::MasterController(QObject *pParent) : QObject(pParent)
 {
-    qRegisterMetaType<DroneList>("DroneList");
+    // Main drone model
     m_pDroneModel = new DroneModel(this);
 
     // Setup mission plan controller
@@ -30,6 +32,14 @@ MasterController::MasterController(QObject *pParent) : QObject(pParent)
     // Setup setting controller
     m_pSettingController = new SettingController(this);
     m_pSettingController->setMasterController(this);
+
+    // Setup battery controller
+    m_pBatteryController = new BatteryController(this);
+    m_pBatteryController->setMasterController(this);
+
+    // Setup gps controller
+    m_pGPSController = new GPSController(this);
+    m_pGPSController->setMasterController(this);
 
     // Speech management
     m_pSpeech = new QTextToSpeech(this);
@@ -47,11 +57,15 @@ MasterController::~MasterController()
 
 bool MasterController::startup(const QStringList &lArgs)
 {
+    if (!m_pSettingController->startup(lArgs))
+        return false;
     if (!m_pMissionPlanController->startup(lArgs))
         return false;
     if (!m_pFlightController->startup(lArgs))
         return false;
-    if (!m_pSettingController->startup(lArgs))
+    if (!m_pBatteryController->startup(lArgs))
+        return false;
+    if (!m_pGPSController->startup(lArgs))
         return false;
     return true;
 }
@@ -63,6 +77,8 @@ void MasterController::shutdown()
     m_pMissionPlanController->shutdown();
     m_pFlightController->shutdown();
     m_pSettingController->shutdown();
+    m_pBatteryController->shutdown();
+    m_pGPSController->shutdown();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -75,8 +91,8 @@ void MasterController::setModel(Model::DroneManager *pDroneManager)
         // From model to view
         connect(m_pDroneManager, &Model::DroneManager::newDroneAvailable, this, &MasterController::onNewDroneAvailable, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::positionChanged, m_pFlightController, &FlightController::onPositionChanged, Qt::QueuedConnection);
-        connect(m_pDroneManager, &Model::DroneManager::batteryLevelChanged, m_pFlightController, &FlightController::onBatteryLevelChanged, Qt::QueuedConnection);
-        connect(m_pDroneManager, &Model::DroneManager::gpsStrengthChanged, m_pFlightController, &FlightController::onGPSStrengthChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::batteryLevelChanged, m_pBatteryController, &BatteryController::onBatteryLevelChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::gpsStrengthChanged, m_pGPSController, &GPSController::onGPSStrengthChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::missionPlanChanged, m_pMissionPlanController, &MissionPlanController::onMissionPlanChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::safetyChanged, m_pMissionPlanController, &MissionPlanController::onSafetyChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::droneError, m_pMissionPlanController, &MissionPlanController::onMissionPlanError, Qt::QueuedConnection);
@@ -96,15 +112,6 @@ void MasterController::setModel(Model::DroneManager *pDroneManager)
 void MasterController::detectDrones()
 {
     emit startDroneDetection();
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void MasterController::setAllDroneState(const DroneBase::State &eState)
-{
-    foreach (DroneBase *pDrone, m_vDrones)
-        if (pDrone != nullptr)
-            pDrone->setState(eState);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -149,6 +156,20 @@ FlightController *MasterController::flightController() const
 SettingController *MasterController::settingController() const
 {
     return m_pSettingController;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+BatteryController *MasterController::batteryController() const
+{
+    return m_pBatteryController;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+GPSController *MasterController::gpsController() const
+{
+    return m_pGPSController;
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -1,15 +1,14 @@
-#ifndef FLIGHTCONTROLLER_H
-#define FLIGHTCONTROLLER_H
+#ifndef BATTERYCONTROLLER_H
+#define BATTERYCONTROLLER_H
 
 // Qt
 #include <QObject>
-#include <QGeoCoordinate>
 
 // Application
 #include "iservice.h"
 class MasterController;
 
-class FlightController : public QObject, public IService
+class BatteryController : public QObject, public IService
 {
     Q_OBJECT
 
@@ -19,10 +18,10 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Constructor
-    explicit FlightController(QObject *pParent=nullptr);
+    explicit BatteryController(QObject *pParent=nullptr);
 
     //! Destructor
-    ~FlightController();
+    ~BatteryController();
 
     //-------------------------------------------------------------------------------------------------
     // IService interface
@@ -41,29 +40,13 @@ public:
     // Set master controller
     void setMasterController(MasterController *pMasterController);
 
-    //! Take off
-    Q_INVOKABLE void takeOff(const QString &sDroneUID);
-
-    //! Fail safe
-    Q_INVOKABLE void failSafe(const QString &sDroneUID);
-
 private:
     //! Master controller
     MasterController *m_pMasterController = nullptr;
 
-public slots:    
-    //! Position changed
-    void onPositionChanged(const QGeoCoordinate &position, double dHeading, const QString &sDroneUID);
-
-    //! Fail safe done
-    void onFailSafeDone(const QString &sDroneUID);
-
-signals:
-    //! Send a take off request
-    void takeOffRequest(const QString &sDroneUID);
-
-    //! Send a failsafe request
-    void failSafeRequest(const QString &sDroneUID);
+public slots:
+    //! Battery level changed
+    void onBatteryLevelChanged(int iBatteryLevel, const QString &sDroneUID);
 };
 
-#endif // FLIGHTCONTROLLER_H
+#endif // BATTERYCONTROLLER_H

@@ -6,6 +6,7 @@ import ".."
 Item {
     id: indexDelegate
     property alias text: label.text
+    property alias color: label.color
     Rectangle {
         anchors.fill: parent
         color: Theme.backgroundColor

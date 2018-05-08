@@ -88,5 +88,10 @@ ListView {
             color: "green"
             visible: index === listView.model.pointCount-1
         }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: listView.currentIndex = index
+        }
     }
 }

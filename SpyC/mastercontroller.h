@@ -17,15 +17,18 @@ class DroneManager;
 class MissionPlanController;
 class FlightController;
 class SettingController;
-typedef QList<DroneBase *> DroneList;
+class BatteryController;
+class GPSController;
 
 class MasterController : public QObject, public IService
 {
     Q_OBJECT
     Q_PROPERTY(DroneModel *droneModel READ droneModel NOTIFY droneModelChanged)
-    Q_PROPERTY(SettingController *settingController READ settingController NOTIFY settingControllerChanged)
     Q_PROPERTY(MissionPlanController *missionPlanController READ missionPlanController NOTIFY missionPlanControllerChanged)
     Q_PROPERTY(FlightController *flightController READ flightController NOTIFY flightControllerChanged)
+    Q_PROPERTY(SettingController *settingController READ settingController NOTIFY settingControllerChanged)
+    Q_PROPERTY(BatteryController *batteryController READ batteryController NOTIFY batteryControllerChanged)
+    Q_PROPERTY(GPSController *gpsController READ gpsController NOTIFY gpsControllerChanged)
     Q_PROPERTY(DroneBase *currentDrone READ currentDrone WRITE setCurrentDrone NOTIFY currentDroneChanged)
     Q_PROPERTY(QString applicationTitle READ applicationTitle WRITE setApplicationTitle NOTIFY applicationTitleChanged)
     Q_ENUMS(DroneError)
@@ -33,6 +36,9 @@ class MasterController : public QObject, public IService
 public:
     friend class MissionPlanController;
     friend class FlightController;
+    friend class SettingController;
+    friend class BatteryController;
+    friend class GPSController;
 
     //! Drone error
     enum DroneError {NO_SAFETY=Qt::UserRole+1, NO_MISSION_PLAN};
@@ -66,9 +72,6 @@ public:
 
     //! Detect drones
     Q_INVOKABLE void detectDrones();
-
-    //! Set drone state
-    Q_INVOKABLE void setAllDroneState(const DroneBase::State &eState);
 
     //! Update application title
     Q_INVOKABLE void updateApplicationTitle(const QString &sArmy, const QString &sUnit, const QString &sMission, const QString &sOperator);
@@ -109,6 +112,12 @@ private:
     //! Return setting controller
     SettingController *settingController() const;
 
+    //! Return battery controller
+    BatteryController *batteryController() const;
+
+    //! Return GPS controller
+    GPSController *gpsController() const;
+
     //! Return drone by UID
     DroneBase *getDrone(const QString &sDroneUID) const;
 
@@ -136,6 +145,12 @@ private:
 
     //! Setting controller
     SettingController *m_pSettingController = nullptr;
+
+    //! Battery controller
+    BatteryController *m_pBatteryController = nullptr;
+
+    //! GPS controller
+    GPSController *m_pGPSController = nullptr;
 
     //! Text to speech
     QTextToSpeech *m_pSpeech = nullptr;
@@ -165,6 +180,12 @@ signals:
 
     //! Flight controller changed
     void flightControllerChanged();
+
+    //! Battery controller changed
+    void batteryControllerChanged();
+
+    //! GPS controller changed
+    void gpsControllerChanged();
 
     //! Application title changed
     void applicationTitleChanged();
