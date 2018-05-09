@@ -230,6 +230,21 @@ int DroneBase::defaultWorkMode() const
 
 //-------------------------------------------------------------------------------------------------
 
+int DroneBase::currentExclusionShape() const
+{
+    return (int)m_eExclusionShape;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::setCurrentExclusionShape(int iExclusionShape)
+{
+    m_eExclusionShape = (ExclusionShape)iExclusionShape;
+    emit currentExclusionShapeChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void DroneBase::setDefaultWorkMode()
 {
     qDebug() << "SETTING DEFAULT WORK MODE";

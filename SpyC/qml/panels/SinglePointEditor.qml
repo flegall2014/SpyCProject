@@ -13,18 +13,22 @@ Item {
         Item {
             width: parent.width
             height: Theme.toolBarHeight
-            RowLayout {
+            anchors.top: parent.top
+            ImageButton {
+                source: "qrc:/icons/ico-point.svg"
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.standardMargin
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            ImageButton {
+                source: "qrc:/icons/ico-circle.svg"
                 anchors.centerIn: parent
-                Layout.fillWidth: true
-                ImageButton {
-                    source: "qrc:/icons/ico-point.svg"
-                }
-                ImageButton {
-                    source: "qrc:/icons/ico-circle.svg"
-                }
-                ImageButton {
-                    source: "qrc:/icons/ico-hippodrom.svg"
-                }
+            }
+            ImageButton {
+                source: "qrc:/icons/ico-hippodrom.svg"
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.standardMargin
+                anchors.verticalCenter: parent.verticalCenter
             }
         }
     }

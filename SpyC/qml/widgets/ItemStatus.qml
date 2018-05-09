@@ -26,7 +26,7 @@ Item {
         smooth: true
         radius: 8
         width: height
-        height: parent.height-12
+        height: Theme.buttonSize
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 4

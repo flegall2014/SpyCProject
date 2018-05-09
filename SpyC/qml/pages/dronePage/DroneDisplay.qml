@@ -68,9 +68,9 @@ Rectangle {
                     z: 0
                     targetDrone: drone
 
-                    // Toolbar loader
+                    // Horizontal toolbar loader
                     Loader {
-                        id: toolBarLoader
+                        id: horizontalToolBarLoader
                         width: parent.width
                         height: Theme.toolBarHeight
                         z: 1000
@@ -79,12 +79,12 @@ Rectangle {
                         function onWorkModeChanged()
                         {
                             if (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
-                                toolBarLoader.source = "qrc:/qml/toolbars/MissionPlanToolBar.qml"
+                                horizontalToolBarLoader.source = "qrc:/qml/toolbars/MissionPlanToolBar.qml"
                             else
                             if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
-                                toolBarLoader.source =  "qrc:/qml/toolbars/SafetyToolBar.qml"
+                                horizontalToolBarLoader.source =  "qrc:/qml/toolbars/SafetyToolBar.qml"
                             else
-                                toolBarLoader.source = ""
+                                horizontalToolBarLoader.source = ""
                         }
                         Component.onCompleted: targetDrone.workModeChanged.connect(onWorkModeChanged)
                     }

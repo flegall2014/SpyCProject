@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/ico-battery.svg</file>
-        <file>icons/ico-circle.svg</file>
         <file>icons/ico-close.svg</file>
         <file>icons/ico-crash.svg</file>
         <file>icons/ico-drone.svg</file>
@@ -100,5 +99,10 @@
         <file>qml/ToolBarBase.qml</file>
         <file>sounds/sound_take_pic.mp3</file>
         <file>qml/panels/SinglePointEditor.qml</file>
+        <file>icons/ico-circle.svg</file>
+        <file>icons/ico-rectangle.svg</file>
+        <file>icons/ico-triangle.svg</file>
+        <file>qml/panels/ExclusionAreaEditorPanel.qml</file>
+        <file>icons/ico-exclude.svg</file>
     </qresource>
 </RCC>

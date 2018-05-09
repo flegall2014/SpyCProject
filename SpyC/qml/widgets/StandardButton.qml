@@ -30,7 +30,6 @@ Rectangle {
         visible: textPosition === "below" && text.length > 0
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.bottom
-        anchors.topMargin: 4
         width: parent.width
         color: textColor
         text: button.label

@@ -4,6 +4,7 @@ import QtPositioning 5.6
 import QtLocation 5.6
 import QtQuick.Controls 1.4
 import Components 1.0
+import QtQuick.Shapes 1.0
 import "../.."
 import "../../toolbars"
 

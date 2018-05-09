@@ -3,6 +3,7 @@
 
 // Qt
 #include <QGeoCoordinate>
+#include <QVariantMap>
 
 class WayPoint
 {
@@ -10,6 +11,17 @@ class WayPoint
 
 public:
     enum Type {POINT, LOITER, EIGHT, HIPPODROM};
+    enum MetaData {
+        // Loiter
+        RADIUS,
+
+        // Eight / Hippodrom
+        ANGLE,
+        LENGTH,
+
+        // Clock wise?
+        CLOCKWISE
+    };
 
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
@@ -37,12 +49,21 @@ public:
     //! Return type
     const Type &type() const;
 
+    //! Set type
+    void setType(const Type &eType, bool bClockWise=true);
+
+    //! Set default meta data for type
+    void setDefaultMetaDataForType(const Type &eType, bool bClockWise=true);
+
 private:
     //! Geo coordinate
     QGeoCoordinate m_geoCoord;
 
     //! Point type
     Type m_eType = POINT;
+
+    //! Point metadata
+    QMap<int, QVariant> m_mMetaData;
 };
 
 #endif // WAYPOINT_H

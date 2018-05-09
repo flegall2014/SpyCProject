@@ -29,6 +29,7 @@ class DroneBase : public QObject
     Q_PROPERTY(QString stateText READ stateText NOTIFY stateChanged)
     Q_PROPERTY(int workMode READ workMode WRITE setWorkMode NOTIFY workModeChanged)
     Q_PROPERTY(int defaultWorkMode READ defaultWorkMode NOTIFY defaultWorkModeChanged)
+    Q_PROPERTY(int currentExclusionShape READ currentExclusionShape WRITE setCurrentExclusionShape NOTIFY currentExclusionShapeChanged)
     Q_PROPERTY(int globalStatus READ globalStatus NOTIFY globalStatusChanged)
 
     // Battery and GPS level/status
@@ -47,6 +48,7 @@ class DroneBase : public QObject
     Q_ENUMS(State)
     Q_ENUMS(WorkMode)
     Q_ENUMS(AlertType)
+    Q_ENUMS(ExclusionShape)
 
 public:
     //! Define a status
@@ -56,7 +58,10 @@ public:
     enum State {IDLE=Qt::UserRole+1, FLYING};
 
     //! Define a drone mode
-    enum WorkMode {MISSION_PLAN_EDIT=Qt::UserRole+1, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT, GALLERY_EDIT};
+    enum WorkMode {MISSION_PLAN_EDIT=Qt::UserRole+1, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT, GALLERY_EDIT, EXCLUSION_EDIT};
+
+    //! Exclusion shape
+    enum ExclusionShape {ELLIPSE=Qt::UserRole+1, RECTANGLE, TRIANGLE};
 
     //! Alert type
     enum AlertType {NO_ALERT=Qt::UserRole+1, BATTERY, GPS, POSITION};
@@ -146,6 +151,12 @@ public:
 
     //! Return default work mode
     int defaultWorkMode() const;
+
+    //! Return current exclusion shape
+    int currentExclusionShape() const;
+
+    //! Set current exclusion shape
+    void setCurrentExclusionShape(int iExclusionShape);
 
     //! Set default work mode
     Q_INVOKABLE void setDefaultWorkMode();
@@ -240,6 +251,9 @@ private:
     //! Default work mode
     WorkMode m_eDefaultWorkMode = PAYLOAD_EDIT;
 
+    //! Current exclusion shape
+    ExclusionShape m_eExclusionShape = ELLIPSE;
+
     //! Global status
     Status m_eGlobalStatus = Status::NOMINAL;
 
@@ -316,6 +330,9 @@ signals:
 
     //! Default work mode changed
     void defaultWorkModeChanged();
+
+    //! Current exclusion shape changed
+    void currentExclusionShapeChanged();
 };
 
 Q_DECLARE_METATYPE(DroneBase::State)

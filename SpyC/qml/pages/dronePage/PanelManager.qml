@@ -66,6 +66,11 @@ StackView {
             "name": "GalleryEditor",
             "displayName": "Gallery Editor",
             "url": "qrc:/qml/panels/GalleryEditorPanel.qml"
+        },
+        {
+            "name": "ExclusionAreaEditor",
+            "displayName": "Exclusion Area",
+            "url": "qrc:/qml/panels/ExclusionAreaEditorPanel.qml"
         }
     ]
 

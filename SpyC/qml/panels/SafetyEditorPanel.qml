@@ -3,10 +3,12 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import ".."
 import "../widgets"
+import "../toolbars"
 
 PanelBase {
     panelContents: Item {
         anchors.fill: parent
+
         WayPointView {
             anchors.fill: parent
             model: droneValid() ? targetDrone.safetyModel : undefined

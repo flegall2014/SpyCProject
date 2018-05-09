@@ -45,6 +45,9 @@ Rectangle {
         if (targetDrone.workMode === DroneBase.GALLERY_EDIT)
             panelMgr.loadPanel("GalleryEditor")
         else
+        if (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
+            panelMgr.loadPanel("ExclusionAreaEditor")
+        else
             panelMgr.loadPanel("PayloadEditor")
     }
 

@@ -44,6 +44,21 @@ Grid {
         ImageButton {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
+            source: "qrc:/icons/ico-exclude.svg"
+            checkable: true
+            checked: targetDrone.workMode === DroneBase.EXCLUSION_EDIT
+            onClicked: targetDrone.workMode = DroneBase.EXCLUSION_EDIT
+            enabled: targetDrone.state !== DroneBase.FLYING
+            label: qsTr("Exclusion area")
+            textPosition: "below"
+        }
+    }
+    Item {
+        width: parent.width/3
+        height: width
+        ImageButton {
+            endColor: Theme.defaultButtonColor
+            anchors.centerIn: parent
             source: "qrc:/icons/ico-takeoff.svg"
             onClicked: dialogMgr.showDialog(SpyC.CONFIRM_TAKE_OFF)
             enabled: targetDrone.state !== DroneBase.FLYING

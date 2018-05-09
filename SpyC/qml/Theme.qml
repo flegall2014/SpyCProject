@@ -25,6 +25,7 @@ Item {
     property color selectedColor: "orange"
 
     // Sizes
+    property int toolBarWidth: 64
     property int toolBarHeight: 64
     property int controlPanelWidth: 316
     property int commonAreaHeight: 316
@@ -34,6 +35,7 @@ Item {
     property int goNextIconSize: 160
     property int wayPointDelegateHeight: 64
     property int busyIndicatorSize: 64
+    property int panelTitleWidth: 256
 
     // Font
     property string standardFont: "Segoe UI"

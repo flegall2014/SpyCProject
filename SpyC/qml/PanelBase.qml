@@ -36,9 +36,11 @@ Item {
         height: Theme.toolBarHeight
         StandardText {
             id: panelTitle
+            width: Theme.panelTitleWidth
             anchors.left: parent.left
             anchors.leftMargin: Theme.standardMargin
             anchors.verticalCenter: parent.verticalCenter
+            horizontalAlignment: Text.AlignLeft
         }
     }
 
