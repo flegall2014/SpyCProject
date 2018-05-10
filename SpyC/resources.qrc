@@ -104,5 +104,8 @@
         <file>icons/ico-triangle.svg</file>
         <file>qml/panels/ExclusionAreaEditorPanel.qml</file>
         <file>icons/ico-exclude.svg</file>
+        <file>qml/pages/dronePage/DroneMarker.qml</file>
+        <file>qml/pages/dronePage/MissionPlanPoints.qml</file>
+        <file>icons/ico-move.svg</file>
     </qresource>
 </RCC>

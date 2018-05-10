@@ -21,9 +21,9 @@ PanelBase {
                 label: qsTr("Circle")
                 textPosition: "below"
                 textColor: Theme.defaultFontColor
-                onClicked: targetDrone.currentExclusionShape = DroneBase.ELLIPSE
+                onClicked: targetDrone.currentExclusionShape = DroneBase.CIRCLE
                 checkable: true
-                checked: root.droneValid() ? (targetDrone.currentExclusionShape === DroneBase.ELLIPSE) : false
+                checked: root.droneValid() ? (targetDrone.currentExclusionShape === DroneBase.CIRCLE) : false
             }
             ImageButton {
                 id: rectExclusion

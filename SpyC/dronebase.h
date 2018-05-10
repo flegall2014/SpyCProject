@@ -10,6 +10,7 @@
 class WayPointModel;
 class AlertModel;
 class GalleryModel;
+class ExclusionAreaModel;
 
 class DroneBase : public QObject
 {
@@ -41,6 +42,7 @@ class DroneBase : public QObject
     // Mission plan model and safety model
     Q_PROPERTY(WayPointModel *missionPlanModel READ missionPlanModel NOTIFY missionPlanModelChanged)
     Q_PROPERTY(WayPointModel *safetyModel READ safetyModel NOTIFY safetyModelChanged)
+    Q_PROPERTY(ExclusionAreaModel *exclusionAreaModel READ exclusionAreaModel NOTIFY exclusionAreaModelChanged)
     Q_PROPERTY(AlertModel *alertModel READ alertModel NOTIFY alertModelChanged)
     Q_PROPERTY(GalleryModel *galleryModel READ galleryModel NOTIFY galleryModelChanged)
 
@@ -61,7 +63,7 @@ public:
     enum WorkMode {MISSION_PLAN_EDIT=Qt::UserRole+1, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT, GALLERY_EDIT, EXCLUSION_EDIT};
 
     //! Exclusion shape
-    enum ExclusionShape {ELLIPSE=Qt::UserRole+1, RECTANGLE, TRIANGLE};
+    enum ExclusionShape {CIRCLE=Qt::UserRole+1, RECTANGLE, TRIANGLE};
 
     //! Alert type
     enum AlertType {NO_ALERT=Qt::UserRole+1, BATTERY, GPS, POSITION};
@@ -173,6 +175,9 @@ public:
     //! Gallery model
     GalleryModel *galleryModel() const;
 
+    //! Exclusion area model
+    ExclusionAreaModel *exclusionAreaModel() const;
+
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------
@@ -252,7 +257,7 @@ private:
     WorkMode m_eDefaultWorkMode = PAYLOAD_EDIT;
 
     //! Current exclusion shape
-    ExclusionShape m_eExclusionShape = ELLIPSE;
+    ExclusionShape m_eExclusionShape = CIRCLE;
 
     //! Global status
     Status m_eGlobalStatus = Status::NOMINAL;
@@ -268,6 +273,9 @@ private:
 
     //! Gallery model
     GalleryModel *m_pGalleryModel = nullptr;
+
+    //! Exclusion area model
+    ExclusionAreaModel *m_pExclusionAreaModel = nullptr;
 
     //! Setting controller
     SettingController m_settingController;
@@ -318,6 +326,9 @@ signals:
 
     //! Safety model changed
     void safetyModelChanged();
+
+    //! Exclusion area model changed
+    void exclusionAreaModelChanged();
 
     //! Alert model changed
     void alertModelChanged();

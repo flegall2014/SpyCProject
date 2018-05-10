@@ -17,6 +17,7 @@ Map {
     property bool safetyVisible: true
     property variant targetDrone
     gesture.enabled: (targetDrone.workMode !== DroneBase.SAFETY_EDIT) && (targetDrone.workMode !== DroneBase.MISSION_PLAN_EDIT)
+                     && (targetDrone.workMode !== DroneBase.EXCLUSION_EDIT)
 
     // Map plugin
     Plugin {
@@ -199,7 +200,7 @@ Map {
         }
     }
 
-    // Draw polylines
+    // Draw safety
     MapPolyline {
         id: safetyPoly
         objectName: "safetyPoly"
@@ -230,18 +231,67 @@ Map {
         Component.onCompleted: targetDrone.safetyModel.pathChanged.connect(onDataChanged)
     }
 
+    // Exclusion area
+    MapItemView {
+        model: targetDrone.exclusionAreaModel
+        delegate: Component {
+            MapCircle {
+                id: circleShape
+                radius: shape.radius
+                color: "blue"
+                center {
+                    latitude: shape.center.latitude
+                    longitude: shape.center.longitude
+                }
+                MouseArea {
+                    id: exclusionArea
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    anchors.fill: parent
+                    enabled: targetDrone.workMode === DroneBase.EXCLUSION_EDIT
+                    onPressed: {
+                        shape.selected = true
+                    }
+                    onPositionChanged: {
+                        if (shape.selected)
+                        {
+                            if (mouse.modifiers & Qt.ControlModifier)
+                            {
+                                console.log("ZOOM")
+                            }
+                            else
+                            {
+                                var mapped = exclusionArea.mapToItem(mapView, mouse.x, mouse.y)
+                                shape.setPosition(mapView.toCoordinate(Qt.point(mapped.x, mapped.y)))
+                            }
+                        }
+                    }
+                    onReleased: shape.selected = false
+                    onWheel: {
+                        if (wheel.modifiers & Qt.ControlModifier)
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // Handle clicks
     MouseArea {
         anchors.fill: parent
-        enabled: (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT) || (targetDrone.workMode === DroneBase.SAFETY_EDIT)
+        enabled: (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT) || (targetDrone.workMode === DroneBase.SAFETY_EDIT) ||
+                 (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
 
         onClicked: {
-            //console.log("TEST ", targetDrone, targetDrone.workMode)
             if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
                 targetDrone.addCoordinateToSafety(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
             else
-            if (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
-                targetDrone.addCoordinateToMissionPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+                if (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
+                    targetDrone.addCoordinateToMissionPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+                else
+                    if (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
+                        targetDrone.exclusionAreaModel.addCircle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)), 800)
         }
     }
 

@@ -16,7 +16,8 @@
 #include "waypointmodel.h"
 #include "alertmodel.h"
 #include "gallerymodel.h"
-
+#include "exclusionareamodel.h"
+#include "baseshape.h"
 SpyC *SpyC::sInstance = nullptr;
 
 //-------------------------------------------------------------------------------------------------
@@ -123,6 +124,8 @@ void SpyC::registerTypes()
     qmlRegisterType<WayPointModel>("Components", 1, 0, "WayPointModel");
     qmlRegisterType<AlertModel>("Components", 1, 0, "AlertModel");
     qmlRegisterType<GalleryModel>("Components", 1, 0, "GalleryModel");
+    qmlRegisterType<ExclusionAreaModel>("Components", 1, 0, "ExclusionAreaModel");
+    qmlRegisterType<BaseShape>("Components", 1, 0, "BaseShape");
 }
 
 //-------------------------------------------------------------------------------------------------

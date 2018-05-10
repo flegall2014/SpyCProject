@@ -7,6 +7,7 @@
 #include "waypointmodel.h"
 #include "alertmodel.h"
 #include "gallerymodel.h"
+#include "exclusionareamodel.h"
 #include "settingcontroller.h"
 using namespace Model;
 
@@ -44,6 +45,7 @@ void DroneBase::initialize(const QMap<int, QVariant> &mSettings)
     m_pSafetyModel = new WayPointModel(this);
     m_pAlertModel = new AlertModel(this);
     m_pGalleryModel = new GalleryModel(m_mSettings[SettingController::GALLERY_PATH].toString(), this);
+    m_pExclusionAreaModel = new ExclusionAreaModel(this);
     connect(this, &DroneBase::batteryStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
     connect(this, &DroneBase::gpsStrengthChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
     connect(this, &DroneBase::positionStatusChanged, this, &DroneBase::onGlobalStatusChanged, Qt::QueuedConnection);
@@ -278,6 +280,13 @@ AlertModel *DroneBase::alertModel() const
 GalleryModel *DroneBase::galleryModel() const
 {
     return m_pGalleryModel;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+ExclusionAreaModel *DroneBase::exclusionAreaModel() const
+{
+    return m_pExclusionAreaModel;
 }
 
 //-------------------------------------------------------------------------------------------------

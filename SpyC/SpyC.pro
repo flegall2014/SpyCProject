@@ -67,7 +67,9 @@ HEADERS += \
     gallerymodel.h \
     batterycontroller.h \
     gpscontroller.h \
-    waypoint.h
+    waypoint.h \
+    exclusionareamodel.h \
+    baseshape.h
 
 SOURCES += \
     main.cpp \
@@ -85,7 +87,9 @@ SOURCES += \
     gallerymodel.cpp \
     batterycontroller.cpp \
     gpscontroller.cpp \
-    waypoint.cpp
+    waypoint.cpp \
+    exclusionareamodel.cpp \
+    baseshape.cpp
 
 DISTFILES +=
 
