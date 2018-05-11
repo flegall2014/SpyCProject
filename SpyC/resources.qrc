@@ -107,5 +107,7 @@
         <file>qml/pages/dronePage/DroneMarker.qml</file>
         <file>qml/pages/dronePage/MissionPlanPoints.qml</file>
         <file>icons/ico-move.svg</file>
+        <file>qml/toolbars/SafetyToolBar.qml</file>
+        <file>qml/toolbars/ExclusionAreaToolBar.qml</file>
     </qresource>
 </RCC>

@@ -209,6 +209,9 @@ public:
     //! Remove coordinate from mission plan at index
     Q_INVOKABLE void removeCoordinateFromMissionPlanAtIndex(int iPointIndex);
 
+    //! Clear exclusion areas
+    Q_INVOKABLE void clearExclusionAreas();
+
 private:
     //! Update battery status
     void updateBatteryStatus();

@@ -353,6 +353,14 @@ void DroneBase::removeCoordinateFromMissionPlanAtIndex(int iPointIndex)
 
 //-------------------------------------------------------------------------------------------------
 
+void DroneBase::clearExclusionAreas()
+{
+    if (m_pExclusionAreaModel != nullptr)
+        m_pExclusionAreaModel->clear();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void DroneBase::onGlobalStatusChanged()
 {
     Status eNewGlobalStatus = (Status)qMax(batteryStatus(), gpsStatus());

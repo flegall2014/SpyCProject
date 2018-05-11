@@ -51,6 +51,9 @@ public:
     //! Add triangle
     Q_INVOKABLE void addTriangle(const QGeoCoordinate &center);
 
+    //! Clear
+    void clear();
+
 private:
     //! Add shape
     void addShape(BaseShape *pShape);

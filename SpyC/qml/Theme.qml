@@ -23,6 +23,8 @@ Item {
     property color videoBkgColor: "black"
     property color defaultButtonColor: "steelblue"
     property color selectedColor: "orange"
+    property color exclusionAreaColor: "red"
+    property color exclusionAreaBorderColor: "black"
 
     // Sizes
     property int toolBarWidth: 64
@@ -36,6 +38,9 @@ Item {
     property int wayPointDelegateHeight: 64
     property int busyIndicatorSize: 64
     property int panelTitleWidth: 256
+
+    // Opacities
+    property double exclusionAreaOpacity: .33
 
     // Font
     property string standardFont: "Segoe UI"

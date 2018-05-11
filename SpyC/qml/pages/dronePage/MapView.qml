@@ -236,7 +236,10 @@ Map {
         model: targetDrone.exclusionAreaModel
         delegate: MapPolygon {
             id: polygonShape
-            color: "blue"
+            color: Theme.exclusionAreaColor
+            border.color: Theme.exclusionAreaBorderColor
+            border.width: 3
+            opacity: Theme.exclusionAreaOpacity
             visible: false
             property variant targetShape: shape
             function onCurrentPathChanged()
@@ -249,11 +252,14 @@ Map {
                 }
             }
             onTargetShapeChanged: {
-                polygonShape.visible = (targetShape.type === BaseShape.TRIANGLE) || (targetShape.type === BaseShape.RECTANGLE)
-                if (polygonShape.visible)
+                if ((typeof targetShape !== "undefined") && (targetShape !== null))
                 {
-                    targetShape.pathChanged.connect(onCurrentPathChanged)
-                    onCurrentPathChanged()
+                    polygonShape.visible = (targetShape.type === BaseShape.TRIANGLE) || (targetShape.type === BaseShape.RECTANGLE)
+                    if (polygonShape.visible)
+                    {
+                        targetShape.pathChanged.connect(onCurrentPathChanged)
+                        onCurrentPathChanged()
+                    }
                 }
             }
             MouseArea {
@@ -269,7 +275,9 @@ Map {
         delegate: Component {
             MapCircle {
                 id: circleShape
-                color: "blue"
+                color: Theme.exclusionAreaColor
+                border.color: Theme.exclusionAreaBorderColor
+                opacity: Theme.exclusionAreaOpacity
                 visible: false
                 property variant targetShape: shape
                 center {
@@ -281,11 +289,14 @@ Map {
                     circleShape.radius = targetShape.radius
                 }
                 onTargetShapeChanged: {
-                    circleShape.visible = (targetShape.type === BaseShape.CIRCLE)
-                    if (circleShape.visible)
+                    if ((typeof targetShape !== "undefined") && (targetShape !== null))
                     {
-                        targetShape.pathChanged.connect(onCurrentPathChanged)
-                        onCurrentPathChanged()
+                        circleShape.visible = (targetShape.type === BaseShape.CIRCLE)
+                        if (circleShape.visible)
+                        {
+                            targetShape.pathChanged.connect(onCurrentPathChanged)
+                            onCurrentPathChanged()
+                        }
                     }
                 }
                 MouseArea {

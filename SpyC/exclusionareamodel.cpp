@@ -91,4 +91,12 @@ void ExclusionAreaModel::addTriangle(const QGeoCoordinate &center)
     addShape(pShape);
 }
 
+//-------------------------------------------------------------------------------------------------
 
+void ExclusionAreaModel::clear()
+{
+    beginResetModel();
+    qDeleteAll(m_vShapes);
+    m_vShapes.clear();
+    endResetModel();
+}
