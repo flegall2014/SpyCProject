@@ -1,3 +1,7 @@
+// Qt
+#include <QDebug>
+#include <QGeoCoordinate>
+
 // Application
 #include "exclusionareamodel.h"
 #include "baseshape.h"
@@ -60,24 +64,30 @@ void ExclusionAreaModel::addShape(BaseShape *pShape)
 
 //-------------------------------------------------------------------------------------------------
 
-void ExclusionAreaModel::addRect(const QGeoCoordinate &topLeft, const QGeoCoordinate &bottomRight)
+void ExclusionAreaModel::addRectangle(const QGeoCoordinate &center)
 {
-    RectShape *pShape = new RectShape(topLeft, bottomRight, this);
+    QGeoCoordinate topLeft = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 135);
+    QGeoCoordinate bottomRight = center.atDistanceAndAzimuth(DEFAULT_RADIUS, -45);
+    RectangleShape *pShape = new RectangleShape(topLeft, bottomRight, this);
     addShape(pShape);
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void ExclusionAreaModel::addCircle(const QGeoCoordinate &center, double dRadius)
+void ExclusionAreaModel::addCircle(const QGeoCoordinate &center)
 {
-    CircleShape *pShape = new CircleShape(center, dRadius);
+    CircleShape *pShape = new CircleShape(center, DEFAULT_RADIUS);
     addShape(pShape);
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void ExclusionAreaModel::addTriangle(const QGeoCoordinate &point1, const QGeoCoordinate &point2, const QGeoCoordinate &point3)
+void ExclusionAreaModel::addTriangle(const QGeoCoordinate &center)
 {
+    QGeoCoordinate point1 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 90);
+    QGeoCoordinate point2 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 210);
+    QGeoCoordinate point3 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 330);
+    qDebug() << "ADDED TRIANGLE " << point1 << point2 << point3;
     TriangleShape *pShape = new TriangleShape(point1, point2, point3);
     addShape(pShape);
 }

@@ -43,13 +43,13 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Add rect
-    Q_INVOKABLE void addRect(const QGeoCoordinate &topLeft, const QGeoCoordinate &bottomRight);
+    Q_INVOKABLE void addRectangle(const QGeoCoordinate &center);
 
     //! Add circle
-    Q_INVOKABLE void addCircle(const QGeoCoordinate &center, double dRadius);
+    Q_INVOKABLE void addCircle(const QGeoCoordinate &center);
 
     //! Add triangle
-    Q_INVOKABLE void addTriangle(const QGeoCoordinate &point1, const QGeoCoordinate &point2, const QGeoCoordinate &point3);
+    Q_INVOKABLE void addTriangle(const QGeoCoordinate &center);
 
 private:
     //! Add shape

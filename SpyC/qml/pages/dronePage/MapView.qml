@@ -234,6 +234,7 @@ Map {
     // Exclusion area
     MapItemView {
         model: targetDrone.exclusionAreaModel
+        /*
         delegate: Component {
             MapCircle {
                 id: circleShape
@@ -275,6 +276,30 @@ Map {
                 }
             }
         }
+        */
+
+        delegate: MapPolygon {
+            id: polygonShape
+            color: "blue"
+            property variant targetShape: shape
+            function onCurrentPathChanged()
+            {
+                polygonShape.path = []
+                for(var i=0; i<targetShape.count; i++)
+                {
+                    var coordinate = targetShape.path.coordinateAt(i)
+                    polygonShape.addCoordinate(coordinate)
+                }
+            }
+            onTargetShapeChanged: {
+                targetShape.pathChanged.connect(onCurrentPathChanged)
+                onCurrentPathChanged()
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: shape.rotate(1)
+            }
+        }
     }
 
     // Handle clicks
@@ -287,11 +312,11 @@ Map {
             if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
                 targetDrone.addCoordinateToSafety(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
             else
-                if (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
-                    targetDrone.addCoordinateToMissionPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
-                else
-                    if (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
-                        targetDrone.exclusionAreaModel.addCircle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)), 800)
+            if (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
+                targetDrone.addCoordinateToMissionPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+            else
+            if (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
+                targetDrone.exclusionAreaModel.addRectangle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
         }
     }
 

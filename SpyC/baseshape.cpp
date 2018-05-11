@@ -1,20 +1,13 @@
 // Qt
-#include <QRectF>
+#include <QDebug>
 
 // Application
 #include "baseshape.h"
-#define SIZE_INCREMENT
+#define BASE_INCREMENT 100
+
 //-------------------------------------------------------------------------------------------------
 
 BaseShape::BaseShape(QObject *pParent) : QObject(pParent)
-{
-
-}
-
-//-------------------------------------------------------------------------------------------------
-
-BaseShape::BaseShape(const Type &eType, QObject *pParent) : QObject(pParent),
-    m_eType(eType)
 {
 
 }
@@ -28,9 +21,100 @@ BaseShape::~BaseShape()
 
 //-------------------------------------------------------------------------------------------------
 
-int BaseShape::type() const
+QGeoCoordinate BaseShape::computeCenter() const
 {
-    return (int)m_eType;
+    if (m_path.size() > 0)
+    {
+        double dTotalLat = 0, dTotalLon = 0;
+        for (int i=0; i<m_path.size(); i++)
+        {
+            dTotalLat += m_path.coordinateAt(i).latitude();
+            dTotalLon += m_path.coordinateAt(i).longitude();
+        }
+        return QGeoCoordinate(dTotalLat/m_path.size(), dTotalLon/m_path.size());
+    }
+
+    return QGeoCoordinate();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void BaseShape::rotate(double dAngle)
+{
+    for (int i=0; i<m_path.size(); i++)
+    {
+        // Read current coord
+        QGeoCoordinate currentCoord = m_path.coordinateAt(i);
+
+        qDebug() << "TOTO " << i << currentCoord << m_center;
+
+        // Read point distance to center
+        double dDistance = m_center.distanceTo(currentCoord);
+
+        // Compute point azimuth
+        double dAzimuth = m_center.azimuthTo(currentCoord);
+
+        // Increment by angle
+        dAzimuth += dAngle;
+
+        // New coord
+        QGeoCoordinate newCoord = m_center.atDistanceAndAzimuth(dDistance, dAzimuth);
+
+        // Update point
+        m_path.replaceCoordinate(i, newCoord);
+
+        qDebug() << currentCoord << newCoord;
+    }
+
+    emit pathChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void BaseShape::moveTo(const QGeoCoordinate &pos)
+{
+    for (int i=0; i<m_path.size(); i++)
+    {
+        // Read current coord
+        QGeoCoordinate currentCoord = m_path.coordinateAt(i);
+
+        // Read point distance to center
+        double dDistance = m_center.distanceTo(currentCoord);
+
+        // Compute point azimuth
+        double dAzimuth = m_center.azimuthTo(currentCoord);
+
+        // Update point
+        m_path.replaceCoordinate(i, pos.atDistanceAndAzimuth(dDistance, dAzimuth));
+    }
+
+    // Update pos
+    m_center = pos;
+
+    emit pathChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void BaseShape::rescale(int iIncrement)
+{
+    bool bUpScale = iIncrement >= 0;
+    for (int i=0; i<m_path.size(); i++)
+    {
+        // Read current coord
+        QGeoCoordinate currentCoord = m_path.coordinateAt(i);
+
+        // Read point distance to center
+        double dDistance = m_center.distanceTo(currentCoord);
+
+        // Compute point azimuth
+        double dAzimuth = m_center.azimuthTo(currentCoord);
+
+        // Update point
+        m_path.replaceCoordinate(i, m_center.atDistanceAndAzimuth(dDistance+(bUpScale ? BASE_INCREMENT : -BASE_INCREMENT), dAzimuth));
+    }
+
+    emit pathChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -42,100 +126,82 @@ bool BaseShape::selected() const
 
 //-------------------------------------------------------------------------------------------------
 
-void BaseShape::select(bool bSelected)
+void BaseShape::select(bool bSelect)
 {
-    m_bSelected = bSelected;
+    m_bSelected = bSelect;
     emit selectedChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void BaseShape::setPosition(const QGeoCoordinate &position)
+const QGeoPath &BaseShape::path() const
 {
-    Q_UNUSED(position);
+    return m_path;
 }
 
 //-------------------------------------------------------------------------------------------------
 
-QList<QGeoCoordinate> BaseShape::boundingRect() const
+int BaseShape::count() const
 {
-    return QList<QGeoCoordinate>();
+    return m_path.size();
 }
 
 //-------------------------------------------------------------------------------------------------
 
-RectShape::RectShape(QObject *pParent) : BaseShape(RECTANGLE, pParent)
-{
-
-}
-
-//-------------------------------------------------------------------------------------------------
-
-RectShape::RectShape(const QGeoCoordinate &topLeft, const QGeoCoordinate &bottomRight, QObject *pParent) :
-    BaseShape(RECTANGLE, pParent), m_topLeft(topLeft), m_bottomRight(bottomRight)
+RectangleShape::RectangleShape(QObject *pParent) : BaseShape(pParent)
 {
 
 }
 
 //-------------------------------------------------------------------------------------------------
 
-RectShape::~RectShape()
+RectangleShape::RectangleShape(const QGeoCoordinate &topLeft, const QGeoCoordinate &bottomRight, QObject *pParent) :
+    BaseShape(pParent)
+{
+    m_path.addCoordinate(topLeft);
+    m_path.addCoordinate(QGeoCoordinate(bottomRight.latitude(), topLeft.longitude()));
+    m_path.addCoordinate(bottomRight);
+    m_path.addCoordinate(QGeoCoordinate(topLeft.latitude(), bottomRight.longitude()));
+    m_center = computeCenter();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+RectangleShape::~RectangleShape()
 {
 
 }
 
 //-------------------------------------------------------------------------------------------------
 
-const QGeoCoordinate &RectShape::topLeft() const
+QGeoCoordinate RectangleShape::topLeft() const
 {
-    return m_topLeft;
+    if (!m_path.isEmpty())
+        return m_path.coordinateAt(0);
+    return QGeoCoordinate();
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void RectShape::setTopLeft(const QGeoCoordinate &topLeft)
+QGeoCoordinate RectangleShape::bottomRight() const
 {
-    m_topLeft = topLeft;
-    emit topLeftChanged();
+    if (m_path.size() > 2)
+        return m_path.coordinateAt(2);
+    return QGeoCoordinate();
 }
 
 //-------------------------------------------------------------------------------------------------
 
-const QGeoCoordinate &RectShape::bottomRight() const
-{
-    return m_bottomRight;
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void RectShape::setBottomRight(const QGeoCoordinate &bottomRight)
-{
-    m_bottomRight = bottomRight;
-    emit bottomRightChanged();
-}
-
-//-------------------------------------------------------------------------------------------------
-
-QList<QGeoCoordinate> RectShape::boundingRect() const
-{
-    QList<QGeoCoordinate> boundingRect;
-    boundingRect << m_topLeft << m_bottomRight;
-    return boundingRect;
-}
-
-//-------------------------------------------------------------------------------------------------
-
-CircleShape::CircleShape(QObject *pParent) : BaseShape(CIRCLE, pParent)
+CircleShape::CircleShape(QObject *pParent) : BaseShape(pParent)
 {
 
 }
 
 //-------------------------------------------------------------------------------------------------
 
-CircleShape::CircleShape(const QGeoCoordinate &center, double dRadius, QObject *pParent) :
-    BaseShape(CIRCLE, pParent), m_center(center), m_dRadius(dRadius)
+CircleShape::CircleShape(const QGeoCoordinate &center, double dRadius) : m_dRadius(dRadius)
 {
-
+    m_center = center;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -147,55 +213,25 @@ CircleShape::~CircleShape()
 
 //-------------------------------------------------------------------------------------------------
 
-const QGeoCoordinate &CircleShape::center() const
+void CircleShape::rotate(double dAngle)
 {
-    return m_center;
+    // No op
+    Q_UNUSED(dAngle);
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void CircleShape::setCenter(const QGeoCoordinate &center)
+void CircleShape::rescale(int iIncrement)
 {
-    m_center = center;
-    emit centerChanged();
+    bool bUpScale = iIncrement >= 0;
+    m_dRadius += (bUpScale ? BASE_INCREMENT : -BASE_INCREMENT);
+
+    emit pathChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
 
-double CircleShape::radius() const
-{
-    return m_dRadius;
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void CircleShape::setRadius(double dRadius)
-{
-    m_dRadius = dRadius;
-    emit radiusChanged();
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void CircleShape::setPosition(const QGeoCoordinate &position)
-{
-    setCenter(position);
-}
-
-//-------------------------------------------------------------------------------------------------
-
-QList<QGeoCoordinate> CircleShape::boundingRect() const
-{
-    QGeoCoordinate topLeft = m_center.atDistanceAndAzimuth(m_dRadius, 135);
-    QGeoCoordinate bottomRight = m_center.atDistanceAndAzimuth(m_dRadius, 135+180);
-    QList<QGeoCoordinate> boundingRect;
-    boundingRect << topLeft << bottomRight;
-    return boundingRect;
-}
-
-//-------------------------------------------------------------------------------------------------
-
-TriangleShape::TriangleShape(QObject *pParent) : BaseShape(TRIANGLE, pParent)
+TriangleShape::TriangleShape(QObject *pParent) : BaseShape(pParent)
 {
 
 }
@@ -203,9 +239,12 @@ TriangleShape::TriangleShape(QObject *pParent) : BaseShape(TRIANGLE, pParent)
 //-------------------------------------------------------------------------------------------------
 
 TriangleShape::TriangleShape(const QGeoCoordinate &point1, const QGeoCoordinate &point2, const QGeoCoordinate &point3, QObject *pParent) :
-    BaseShape(TRIANGLE, pParent), m_point1(point1), m_point2(point2), m_point3(point3)
+    BaseShape(pParent)
 {
-
+    m_path.addCoordinate(point1);
+    m_path.addCoordinate(point2);
+    m_path.addCoordinate(point3);
+    m_center = computeCenter();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -213,72 +252,4 @@ TriangleShape::TriangleShape(const QGeoCoordinate &point1, const QGeoCoordinate 
 TriangleShape::~TriangleShape()
 {
 
-}
-
-//-------------------------------------------------------------------------------------------------
-
-const QGeoCoordinate &TriangleShape::point1() const
-{
-    return m_point1;
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void TriangleShape::setPoint1(const QGeoCoordinate &point)
-{
-    m_point1 = point;
-    emit point1Changed();
-}
-
-//-------------------------------------------------------------------------------------------------
-
-const QGeoCoordinate &TriangleShape::point2() const
-{
-    return m_point2;
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void TriangleShape::setPoint2(const QGeoCoordinate &point)
-{
-    m_point2 = point;
-    emit point2Changed();
-}
-
-//-------------------------------------------------------------------------------------------------
-
-const QGeoCoordinate &TriangleShape::point3() const
-{
-    return m_point3;
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void TriangleShape::setPoint3(const QGeoCoordinate &point)
-{
-    m_point3 = point;
-    emit point3Changed();
-}
-
-//-------------------------------------------------------------------------------------------------
-
-QList<QGeoCoordinate> TriangleShape::boundingRect() const
-{
-    double dMinLatitude = qMin(m_point1.latitude(), m_point2.latitude());
-    dMinLatitude = qMin(dMinLatitude, m_point3.latitude());
-    double dMaxLatitude = qMax(m_point1.latitude(), m_point2.latitude());
-    dMaxLatitude = qMax(dMinLatitude, m_point3.latitude());
-
-    double dMinLongitude = qMin(m_point1.longitude(), m_point2.longitude());
-    dMinLongitude = qMin(dMinLongitude, m_point3.longitude());
-    double dMaxLongitude = qMax(m_point1.longitude(), m_point2.longitude());
-    dMaxLongitude = qMax(dMaxLongitude, m_point3.longitude());
-
-    QGeoCoordinate topLeft(dMinLatitude, dMinLongitude);
-    QGeoCoordinate bottomRight(dMaxLatitude, dMaxLongitude);
-
-    QList<QGeoCoordinate> boundingRect;
-    boundingRect << topLeft << bottomRight;
-
-    return boundingRect;
 }

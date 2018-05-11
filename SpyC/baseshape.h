@@ -4,19 +4,18 @@
 // Qt
 #include <QObject>
 #include <QGeoCoordinate>
+#include <QVector>
+#include <QGeoPath>
+#define DEFAULT_RADIUS 500
 
 class BaseShape : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int type READ type NOTIFY typeChanged)
+    Q_PROPERTY(QGeoPath path READ path NOTIFY pathChanged)
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool selected READ selected WRITE select NOTIFY selectedChanged)
-    Q_PROPERTY(QList<QGeoCoordinate> boundingRect READ boundingRect NOTIFY boundingRectChanged)
-
-    Q_ENUMS(Type)
 
 public:
-    enum Type {CIRCLE=Qt::UserRole+1, RECTANGLE, TRIANGLE};
-
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
@@ -24,55 +23,63 @@ public:
     //! Constructor
     BaseShape(QObject *pParent=nullptr);
 
-    //! Constructor
-    BaseShape(const Type &eType, QObject *pParent=nullptr);
-
     //! Destructor
     virtual ~BaseShape();
 
     //-------------------------------------------------------------------------------------------------
-    // Getters & setters
+    // Control methods
     //-------------------------------------------------------------------------------------------------
 
-    //! Return type
-    int type() const;
+    //! Rotate
+    Q_INVOKABLE virtual void rotate(double dAngle);
 
-    //! Return selected state
-    bool selected() const;
+    //! Move to
+    Q_INVOKABLE void moveTo(const QGeoCoordinate &pos);
 
-    //! Select
-    void select(bool bSelected);
+    //! Rescale
+    Q_INVOKABLE virtual void rescale(int iIncrement);
 
-    //! Set position
-    Q_INVOKABLE virtual void setPosition(const QGeoCoordinate &position);
+protected:
+    //! Compute center
+    QGeoCoordinate computeCenter() const;
 
-private:
-    //! Bounding rect
-    virtual QList<QGeoCoordinate> boundingRect() const;
+protected:
+    //! Points
+    QGeoPath m_path;
 
-private:
-    //! Type
-    Type m_eType=CIRCLE;
+    //! Center
+    QGeoCoordinate m_center;
 
     //! Selected?
     bool m_bSelected = false;
 
+private:
+    //! Return selected state
+    bool selected() const;
+
+    //! Select
+    void select(bool bSelect);
+
+    //! Return path
+    const QGeoPath &path() const;
+
+    //! Return count
+    int count() const;
+
 signals:
-    //! Type changed
-    void typeChanged();
+    //! Path changed
+    void pathChanged();
+
+    //! Count changed
+    void countChanged();
 
     //! Selected changed
     void selectedChanged();
-
-    //! Bounding rect changed
-    void boundingRectChanged();
 };
 
-class RectShape : public BaseShape
+class RectangleShape : public BaseShape
 {
     Q_OBJECT
-    Q_PROPERTY(QGeoCoordinate topLeft READ topLeft WRITE setTopLeft NOTIFY topLeftChanged)
-    Q_PROPERTY(QGeoCoordinate bottomRight READ bottomRight WRITE setBottomRight NOTIFY bottomRightChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -80,54 +87,28 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Constructor
-    RectShape(QObject *pParent=nullptr);
+    RectangleShape(QObject *pParent=nullptr);
 
     //! Constructor
-    RectShape(const QGeoCoordinate &topLeft, const QGeoCoordinate &bottomRight, QObject *pParent=nullptr);
+    RectangleShape(const QGeoCoordinate &topLeft, const QGeoCoordinate &bottomRight, QObject *pParent=nullptr);
 
     //! Destructor
-    virtual ~RectShape();
+    virtual ~RectangleShape();
 
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
     //-------------------------------------------------------------------------------------------------
 
     //! Return top left
-    const QGeoCoordinate &topLeft() const;
-
-    //! Set top left
-    void setTopLeft(const QGeoCoordinate &topLeft);
+    QGeoCoordinate topLeft() const;
 
     //! Return bottom right
-    const QGeoCoordinate &bottomRight() const;
-
-    //! Set bottom right
-    void setBottomRight(const QGeoCoordinate &topLeft);
-
-private:
-    //! Bounding rect
-    virtual QList<QGeoCoordinate> boundingRect() const;
-
-private:
-    //! Top left
-    QGeoCoordinate m_topLeft;
-
-    //! Bottom right
-    QGeoCoordinate m_bottomRight;
-
-signals:
-    //! Top left changed
-    void topLeftChanged();
-
-    //! Bottom right changed
-    void bottomRightChanged();
+    QGeoCoordinate bottomRight() const;
 };
 
 class CircleShape : public BaseShape
 {
     Q_OBJECT
-    Q_PROPERTY(QGeoCoordinate center READ center WRITE setCenter NOTIFY centerChanged)
-    Q_PROPERTY(double radius READ radius WRITE setRadius NOTIFY radiusChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -138,55 +119,29 @@ public:
     CircleShape(QObject *pParent=nullptr);
 
     //! Constructor
-    CircleShape(const QGeoCoordinate &center, double dRadius, QObject *pParent=nullptr);
+    CircleShape(const QGeoCoordinate &center, double dRadius);
 
     //! Destructor
     virtual ~CircleShape();
 
     //-------------------------------------------------------------------------------------------------
-    // Getters & setters
+    // Control methods
     //-------------------------------------------------------------------------------------------------
 
-    //! Return center
-    const QGeoCoordinate &center() const;
+    //! Rotate
+    Q_INVOKABLE virtual void rotate(double dAngle);
 
-    //! Set center
-    void setCenter(const QGeoCoordinate &center);
-
-    //! Return radius
-    double radius() const;
-
-    //! Set radius
-    void setRadius(double dRadius);
-
-    //! Set position
-    Q_INVOKABLE virtual void setPosition(const QGeoCoordinate &position);
+    //! Rescale
+    Q_INVOKABLE virtual void rescale(int iIncrement);
 
 private:
-    //! Bounding rect
-    virtual QList<QGeoCoordinate> boundingRect() const;
-
-private:
-    //! Center
-    QGeoCoordinate m_center;
-
-    //! Radius (meters)
+    //! Circle radius
     double m_dRadius = 0;
-
-signals:
-    //! Center changed
-    void centerChanged();
-
-    //! Radius changed
-    void radiusChanged();
 };
 
 class TriangleShape : public BaseShape
 {
     Q_OBJECT
-    Q_PROPERTY(QGeoCoordinate point1 READ point1 WRITE setPoint1 NOTIFY point1Changed)
-    Q_PROPERTY(QGeoCoordinate point2 READ point2 WRITE setPoint2 NOTIFY point2Changed)
-    Q_PROPERTY(QGeoCoordinate point3 READ point3 WRITE setPoint3 NOTIFY point3Changed)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -197,56 +152,10 @@ public:
     TriangleShape(QObject *pParent=nullptr);
 
     //! Constructor
-    TriangleShape(const QGeoCoordinate &point1, const QGeoCoordinate &point2, const QGeoCoordinate &point3, QObject *pParent=nullptr);
+    TriangleShape(const QGeoCoordinate &point1, const QGeoCoordinate &point2, const QGeoCoordinate &pojnt3, QObject *pParent=nullptr);
 
     //! Destructor
     virtual ~TriangleShape();
-
-    //-------------------------------------------------------------------------------------------------
-    // Getters & setters
-    //-------------------------------------------------------------------------------------------------
-
-    //! Return point1
-    const QGeoCoordinate &point1() const;
-
-    //! Set point1
-    void setPoint1(const QGeoCoordinate &point);
-
-    //! Return point2
-    const QGeoCoordinate &point2() const;
-
-    //! Set point2
-    void setPoint2(const QGeoCoordinate &point);
-
-    //! Return point3
-    const QGeoCoordinate &point3() const;
-
-    //! Set point3
-    void setPoint3(const QGeoCoordinate &point);
-
-private:
-    //! Bounding rect
-    virtual QList<QGeoCoordinate> boundingRect() const;
-
-private:
-    //! Point1
-    QGeoCoordinate m_point1;
-
-    //! Point2
-    QGeoCoordinate m_point2;
-
-    //! Point3
-    QGeoCoordinate m_point3;
-
-signals:
-    //! Point1 changed
-    void point1Changed();
-
-    //! Point2 changed
-    void point2Changed();
-
-    //! Point3 changed
-    void point3Changed();
 };
 
 #endif // BASESHAPE_H

@@ -3,7 +3,6 @@
 
 // Qt
 #include <QObject>
-#include <QPolygonF>
 #include <QTimer>
 #include <QGeoCoordinate>
 #include <QGeoPath>
