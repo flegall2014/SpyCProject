@@ -87,7 +87,6 @@ void ExclusionAreaModel::addTriangle(const QGeoCoordinate &center)
     QGeoCoordinate point1 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 90);
     QGeoCoordinate point2 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 210);
     QGeoCoordinate point3 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 330);
-    qDebug() << "ADDED TRIANGLE " << point1 << point2 << point3;
     TriangleShape *pShape = new TriangleShape(point1, point2, point3);
     addShape(pShape);
 }

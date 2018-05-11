@@ -12,9 +12,11 @@ class BaseShape : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QGeoPath path READ path NOTIFY pathChanged)
+    Q_PROPERTY(QGeoCoordinate center READ center NOTIFY pathChanged)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool selected READ selected WRITE select NOTIFY selectedChanged)
     Q_PROPERTY(int type READ type NOTIFY typeChanged)
+    Q_ENUMS(Type)
 
 public:
     //! Type
@@ -76,6 +78,9 @@ private:
     //! Return type
     int type() const;
 
+    //! Return center
+    const QGeoCoordinate &center() const;
+
 signals:
     //! Path changed
     void pathChanged();
@@ -122,6 +127,7 @@ public:
 class CircleShape : public BaseShape
 {
     Q_OBJECT
+    Q_PROPERTY(double radius READ radius NOTIFY radiusChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -138,6 +144,13 @@ public:
     virtual ~CircleShape();
 
     //-------------------------------------------------------------------------------------------------
+    // Getters & setters
+    //-------------------------------------------------------------------------------------------------
+
+    //! Return radius
+    double radius() const;
+
+    //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------
 
@@ -150,6 +163,10 @@ public:
 private:
     //! Circle radius
     double m_dRadius = 0;
+
+signals:
+    //! Radius changed
+    void radiusChanged();
 };
 
 class TriangleShape : public BaseShape

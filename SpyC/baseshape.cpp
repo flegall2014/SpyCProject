@@ -46,8 +46,6 @@ void BaseShape::rotate(double dAngle)
         // Read current coord
         QGeoCoordinate currentCoord = m_path.coordinateAt(i);
 
-        qDebug() << "TOTO " << i << currentCoord << m_center;
-
         // Read point distance to center
         double dDistance = m_center.distanceTo(currentCoord);
 
@@ -62,8 +60,6 @@ void BaseShape::rotate(double dAngle)
 
         // Update point
         m_path.replaceCoordinate(i, newCoord);
-
-        qDebug() << currentCoord << newCoord;
     }
 
     emit pathChanged();
@@ -155,6 +151,13 @@ int BaseShape::type() const
 
 //-------------------------------------------------------------------------------------------------
 
+const QGeoCoordinate &BaseShape::center() const
+{
+    return m_center;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 RectangleShape::RectangleShape(QObject *pParent) : BaseShape(pParent)
 {
     m_eType = RECTANGLE;
@@ -218,6 +221,13 @@ CircleShape::CircleShape(const QGeoCoordinate &center, double dRadius) : m_dRadi
 CircleShape::~CircleShape()
 {
 
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CircleShape::radius() const
+{
+    return m_dRadius;
 }
 
 //-------------------------------------------------------------------------------------------------

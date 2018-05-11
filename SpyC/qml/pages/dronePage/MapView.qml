@@ -237,7 +237,7 @@ Map {
         delegate: MapPolygon {
             id: polygonShape
             color: "blue"
-            //visible: (targetShape.type === BaseShape.TRIANGLE) || (targetShape.type === BaseShape.RECTANGLE)
+            visible: false
             property variant targetShape: shape
             function onCurrentPathChanged()
             {
@@ -249,8 +249,12 @@ Map {
                 }
             }
             onTargetShapeChanged: {
-                targetShape.pathChanged.connect(onCurrentPathChanged)
-                onCurrentPathChanged()
+                polygonShape.visible = (targetShape.type === BaseShape.TRIANGLE) || (targetShape.type === BaseShape.RECTANGLE)
+                if (polygonShape.visible)
+                {
+                    targetShape.pathChanged.connect(onCurrentPathChanged)
+                    onCurrentPathChanged()
+                }
             }
             MouseArea {
                 anchors.fill: parent
@@ -259,34 +263,38 @@ Map {
         }
     }
 
-    /*
     // Exclusion area
     MapItemView {
         model: targetDrone.exclusionAreaModel
         delegate: Component {
             MapCircle {
                 id: circleShape
-                radius: shape.radius
                 color: "blue"
-                visible: (targetShape.type === BaseShape.CIRCLE)
+                visible: false
+                property variant targetShape: shape
                 center {
                     latitude: shape.center.latitude
                     longitude: shape.center.longitude
                 }
-                MouseArea {
-                    id: exclusionArea
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    anchors.fill: parent
-                    enabled: targetDrone.workMode === DroneBase.EXCLUSION_EDIT
-                    onPressed: {
-                        shape.selected = true
+                function onCurrentPathChanged()
+                {
+                    circleShape.radius = targetShape.radius
+                }
+                onTargetShapeChanged: {
+                    circleShape.visible = (targetShape.type === BaseShape.CIRCLE)
+                    if (circleShape.visible)
+                    {
+                        targetShape.pathChanged.connect(onCurrentPathChanged)
+                        onCurrentPathChanged()
                     }
-                    onReleased: shape.selected = false
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: shape.rescale(1)
                 }
             }
         }
     }
-    */
 
     // Handle clicks
     MouseArea {
@@ -302,7 +310,16 @@ Map {
                 targetDrone.addCoordinateToMissionPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
             else
             if (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
-                targetDrone.exclusionAreaModel.addRectangle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+            {
+                if (targetDrone.currentExclusionShape === DroneBase.RECTANGLE)
+                    targetDrone.exclusionAreaModel.addRectangle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+                else
+                if (targetDrone.currentExclusionShape === DroneBase.TRIANGLE)
+                    targetDrone.exclusionAreaModel.addTriangle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+                else
+                if (targetDrone.currentExclusionShape === DroneBase.CIRCLE)
+                    targetDrone.exclusionAreaModel.addCircle(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+             }
         }
     }
 
