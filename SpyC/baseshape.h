@@ -14,14 +14,15 @@ class BaseShape : public QObject
     Q_PROPERTY(QGeoPath path READ path NOTIFY pathChanged)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool selected READ selected WRITE select NOTIFY selectedChanged)
+    Q_PROPERTY(int type READ type NOTIFY typeChanged)
 
 public:
+    //! Type
+    enum Type {RECTANGLE=Qt::UserRole+1, TRIANGLE, CIRCLE};
+
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
-
-    //! Constructor
-    BaseShape(QObject *pParent=nullptr);
 
     //! Destructor
     virtual ~BaseShape();
@@ -40,6 +41,9 @@ public:
     Q_INVOKABLE virtual void rescale(int iIncrement);
 
 protected:
+    //! Constructor
+    BaseShape(QObject *pParent=nullptr);
+
     //! Compute center
     QGeoCoordinate computeCenter() const;
 
@@ -52,6 +56,9 @@ protected:
 
     //! Selected?
     bool m_bSelected = false;
+
+    //! Type
+    Type m_eType = RECTANGLE;
 
 private:
     //! Return selected state
@@ -66,6 +73,9 @@ private:
     //! Return count
     int count() const;
 
+    //! Return type
+    int type() const;
+
 signals:
     //! Path changed
     void pathChanged();
@@ -75,6 +85,9 @@ signals:
 
     //! Selected changed
     void selectedChanged();
+
+    //! Type changed
+    void typeChanged();
 };
 
 class RectangleShape : public BaseShape

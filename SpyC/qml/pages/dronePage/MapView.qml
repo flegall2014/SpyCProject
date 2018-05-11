@@ -234,53 +234,10 @@ Map {
     // Exclusion area
     MapItemView {
         model: targetDrone.exclusionAreaModel
-        /*
-        delegate: Component {
-            MapCircle {
-                id: circleShape
-                radius: shape.radius
-                color: "blue"
-                center {
-                    latitude: shape.center.latitude
-                    longitude: shape.center.longitude
-                }
-                MouseArea {
-                    id: exclusionArea
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    anchors.fill: parent
-                    enabled: targetDrone.workMode === DroneBase.EXCLUSION_EDIT
-                    onPressed: {
-                        shape.selected = true
-                    }
-                    onPositionChanged: {
-                        if (shape.selected)
-                        {
-                            if (mouse.modifiers & Qt.ControlModifier)
-                            {
-                                console.log("ZOOM")
-                            }
-                            else
-                            {
-                                var mapped = exclusionArea.mapToItem(mapView, mouse.x, mouse.y)
-                                shape.setPosition(mapView.toCoordinate(Qt.point(mapped.x, mapped.y)))
-                            }
-                        }
-                    }
-                    onReleased: shape.selected = false
-                    onWheel: {
-                        if (wheel.modifiers & Qt.ControlModifier)
-                        {
-
-                        }
-                    }
-                }
-            }
-        }
-        */
-
         delegate: MapPolygon {
             id: polygonShape
             color: "blue"
+            //visible: (targetShape.type === BaseShape.TRIANGLE) || (targetShape.type === BaseShape.RECTANGLE)
             property variant targetShape: shape
             function onCurrentPathChanged()
             {
@@ -301,6 +258,35 @@ Map {
             }
         }
     }
+
+    /*
+    // Exclusion area
+    MapItemView {
+        model: targetDrone.exclusionAreaModel
+        delegate: Component {
+            MapCircle {
+                id: circleShape
+                radius: shape.radius
+                color: "blue"
+                visible: (targetShape.type === BaseShape.CIRCLE)
+                center {
+                    latitude: shape.center.latitude
+                    longitude: shape.center.longitude
+                }
+                MouseArea {
+                    id: exclusionArea
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    anchors.fill: parent
+                    enabled: targetDrone.workMode === DroneBase.EXCLUSION_EDIT
+                    onPressed: {
+                        shape.selected = true
+                    }
+                    onReleased: shape.selected = false
+                }
+            }
+        }
+    }
+    */
 
     // Handle clicks
     MouseArea {

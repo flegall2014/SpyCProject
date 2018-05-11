@@ -148,9 +148,16 @@ int BaseShape::count() const
 
 //-------------------------------------------------------------------------------------------------
 
+int BaseShape::type() const
+{
+    return (int)m_eType;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 RectangleShape::RectangleShape(QObject *pParent) : BaseShape(pParent)
 {
-
+    m_eType = RECTANGLE;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -158,6 +165,7 @@ RectangleShape::RectangleShape(QObject *pParent) : BaseShape(pParent)
 RectangleShape::RectangleShape(const QGeoCoordinate &topLeft, const QGeoCoordinate &bottomRight, QObject *pParent) :
     BaseShape(pParent)
 {
+    m_eType = RECTANGLE;
     m_path.addCoordinate(topLeft);
     m_path.addCoordinate(QGeoCoordinate(bottomRight.latitude(), topLeft.longitude()));
     m_path.addCoordinate(bottomRight);
@@ -194,13 +202,14 @@ QGeoCoordinate RectangleShape::bottomRight() const
 
 CircleShape::CircleShape(QObject *pParent) : BaseShape(pParent)
 {
-
+    m_eType = CIRCLE;
 }
 
 //-------------------------------------------------------------------------------------------------
 
 CircleShape::CircleShape(const QGeoCoordinate &center, double dRadius) : m_dRadius(dRadius)
 {
+    m_eType = CIRCLE;
     m_center = center;
 }
 
@@ -233,7 +242,7 @@ void CircleShape::rescale(int iIncrement)
 
 TriangleShape::TriangleShape(QObject *pParent) : BaseShape(pParent)
 {
-
+    m_eType = TRIANGLE;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -241,6 +250,7 @@ TriangleShape::TriangleShape(QObject *pParent) : BaseShape(pParent)
 TriangleShape::TriangleShape(const QGeoCoordinate &point1, const QGeoCoordinate &point2, const QGeoCoordinate &point3, QObject *pParent) :
     BaseShape(pParent)
 {
+    m_eType = TRIANGLE;
     m_path.addCoordinate(point1);
     m_path.addCoordinate(point2);
     m_path.addCoordinate(point3);
