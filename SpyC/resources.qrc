@@ -109,5 +109,9 @@
         <file>icons/ico-move.svg</file>
         <file>qml/toolbars/SafetyToolBar.qml</file>
         <file>qml/toolbars/ExclusionAreaToolBar.qml</file>
+        <file>qml/panels/ShapeEditor.qml</file>
+        <file>icons/ico-anticlockwise.svg</file>
+        <file>icons/ico-zoomin.svg</file>
+        <file>icons/ico-zoomout.svg</file>
     </qresource>
 </RCC>
