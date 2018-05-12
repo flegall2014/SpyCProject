@@ -48,7 +48,7 @@ ListView {
             WayPointDelegate {
                 width: listView.width/columnTitles.length
                 height: parent.height
-                text: wayPointLatitude
+                text: wayPointLatitude.toFixed(3)
                 color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
             }
 
@@ -56,7 +56,7 @@ ListView {
             WayPointDelegate {
                 width: listView.width/columnTitles.length
                 height: parent.height
-                text: wayPointLongitude
+                text: wayPointLongitude.toFixed(3)
                 color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
             }
 
@@ -64,7 +64,7 @@ ListView {
             WayPointDelegate {
                 width: listView.width/columnTitles.length
                 height: parent.height
-                text: "0"
+                text: wayPointAltitude.toFixed(3)
                 color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
             }
 

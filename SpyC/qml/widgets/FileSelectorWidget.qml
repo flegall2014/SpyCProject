@@ -25,7 +25,7 @@ Item {
         text: qsTr("Gallery")
         width: 224
     }
-    TextField {
+    StandardTextField {
         id: input
         anchors.left: label.right
         anchors.verticalCenter: parent.verticalCenter

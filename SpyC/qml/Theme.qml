@@ -38,6 +38,7 @@ Item {
     property int wayPointDelegateHeight: 64
     property int busyIndicatorSize: 64
     property int panelTitleWidth: 256
+    property int coordinateDelegateHeight: buttonSize
 
     // Opacities
     property double exclusionAreaOpacity: .5

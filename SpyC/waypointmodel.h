@@ -23,7 +23,7 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Define roles
-    enum Roles {WayPointIndex=Qt::UserRole+1, WayPointCoordinate, WayPointLatitude, WayPointLongitude, WayPointType};
+    enum Roles {WayPointIndex=Qt::UserRole+1, WayPointCoordinate, WayPointLatitude, WayPointLongitude, WayPointAltitude, WayPointType};
 
     //! Constructor
     WayPointModel(QObject *pParent=nullptr);

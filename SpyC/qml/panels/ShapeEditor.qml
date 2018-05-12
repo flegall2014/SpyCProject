@@ -19,11 +19,12 @@ Item {
             anchors.fill: parent
             ListView {
                 width: parent.width/2
-                height: parent.height/2
+                height: Theme.coordinateDelegateHeight*currentShape.count
                 anchors.centerIn: parent
                 interactive: false
                 model: currentShape.count
                 delegate: CoordinateEditor {
+                    id: delegate
                     coordinate: currentShape.path.coordinateAt(index)
                     onLatitudeChanged: {
                         currentShape.setLatitudeAtIndex(index, latitude)

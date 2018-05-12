@@ -48,9 +48,13 @@ QVariant WayPointModel::data(const QModelIndex &index, int iRole) const
     if (iRole == WayPointLatitude)
         return m_vWayPoints[index.row()].geoCoord().latitude();
 
-    // Return way point at index
+    // Return way point longitude
     if (iRole == WayPointLongitude)
         return m_vWayPoints[index.row()].geoCoord().longitude();
+
+    // Return way point altitude
+    if (iRole == WayPointAltitude)
+        return m_vWayPoints[index.row()].geoCoord().altitude();
 
     // Return way point type
     if (iRole == WayPointType)
@@ -82,6 +86,7 @@ QHash<int, QByteArray> WayPointModel::roleNames() const
     hRoleNames[WayPointIndex] = "wayPointIndex";
     hRoleNames[WayPointCoordinate] = "wayPointCoordinate";
     hRoleNames[WayPointLatitude] = "wayPointLatitude";
+    hRoleNames[WayPointAltitude] = "wayPointAltitude";
     hRoleNames[WayPointLongitude] = "wayPointLongitude";
     hRoleNames[WayPointType] = "wayPointType";
 

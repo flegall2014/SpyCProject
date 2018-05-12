@@ -8,12 +8,12 @@ Item {
     id: loginPage
     opacity: 1
     visible: opacity > 0
-    property bool goNextEnabled: (armyTextField.text.length > 0) && (unitTextField.text.length > 0) &&
-             (missionTextField.text.length > 0) && (operatorTextField.text.length > 0)
-    property alias armyText: armyTextField.text
-    property alias unitText: unitTextField.text
-    property alias missionText: missionTextField.text
-    property alias operatorText: operatorTextField.text
+    property bool goNextEnabled: (armyStandardTextField.text.length > 0) && (unitStandardTextField.text.length > 0) &&
+             (missionStandardTextField.text.length > 0) && (operatorStandardTextField.text.length > 0)
+    property alias armyText: armyStandardTextField.text
+    property alias unitText: unitStandardTextField.text
+    property alias missionText: missionStandardTextField.text
+    property alias operatorText: operatorStandardTextField.text
     signal loginClicked()
 
     // Main container
@@ -80,8 +80,9 @@ Item {
                     text: qsTr("Army")
                     width: 224
                 }
-                TextField {
-                    id: armyTextField
+                StandardTextField {
+                    id: armyStandardTextField
+                    horizontalAlignment: Text.AlignLeft
                     anchors.left: armyTitle.right
                     anchors.right: parent.right
                     height: parent.height
@@ -107,8 +108,9 @@ Item {
                     text: qsTr("Unit")
                     width: 224
                 }
-                TextField {
-                    id: unitTextField
+                StandardTextField {
+                    id: unitStandardTextField
+                    horizontalAlignment: Text.AlignLeft
                     anchors.left: unitTitle.right
                     anchors.right: parent.right
                     height: parent.height
@@ -134,8 +136,9 @@ Item {
                     text: qsTr("Mission")
                     width: 224
                 }
-                TextField {
-                    id: missionTextField
+                StandardTextField {
+                    id: missionStandardTextField
+                    horizontalAlignment: Text.AlignLeft
                     anchors.left: missionTitle.right
                     anchors.right: parent.right
                     height: parent.height
@@ -161,8 +164,9 @@ Item {
                     text: qsTr("Operator")
                     width: 224
                 }
-                TextField {
-                    id: operatorTextField
+                StandardTextField {
+                    id: operatorStandardTextField
+                    horizontalAlignment: Text.AlignLeft
                     anchors.left: operatorTitle.right
                     anchors.right: parent.right
                     height: parent.height

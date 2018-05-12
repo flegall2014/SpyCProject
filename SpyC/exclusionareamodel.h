@@ -67,15 +67,15 @@ public:
     //! Return exclusion area list
     QList<QGeoPath> getExclusionAreaList() const;
 
-private:
-    //! Add shape
-    void addShape(BaseShape *pShape);
-
     //! Return current shape
     BaseShape *currentShape() const;
 
     //! Set current shape
     void setCurrentShape(BaseShape *pShape);
+
+private:
+    //! Add shape
+    void addShape(BaseShape *pShape);
 
     //! Return shape count
     int shapeCount() const;
