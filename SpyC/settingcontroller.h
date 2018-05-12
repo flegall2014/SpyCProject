@@ -137,6 +137,9 @@ private:
     //! Load settings
     void loadSettings();
 
+    //! Create dir
+    void createDir(const QString &sDirPath);
+
 private:
     //! Master controller
     MasterController *m_pMasterController = nullptr;

@@ -115,21 +115,6 @@ void BaseShape::rescale(int iIncrement)
 
 //-------------------------------------------------------------------------------------------------
 
-bool BaseShape::selected() const
-{
-    return m_bSelected;
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void BaseShape::select(bool bSelect)
-{
-    m_bSelected = bSelect;
-    emit selectedChanged();
-}
-
-//-------------------------------------------------------------------------------------------------
-
 const QGeoPath &BaseShape::path() const
 {
     return m_path;

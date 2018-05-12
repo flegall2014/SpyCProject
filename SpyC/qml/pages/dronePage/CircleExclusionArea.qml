@@ -45,15 +45,14 @@ MapItemView {
                         targetDrone.exclusionAreaModel.removeShape(index)
                 }
                 onPressed: {
-                    shape.selected = true
+                    targetDrone.exclusionAreaModel.currentShape = shape
                     mapView.gesture.enabled = false
                 }
                 onReleased: {
-                    shape.selected = true
                     mapView.gesture.enabled = true
                 }
                 onPositionChanged: {
-                    if (shape.selected)
+                    if (shape === targetDrone.exclusionAreaModel.currentShape)
                     {
                         var mapped = mouseArea.mapToItem(mapView, mouse.x, mouse.y)
                         var newPosition = mapView.toCoordinate(Qt.point(mapped.x, mapped.y))

@@ -330,25 +330,40 @@ void SettingController::loadSettings()
     QString sMapPath = settings.value("/user/maps").toString();
     if (sMapPath.simplified().isEmpty())
         sMapPath = baseDir.absoluteFilePath("maps");
+    createDir(sMapPath);
     m_sMapPath = sMapPath;
 
     QString sMissionPath = settings.value("/user/mission").toString();
     if (sMissionPath.simplified().isEmpty())
         sMissionPath = baseDir.absoluteFilePath("mission");
+    createDir(sMissionPath);
     m_sMissionPath = sMissionPath;
 
     QString sLogPath = settings.value("/user/logs").toString();
     if (sLogPath.simplified().isEmpty())
         sLogPath = baseDir.absoluteFilePath("logs");
+    createDir(sLogPath);
     m_sLogPath = sLogPath;
 
     QString sAlertPath = settings.value("/user/alerts").toString();
     if (sAlertPath.simplified().isEmpty())
         sAlertPath = baseDir.absoluteFilePath("alerts");
+    createDir(sAlertPath);
     m_sAlertPath = sAlertPath;
 
     QString sGalleryPath = settings.value("/user/gallery").toString();
     if (sGalleryPath.simplified().isEmpty())
         sGalleryPath = baseDir.absoluteFilePath("gallery");
+    createDir(sGalleryPath);
     m_sGalleryPath = sGalleryPath;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void SettingController::createDir(const QString &sDirPath)
+{
+    qDebug() << "CREATING DIR: " << sDirPath;
+    QDir dir(sDirPath);
+    if (!dir.exists())
+      dir.mkpath(".");
 }

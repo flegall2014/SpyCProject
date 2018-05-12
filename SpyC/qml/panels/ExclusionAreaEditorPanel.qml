@@ -54,14 +54,10 @@ PanelBase {
             }
         }
 
-        Item {
+        ShapeEditor {
             width: parent.width/2
             height: parent.height
-
-            Rectangle {
-                anchors.fill: parent
-                color: "green"
-            }
+            currentShape: droneValid() ? targetDrone.exclusionAreaModel.currentShape : null
         }
     }
 }

@@ -14,7 +14,6 @@ class BaseShape : public QObject
     Q_PROPERTY(QGeoPath path READ path NOTIFY pathChanged)
     Q_PROPERTY(QGeoCoordinate center READ center NOTIFY pathChanged)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
-    Q_PROPERTY(bool selected READ selected WRITE select NOTIFY selectedChanged)
     Q_PROPERTY(int type READ type NOTIFY typeChanged)
     Q_ENUMS(Type)
 
@@ -56,19 +55,10 @@ protected:
     //! Center
     QGeoCoordinate m_center;
 
-    //! Selected?
-    bool m_bSelected = false;
-
     //! Type
     Type m_eType = RECTANGLE;
 
 private:
-    //! Return selected state
-    bool selected() const;
-
-    //! Select
-    void select(bool bSelect);
-
     //! Return path
     const QGeoPath &path() const;
 

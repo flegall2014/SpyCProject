@@ -11,6 +11,7 @@ class BaseShape;
 class ExclusionAreaModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(BaseShape *currentShape READ currentShape WRITE setCurrentShape NOTIFY currentShapeChanged)
 
 public:
     enum Roles {ShapeRole=Qt::UserRole+1};
@@ -61,9 +62,22 @@ private:
     //! Add shape
     void addShape(BaseShape *pShape);
 
+    //! Return current shape
+    BaseShape *currentShape() const;
+
+    //! Set current shape
+    void setCurrentShape(BaseShape *pShape);
+
 private:
     //! Shapes
     QVector<BaseShape *> m_vShapes;
+
+    //! Current shape
+    BaseShape *m_pCurrentShape = nullptr;
+
+signals:
+    //! Current shape changed
+    void currentShapeChanged();
 };
 
 #endif // EXCLUSIONAREAMODEL_H

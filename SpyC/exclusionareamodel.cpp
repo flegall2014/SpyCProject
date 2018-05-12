@@ -64,11 +64,27 @@ void ExclusionAreaModel::addShape(BaseShape *pShape)
 
 //-------------------------------------------------------------------------------------------------
 
+BaseShape *ExclusionAreaModel::currentShape() const
+{
+    return m_pCurrentShape;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void ExclusionAreaModel::setCurrentShape(BaseShape *pShape)
+{
+    m_pCurrentShape = pShape;
+    emit currentShapeChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void ExclusionAreaModel::addRectangle(const QGeoCoordinate &center)
 {
     QGeoCoordinate topLeft = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 135);
     QGeoCoordinate bottomRight = center.atDistanceAndAzimuth(DEFAULT_RADIUS, -45);
     RectangleShape *pShape = new RectangleShape(topLeft, bottomRight, this);
+    setCurrentShape(pShape);
     addShape(pShape);
 }
 
@@ -77,6 +93,7 @@ void ExclusionAreaModel::addRectangle(const QGeoCoordinate &center)
 void ExclusionAreaModel::addCircle(const QGeoCoordinate &center)
 {
     CircleShape *pShape = new CircleShape(center, DEFAULT_RADIUS);
+    setCurrentShape(pShape);
     addShape(pShape);
 }
 
@@ -88,6 +105,7 @@ void ExclusionAreaModel::addTriangle(const QGeoCoordinate &center)
     QGeoCoordinate point2 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 210);
     QGeoCoordinate point3 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 330);
     TriangleShape *pShape = new TriangleShape(point1, point2, point3);
+    setCurrentShape(pShape);
     addShape(pShape);
 }
 
@@ -100,6 +118,7 @@ void ExclusionAreaModel::removeShape(int iShapeIndex)
     if (pShape != nullptr)
         delete pShape;
     endResetModel();
+    setCurrentShape(nullptr);
 }
 
 //-------------------------------------------------------------------------------------------------

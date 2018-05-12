@@ -69,11 +69,11 @@ int GalleryModel::rowCount(const QModelIndex &parent) const
 
 void GalleryModel::addSnapShot(const QString &sSnapShotPath)
 {
-    qDebug() << "ADDING: " << sSnapShotPath;
     QImage img(sSnapShotPath);
+    qDebug() << sSnapShotPath;
     if (!img.isNull())
     {
-        qDebug() << "ADDING: " << sSnapShotPath;
+        qDebug() << "TEST ADDING: " << sSnapShotPath;
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
         m_vSnaps << SnapShot(sSnapShotPath);
         endInsertRows();
