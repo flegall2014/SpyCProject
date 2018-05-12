@@ -7,6 +7,7 @@ import "../.."
 
 // Exclusion area
 MapItemView {
+    id: root
     delegate: MapPolygon {
         id: polygonShape
         color: Theme.exclusionAreaColor
@@ -17,11 +18,14 @@ MapItemView {
         property variant targetShape: shape
         function onCurrentPathChanged()
         {
-            polygonShape.path = []
-            for (var i=0; i<targetShape.count; i++)
+            if ((typeof polygonShape !== "undefined") && (polygonShape !== null))
             {
-                var coordinate = targetShape.path.coordinateAt(i)
-                polygonShape.addCoordinate(coordinate)
+                polygonShape.path = []
+                for (var i=0; i<targetShape.count; i++)
+                {
+                    var coordinate = targetShape.path.coordinateAt(i)
+                    polygonShape.addCoordinate(coordinate)
+                }
             }
         }
         onTargetShapeChanged: {
@@ -37,14 +41,19 @@ MapItemView {
         }
         MouseArea {
             id: mouseArea
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             anchors.fill: parent
+            onClicked: {
+                if (mouse.button === Qt.RightButton)
+                    targetDrone.exclusionAreaModel.removeShape(index)
+            }
             onPressed: {
                 shape.selected = true
                 mapView.gesture.enabled = false
             }
             onReleased: {
                 shape.selected = true
-                mapView.gesture.enabled = false
+                mapView.gesture.enabled = true
             }
             onPositionChanged: {
                 if (shape.selected)

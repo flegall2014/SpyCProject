@@ -93,6 +93,17 @@ void ExclusionAreaModel::addTriangle(const QGeoCoordinate &center)
 
 //-------------------------------------------------------------------------------------------------
 
+void ExclusionAreaModel::removeShape(int iShapeIndex)
+{
+    beginResetModel();
+    BaseShape *pShape = m_vShapes.takeAt(iShapeIndex);
+    if (pShape != nullptr)
+        delete pShape;
+    endResetModel();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void ExclusionAreaModel::clear()
 {
     beginResetModel();

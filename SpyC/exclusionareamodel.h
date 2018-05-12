@@ -51,6 +51,9 @@ public:
     //! Add triangle
     Q_INVOKABLE void addTriangle(const QGeoCoordinate &center);
 
+    //! Remove shape
+    Q_INVOKABLE void removeShape(int iShapeIndex);
+
     //! Clear
     void clear();
 

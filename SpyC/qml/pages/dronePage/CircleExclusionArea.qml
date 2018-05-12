@@ -7,6 +7,7 @@ import "../.."
 
 // Exclusion area
 MapItemView {
+    id: root
     delegate: Component {
         MapCircle {
             id: circleShape
@@ -36,14 +37,19 @@ MapItemView {
             }
             MouseArea {
                 id: mouseArea
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
                 anchors.fill: parent
+                onClicked: {
+                    if (mouse.button === Qt.RightButton)
+                        targetDrone.exclusionAreaModel.removeShape(index)
+                }
                 onPressed: {
                     shape.selected = true
                     mapView.gesture.enabled = false
                 }
                 onReleased: {
                     shape.selected = true
-                    mapView.gesture.enabled = false
+                    mapView.gesture.enabled = true
                 }
                 onPositionChanged: {
                     if (shape.selected)
