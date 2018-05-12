@@ -22,7 +22,8 @@ MapItemView {
             }
             function onCurrentPathChanged()
             {
-                circleShape.radius = targetShape.radius
+                if ((typeof targetShape !== "undefined") && (targetShape !== null))
+                    circleShape.radius = targetShape.radius
             }
             onTargetShapeChanged: {
                 if ((typeof targetShape !== "undefined") && (targetShape !== null))

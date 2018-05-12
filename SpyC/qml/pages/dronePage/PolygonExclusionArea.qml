@@ -16,6 +16,7 @@ MapItemView {
         opacity: Theme.exclusionAreaOpacity
         visible: false
         property variant targetShape: shape
+
         function onCurrentPathChanged()
         {
             if ((typeof polygonShape !== "undefined") && (polygonShape !== null))
