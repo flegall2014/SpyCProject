@@ -195,7 +195,8 @@ CircleShape::CircleShape(QObject *pParent) : BaseShape(pParent)
 
 //-------------------------------------------------------------------------------------------------
 
-CircleShape::CircleShape(const QGeoCoordinate &center, double dRadius) : m_dRadius(dRadius)
+CircleShape::CircleShape(const QGeoCoordinate &center, double dRadius, QObject *pParent) : BaseShape(pParent),
+    m_dRadius(dRadius)
 {
     m_eType = CIRCLE;
     m_center = center;

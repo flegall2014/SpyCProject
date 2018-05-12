@@ -4,6 +4,7 @@
 // Qt
 #include <QAbstractListModel>
 #include <QGeoCoordinate>
+#include <QGeoPath>
 
 // Application
 class BaseShape;
@@ -12,6 +13,7 @@ class ExclusionAreaModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(BaseShape *currentShape READ currentShape WRITE setCurrentShape NOTIFY currentShapeChanged)
+    Q_PROPERTY(int shapeCount READ shapeCount NOTIFY shapeCountChanged)
 
 public:
     enum Roles {ShapeRole=Qt::UserRole+1};
@@ -58,6 +60,13 @@ public:
     //! Clear
     void clear();
 
+    //-------------------------------------------------------------------------------------------------
+    // Getters & setters
+    //-------------------------------------------------------------------------------------------------
+
+    //! Return exclusion area list
+    QList<QGeoPath> getExclusionAreaList() const;
+
 private:
     //! Add shape
     void addShape(BaseShape *pShape);
@@ -67,6 +76,9 @@ private:
 
     //! Set current shape
     void setCurrentShape(BaseShape *pShape);
+
+    //! Return shape count
+    int shapeCount() const;
 
 private:
     //! Shapes
@@ -78,6 +90,9 @@ private:
 signals:
     //! Current shape changed
     void currentShapeChanged();
+
+    //! Shape count changed
+    void shapeCountChanged();
 };
 
 #endif // EXCLUSIONAREAMODEL_H

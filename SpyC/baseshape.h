@@ -41,6 +41,13 @@ public:
     //! Rescale
     Q_INVOKABLE virtual void rescale(int iIncrement);
 
+    //-------------------------------------------------------------------------------------------------
+    // Getters & setters
+    //-------------------------------------------------------------------------------------------------
+
+    //! Return path
+    const QGeoPath &path() const;
+
 protected:
     //! Constructor
     BaseShape(QObject *pParent=nullptr);
@@ -59,9 +66,6 @@ protected:
     Type m_eType = RECTANGLE;
 
 private:
-    //! Return path
-    const QGeoPath &path() const;
-
     //! Return count
     int count() const;
 
@@ -128,7 +132,7 @@ public:
     CircleShape(QObject *pParent=nullptr);
 
     //! Constructor
-    CircleShape(const QGeoCoordinate &center, double dRadius);
+    CircleShape(const QGeoCoordinate &center, double dRadius, QObject *pParent=nullptr);
 
     //! Destructor
     virtual ~CircleShape();

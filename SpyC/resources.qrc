@@ -115,5 +115,7 @@
         <file>icons/ico-zoomout.svg</file>
         <file>qml/pages/dronePage/PolygonExclusionArea.qml</file>
         <file>qml/pages/dronePage/CircleExclusionArea.qml</file>
+        <file>qml/dialogs/NoExclusionAreaErrorDialog.qml</file>
+        <file>qml/dialogs/ExclusionAreaValidationDialog.qml</file>
     </qresource>
 </RCC>

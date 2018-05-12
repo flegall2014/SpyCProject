@@ -72,6 +72,7 @@ void DroneManager::onDroneTimeOut()
         connect(pDrone, &Drone::gpsStrengthChanged, this, &DroneManager::gpsStrengthChanged, Qt::QueuedConnection);
         connect(pDrone, &Drone::missionPlanChanged, this, &DroneManager::missionPlanChanged, Qt::QueuedConnection);
         connect(pDrone, &Drone::safetyChanged, this, &DroneManager::safetyChanged, Qt::QueuedConnection);
+        connect(pDrone, &Drone::exclusionAreaChanged, this, &DroneManager::exclusionAreaChanged, Qt::QueuedConnection);
         connect(pDrone, &Drone::droneError, this, &DroneManager::droneError, Qt::QueuedConnection);
         connect(pDrone, &Drone::failSafeDone, this, &DroneManager::failSafeDone, Qt::QueuedConnection);
         m_hDrones[pDrone->uid()] = pDrone;
@@ -135,4 +136,14 @@ void DroneManager::onUploadSafety(const QGeoPath &path, const QString &sDroneUID
     Drone *pDrone = m_hDrones[sDroneUID];
     if (pDrone != nullptr)
         pDrone->setSafety(path);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneManager::onUploadExclusionArea(const QList<QGeoPath> &lExclusionArea, const QString &sDroneUID)
+{
+    // Retrieve target drone
+    Drone *pDrone = m_hDrones[sDroneUID];
+    if (pDrone != nullptr)
+        pDrone->setExclusionArea(lExclusionArea);
 }

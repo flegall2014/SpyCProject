@@ -65,6 +65,18 @@ Item {
             dialogLoader.source = "qrc:/qml/dialogs/ConfirmExitSpyCDialog.qml"
             root.msgType = SpyC.INFORMATION
         }
+        else
+        if (dialogType === SpyC.NO_EXCLUSION_AREA_ERROR)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/NoExclusionAreaErrorDialog.qml"
+            root.msgType = SpyC.CRITICAL
+        }
+        else
+        if (dialogType === SpyC.EXCLUSION_AREA_VALIDATION)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/ExclusionAreaValidationDialog.qml"
+            root.msgType = SpyC.INFORMATION
+        }
     }
 
     // Background

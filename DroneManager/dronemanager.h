@@ -78,6 +78,9 @@ public slots:
     //! Upload safety
     void onUploadSafety(const QGeoPath &path, const QString &sDroneUID);
 
+    //! Upload exclusion area
+    void onUploadExclusionArea(const QList<QGeoPath> &lExclusionArea, const QString &sDroneUID);
+
 signals:
     //! New drone available
     void newDroneAvailable(const QString &sVideoUrl, const QGeoCoordinate &initialPosition, const QString &sDroneUID);
@@ -96,6 +99,9 @@ signals:
 
     //! Safety changed
     void safetyChanged(const QString &sDroneUID);
+
+    //! Exclusion area changed
+    void exclusionAreaChanged(const QString &sDroneUID);
 
     //! Drone error
     void droneError(const Drone::DroneError &eError, const QString &sDroneUID);

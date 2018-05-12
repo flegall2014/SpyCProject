@@ -75,6 +75,14 @@ void Drone::setMissionPlan(const QGeoPath &geoPath)
 
 //-------------------------------------------------------------------------------------------------
 
+void Drone::setExclusionArea(const QList<QGeoPath> &lExclusionArea)
+{
+    m_lExclusionArea = lExclusionArea;
+    emit exclusionAreaChanged(m_sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void Drone::takeOff()
 {
     if (m_safety.isEmpty())

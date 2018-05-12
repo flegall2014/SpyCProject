@@ -18,7 +18,7 @@ class MissionPlanController : public QObject
 
 public:
     enum MissionPlanError {EMPTY_SAFETY=Qt::UserRole+1, NOT_ENOUGH_POINTS_IN_SAFETY,
-                           EMPTY_MISSION_PLAN, NOT_ENOUGH_POINTS_IN_MISSION_PLAN};
+                           EMPTY_MISSION_PLAN, NOT_ENOUGH_POINTS_IN_MISSION_PLAN, EMPTY_EXCLUSION_AREA};
 
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
@@ -57,6 +57,9 @@ public:
     //! Validate safety
     Q_INVOKABLE void validateSafety(const QString &sDroneUID);
 
+    //! Validate exclusion areas
+    Q_INVOKABLE void validateExclusionAreas(const QString &sDroneUID);
+
 private:
     //! Master controller
     MasterController *m_pMasterController=nullptr;
@@ -67,6 +70,9 @@ public slots:
 
     //! Safety changed
     void onSafetyChanged(const QString &sDroneUID);
+
+    //! Exclusion area changed
+    void onExclusionAreaChanged(const QString &sDroneUID);
 
     //! Mission plan error
     void onMissionPlanError(const Model::Drone::DroneError &eError, const QString &sDroneUID);
@@ -80,6 +86,9 @@ signals:
 
     //! Upload safety
     void uploadSafety(const QGeoPath &geoPath, const QString &sDroneUID);
+
+    //! Upload exclusion areas
+    void uploadExclusionArea(const QList<QGeoPath> &lExclusionArea, const QString &sDroneUID);
 
     //! Mission plan error
     void missionPlanError(const MissionPlanError &eError, const QString &sDroneUID);

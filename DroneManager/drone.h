@@ -55,6 +55,9 @@ public:
     //! Set mission plan
     void setMissionPlan(const QGeoPath &geoPath);
 
+    //! Set exclusion area
+    void setExclusionArea(const QList<QGeoPath> &lExclusionArea);
+
     //! Take off
     void takeOff();
 
@@ -76,6 +79,9 @@ private:
 
     //! Mission plan
     QGeoPath m_missionPlan;
+
+    //! Exclusion area
+    QList<QGeoPath> m_lExclusionArea;
 
     //! Flight simulator
     FlightSimulator *m_pFlightSimulator = nullptr;
@@ -105,6 +111,9 @@ signals:
 
     //! Safety changed
     void safetyChanged(const QString &sDroneUID);
+
+    //! Exclusion area changed
+    void exclusionAreaChanged(const QString &sDroneUID);
 
     //! Drone error
     void droneError(const Drone::DroneError &eDroneError, const QString &sDroneUID);

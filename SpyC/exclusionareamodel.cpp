@@ -79,6 +79,13 @@ void ExclusionAreaModel::setCurrentShape(BaseShape *pShape)
 
 //-------------------------------------------------------------------------------------------------
 
+int ExclusionAreaModel::shapeCount() const
+{
+    return rowCount();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void ExclusionAreaModel::addRectangle(const QGeoCoordinate &center)
 {
     QGeoCoordinate topLeft = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 135);
@@ -86,15 +93,17 @@ void ExclusionAreaModel::addRectangle(const QGeoCoordinate &center)
     RectangleShape *pShape = new RectangleShape(topLeft, bottomRight, this);
     setCurrentShape(pShape);
     addShape(pShape);
+    emit shapeCountChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void ExclusionAreaModel::addCircle(const QGeoCoordinate &center)
 {
-    CircleShape *pShape = new CircleShape(center, DEFAULT_RADIUS);
+    CircleShape *pShape = new CircleShape(center, DEFAULT_RADIUS, this);
     setCurrentShape(pShape);
     addShape(pShape);
+    emit shapeCountChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -104,9 +113,10 @@ void ExclusionAreaModel::addTriangle(const QGeoCoordinate &center)
     QGeoCoordinate point1 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 90);
     QGeoCoordinate point2 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 210);
     QGeoCoordinate point3 = center.atDistanceAndAzimuth(DEFAULT_RADIUS, 330);
-    TriangleShape *pShape = new TriangleShape(point1, point2, point3);
+    TriangleShape *pShape = new TriangleShape(point1, point2, point3, this);
     setCurrentShape(pShape);
     addShape(pShape);
+    emit shapeCountChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -119,6 +129,7 @@ void ExclusionAreaModel::removeShape(int iShapeIndex)
         delete pShape;
     endResetModel();
     setCurrentShape(nullptr);
+    emit shapeCountChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -129,4 +140,14 @@ void ExclusionAreaModel::clear()
     qDeleteAll(m_vShapes);
     m_vShapes.clear();
     endResetModel();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+QList<QGeoPath> ExclusionAreaModel::getExclusionAreaList() const
+{
+    QList<QGeoPath> lGeoPathList;
+    foreach (BaseShape *pShape, m_vShapes)
+        lGeoPathList << pShape->path();
+    return lGeoPathList;
 }

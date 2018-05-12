@@ -6,6 +6,7 @@
 #include "mastercontroller.h"
 #include "dronebase.h"
 #include "waypointmodel.h"
+#include "exclusionareamodel.h"
 
 //-------------------------------------------------------------------------------------------------
 
@@ -84,9 +85,26 @@ void MissionPlanController::validateSafety(const QString &sDroneUID)
                 else
                     emit missionPlanError(MissionPlanError::NOT_ENOUGH_POINTS_IN_SAFETY, pDrone->uid());
             }
-            else {
-                emit missionPlanError(MissionPlanError::EMPTY_SAFETY, pDrone->uid());
-            }
+            else emit missionPlanError(MissionPlanError::EMPTY_SAFETY, pDrone->uid());
+        }
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MissionPlanController::validateExclusionAreas(const QString &sDroneUID)
+{
+    if (m_pMasterController != nullptr)
+    {
+        DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
+        if (pDrone != nullptr)
+        {
+            // Retrieve exclusion areas
+            QList<QGeoPath> lGeoPathList = pDrone->exclusionAreaModel()->getExclusionAreaList();
+            if (!lGeoPathList.isEmpty())
+                emit uploadExclusionArea(lGeoPathList, pDrone->uid());
+            else
+                emit missionPlanError(MissionPlanError::EMPTY_EXCLUSION_AREA, pDrone->uid());
         }
     }
 }
@@ -106,6 +124,20 @@ void MissionPlanController::onMissionPlanChanged(const QString &sDroneUID)
 //-------------------------------------------------------------------------------------------------
 
 void MissionPlanController::onSafetyChanged(const QString &sDroneUID)
+{
+    if (m_pMasterController != nullptr)
+    {
+        DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
+        if (pDrone != nullptr)
+        {
+            pDrone->setState(DroneBase::IDLE);
+        }
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MissionPlanController::onExclusionAreaChanged(const QString &sDroneUID)
 {
     if (m_pMasterController != nullptr)
     {

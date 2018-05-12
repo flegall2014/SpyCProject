@@ -37,6 +37,11 @@ ToolBarBase {
         anchors.verticalCenter: parent.verticalCenter
         label: qsTr("Done")
         endColor: Theme.defaultButtonColor
-        onClicked: targetDrone.setDefaultWorkMode()
+        onClicked: {
+            if (targetDrone.exclusionAreaModel.shapeCount === 0)
+                dialogMgr.showDialog(SpyC.NO_EXCLUSION_AREA_ERROR, targetDrone.uid)
+            else
+                dialogMgr.showDialog(SpyC.EXCLUSION_AREA_VALIDATION, targetDrone.uid)
+        }
     }
 }
