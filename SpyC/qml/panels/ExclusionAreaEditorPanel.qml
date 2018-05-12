@@ -8,6 +8,7 @@ import "../widgets"
 
 PanelBase {
     id: root
+    centralTitle: qsTr("EDITING EXCLUSION AREA")
     panelContents: Row {
         anchors.fill: parent
 

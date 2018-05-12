@@ -11,6 +11,7 @@ Item {
 
     function showDialog(dialogType, droneUID)
     {
+        console.log("TOTO ", dialogType, SpyC.CONFIRM_TAKE_OFF)
         root.state = "active"
         if (dialogType === SpyC.CONFIRM_TAKE_OFF)
         {
@@ -60,14 +61,9 @@ Item {
             root.msgType = SpyC.INFORMATION
         }
         else
-        if (dialogType === SpyC.EXIT_SPYC)
-        {
-            dialogLoader.source = "qrc:/qml/dialogs/ConfirmExitSpyCDialog.qml"
-            root.msgType = SpyC.INFORMATION
-        }
-        else
         if (dialogType === SpyC.NO_EXCLUSION_AREA_ERROR)
         {
+             console.log("LA!!!!!!!!!!!!!!!!!!!!!!")
             dialogLoader.source = "qrc:/qml/dialogs/NoExclusionAreaErrorDialog.qml"
             root.msgType = SpyC.CRITICAL
         }
@@ -75,6 +71,13 @@ Item {
         if (dialogType === SpyC.EXCLUSION_AREA_VALIDATION)
         {
             dialogLoader.source = "qrc:/qml/dialogs/ExclusionAreaValidationDialog.qml"
+            root.msgType = SpyC.INFORMATION
+        }
+        else
+        if (dialogType === SpyC.EXIT_SPYC)
+        {
+            console.log("ICI!!!!!!!!!!!!!!!!!!!!!!")
+            dialogLoader.source = "qrc:/qml/dialogs/ConfirmExitSpyCDialog.qml"
             root.msgType = SpyC.INFORMATION
         }
     }

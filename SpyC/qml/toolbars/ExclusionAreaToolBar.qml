@@ -38,6 +38,7 @@ ToolBarBase {
         label: qsTr("Done")
         endColor: Theme.defaultButtonColor
         onClicked: {
+            console.log("ZAZA!!!!")
             if (targetDrone.exclusionAreaModel.shapeCount === 0)
                 dialogMgr.showDialog(SpyC.NO_EXCLUSION_AREA_ERROR, targetDrone.uid)
             else

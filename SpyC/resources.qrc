@@ -107,7 +107,6 @@
         <file>qml/pages/dronePage/DroneMarker.qml</file>
         <file>qml/pages/dronePage/MissionPlanPoints.qml</file>
         <file>icons/ico-move.svg</file>
-        <file>qml/toolbars/SafetyToolBar.qml</file>
         <file>qml/toolbars/ExclusionAreaToolBar.qml</file>
         <file>qml/panels/ShapeEditor.qml</file>
         <file>icons/ico-anticlockwise.svg</file>
@@ -117,5 +116,6 @@
         <file>qml/pages/dronePage/CircleExclusionArea.qml</file>
         <file>qml/dialogs/NoExclusionAreaErrorDialog.qml</file>
         <file>qml/dialogs/ExclusionAreaValidationDialog.qml</file>
+        <file>qml/panels/CoordinateEditor.qml</file>
     </qresource>
 </RCC>

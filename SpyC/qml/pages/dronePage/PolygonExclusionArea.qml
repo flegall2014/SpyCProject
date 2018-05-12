@@ -17,6 +17,22 @@ MapItemView {
         visible: false
         property variant targetShape: shape
 
+        Timer {
+            interval: 500
+            repeat: true
+            running: (shape === targetDrone.exclusionAreaModel.currentShape)
+            onTriggered: {
+                if (border.color === Theme.exclusionAreaBorderColor)
+                    border.color = Theme.exclusionAreaColor
+                else
+                    border.color = Theme.exclusionAreaBorderColor
+            }
+            onRunningChanged: {
+                if (running === false)
+                    border.color = Theme.exclusionAreaBorderColor
+            }
+        }
+
         function onCurrentPathChanged()
         {
             if ((typeof polygonShape !== "undefined") && (polygonShape !== null))
@@ -64,12 +80,15 @@ MapItemView {
                 }
             }
             onWheel: {
-                if (wheel.modifiers & Qt.ControlModifier) {
-                    shape.rescale(wheel.angleDelta.y > 0 ? 1 : -1)
-                }
-                else
-                if (wheel.modifiers & Qt.ShiftModifier) {
-                    shape.rotate(wheel.angleDelta.y > 0 ? 1 : -1)
+                if (shape === targetDrone.exclusionAreaModel.currentShape)
+                {
+                    if (wheel.modifiers & Qt.ControlModifier) {
+                        shape.rescale(wheel.angleDelta.y > 0 ? 1 : -1)
+                    }
+                    else
+                    if (wheel.modifiers & Qt.ShiftModifier) {
+                        shape.rotate(wheel.angleDelta.y > 0 ? 1 : -1)
+                    }
                 }
             }
         }

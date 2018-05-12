@@ -41,6 +41,15 @@ public:
     //! Rescale
     Q_INVOKABLE virtual void rescale(int iIncrement);
 
+    //! Set latitude at index
+    Q_INVOKABLE void setLatitudeAtIndex(int iIndex, double dLatitude);
+
+    //! Set longitude at index
+    Q_INVOKABLE void setLongitudeAtIndex(int iIndex, double dLongitude);
+
+    //! Set altitude at index
+    Q_INVOKABLE void setAltitudeAtIndex(int iIndex, double dAltitude);
+
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
     //-------------------------------------------------------------------------------------------------

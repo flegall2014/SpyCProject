@@ -115,6 +115,46 @@ void BaseShape::rescale(int iIncrement)
 
 //-------------------------------------------------------------------------------------------------
 
+void BaseShape::setLatitudeAtIndex(int iIndex, double dLatitude)
+{
+    qDebug() << "ICI " << iIndex << dLatitude;
+    if ((iIndex >= 0) && (iIndex < m_path.size()))
+    {
+        QGeoCoordinate currentCoordinate = m_path.coordinateAt(iIndex);
+        currentCoordinate.setLatitude(dLatitude);
+        m_path.replaceCoordinate(iIndex, currentCoordinate);
+        emit pathChanged();
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void BaseShape::setLongitudeAtIndex(int iIndex, double dLatitude)
+{
+    if ((iIndex >= 0) && (iIndex < m_path.size()))
+    {
+        QGeoCoordinate currentCoordinate = m_path.coordinateAt(iIndex);
+        currentCoordinate.setLongitude(dLatitude);
+        m_path.replaceCoordinate(iIndex, currentCoordinate);
+        emit pathChanged();
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void BaseShape::setAltitudeAtIndex(int iIndex, double dAltitude)
+{
+    if ((iIndex >= 0) && (iIndex < m_path.size()))
+    {
+        QGeoCoordinate currentCoordinate = m_path.coordinateAt(iIndex);
+        currentCoordinate.setAltitude(dAltitude);
+        m_path.replaceCoordinate(iIndex, currentCoordinate);
+        emit pathChanged();
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
 const QGeoPath &BaseShape::path() const
 {
     return m_path;

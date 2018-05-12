@@ -14,44 +14,25 @@ Item {
         }
     }
     Component {
-        id: rectangleEditorComponent
+        id: polygonEditorComponent
         Item {
             anchors.fill: parent
-            Rectangle {
+            ListView {
                 width: parent.width/2
                 height: parent.height/2
-                color: "green"
                 anchors.centerIn: parent
-
-                ListView {
-                    anchors.fill: parent
-                    interactive: false
-                    model: currentShape.count
-                    delegate: StandardText {
-                        text: currentShape.path.coordinateAt(index).toString()
-                        horizontalAlignment: Text.AlignHCenter
+                interactive: false
+                model: currentShape.count
+                delegate: CoordinateEditor {
+                    coordinate: currentShape.path.coordinateAt(index)
+                    onLatitudeChanged: {
+                        currentShape.setLatitudeAtIndex(index, latitude)
                     }
-                }
-            }
-        }
-    }
-    Component {
-        id: triangleEditorComponent
-        Item {
-            anchors.fill: parent
-            Rectangle {
-                width: parent.width/2
-                height: parent.height/2
-                color: "green"
-                anchors.centerIn: parent
-
-                ListView {
-                    anchors.fill: parent
-                    interactive: false
-                    model: currentShape.count
-                    delegate: StandardText {
-                        text: currentShape.path.coordinateAt(index).toString()
-                        horizontalAlignment: Text.AlignHCenter
+                    onLongitudeChanged: {
+                        currentShape.setLongitudeAtIndex(index, longitude)
+                    }
+                    onAltitudeChanged: {
+                        currentShape.setAltitudeAtIndex(index, altitude)
                     }
                 }
             }
@@ -69,11 +50,7 @@ Item {
             if (currentShape.type === BaseShape.CIRCLE)
                 shapeEditorLoader.sourceComponent = circleEditorComponent
             else
-            if (currentShape.type === BaseShape.RECTANGLE)
-                shapeEditorLoader.sourceComponent = rectangleEditorComponent
-            else
-            if (currentShape.type === BaseShape.TRIANGLE)
-                shapeEditorLoader.sourceComponent = triangleEditorComponent
+                shapeEditorLoader.sourceComponent = polygonEditorComponent
         }
         else shapeEditorLoader.sourceComponent = null
     }
