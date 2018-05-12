@@ -35,8 +35,24 @@ MapItemView {
                 }
             }
             MouseArea {
+                id: mouseArea
                 anchors.fill: parent
-                onClicked: shape.rescale(1)
+                onPressed: {
+                    shape.selected = true
+                    mapView.gesture.enabled = false
+                }
+                onReleased: {
+                    shape.selected = true
+                    mapView.gesture.enabled = false
+                }
+                onPositionChanged: {
+                    if (shape.selected)
+                    {
+                        var mapped = mouseArea.mapToItem(mapView, mouse.x, mouse.y)
+                        var newPosition = mapView.toCoordinate(Qt.point(mapped.x, mapped.y))
+                        shape.moveTo(newPosition)
+                    }
+                }
                 onWheel: {
                     if (wheel.modifiers & Qt.ControlModifier) {
                         shape.rescale(wheel.angleDelta.y > 0 ? 1 : -1)
