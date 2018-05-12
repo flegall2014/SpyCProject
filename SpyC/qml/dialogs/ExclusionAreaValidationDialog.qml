@@ -15,6 +15,7 @@ DialogBase {
             anchors.verticalCenter: parent.verticalCenter
             label: qsTr("Cancel")
             onClicked: {
+                targetDrone.exclusionAreaModel.currentShape = null
                 targetDrone.setDefaultWorkMode()
                 closeDialog()
             }
@@ -29,6 +30,7 @@ DialogBase {
             label: qsTr("OK")
             onClicked: {
                 MASTERCONTROLLER.missionPlanController.validateExclusionAreas(targetDrone.uid)
+                targetDrone.exclusionAreaModel.currentShape = null
                 targetDrone.setDefaultWorkMode()
                 closeDialog()
             }

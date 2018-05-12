@@ -13,9 +13,27 @@ MapItemView {
             id: circleShape
             color: Theme.exclusionAreaColor
             border.color: Theme.exclusionAreaBorderColor
+            border.width: 3
             opacity: Theme.exclusionAreaOpacity
             visible: false
             property variant targetShape: shape
+
+            Timer {
+                interval: Theme.shapeBlinkInterval
+                repeat: true
+                running: ((shape === targetDrone.exclusionAreaModel.currentShape) && (targetDrone.workMode === DroneBase.EXCLUSION_EDIT))
+                onTriggered: {
+                    if (border.color === Theme.exclusionAreaBorderColor)
+                        border.color = Theme.exclusionAreaColor
+                    else
+                        border.color = Theme.exclusionAreaBorderColor
+                }
+                onRunningChanged: {
+                    if (running === false)
+                        border.color = Theme.exclusionAreaBorderColor
+                }
+            }
+
             center {
                 latitude: shape.center.latitude
                 longitude: shape.center.longitude
@@ -38,6 +56,7 @@ MapItemView {
             }
             MouseArea {
                 id: mouseArea
+                enabled: targetDrone.workMode === DroneBase.EXCLUSION_EDIT
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                 anchors.fill: parent
                 onClicked: {

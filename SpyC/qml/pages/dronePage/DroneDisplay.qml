@@ -73,7 +73,7 @@ Rectangle {
                         id: horizontalToolBarLoader
                         width: parent.width
                         height: Theme.toolBarHeight
-                        z: 1000
+                        z: Theme.zMax
                         anchors.top: parent.top
                         onLoaded: item.targetDrone = targetDrone
                         function onWorkModeChanged()
@@ -181,7 +181,7 @@ Rectangle {
                 height: Theme.mapOrVideoThumbnailSize
                 x: mapView.width-Theme.mapOrVideoThumbnailSize
                 y: mapView.height-Theme.mapOrVideoThumbnailSize
-                z: 1000
+                z: Theme.zMax
             }
         },
         State {
@@ -216,7 +216,7 @@ Rectangle {
                 height: Theme.mapOrVideoThumbnailSize
                 x: videoView.width-Theme.mapOrVideoThumbnailSize
                 y: videoView.height-Theme.mapOrVideoThumbnailSize
-                z: 1000
+                z: Theme.zMax
             }
             PropertyChanges {
                 target: videoView

@@ -54,7 +54,7 @@ Item {
             Timer {
                 id: timer
                 running: statusText.text.length > 0
-                interval: 1000
+                interval: Theme.centralTitleBlinkInterval
                 repeat: true
                 triggeredOnStart: true
                 onTriggered: statusText.opacity = 1-statusText.opacity

@@ -53,10 +53,15 @@ Item {
 
     // Animation
     property int standardAnimationDuration: 300
+    property int centralTitleBlinkInterval: 1000
+    property int shapeBlinkInterval: 250
 
     // Margins
     property int standardMargin: 4
     property int standardSpacing: 8
+
+    // Z
+    property int zMax: 1000
 
     // Tab view style (control panel)
     property Component controlPanelTabViewStyle: TabViewStyle {

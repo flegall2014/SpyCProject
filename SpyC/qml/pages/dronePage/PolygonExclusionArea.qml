@@ -18,9 +18,9 @@ MapItemView {
         property variant targetShape: shape
 
         Timer {
-            interval: 500
+            interval: Theme.shapeBlinkInterval
             repeat: true
-            running: (shape === targetDrone.exclusionAreaModel.currentShape)
+            running: ((shape === targetDrone.exclusionAreaModel.currentShape) && (targetDrone.workMode === DroneBase.EXCLUSION_EDIT))
             onTriggered: {
                 if (border.color === Theme.exclusionAreaBorderColor)
                     border.color = Theme.exclusionAreaColor
@@ -58,6 +58,7 @@ MapItemView {
         }
         MouseArea {
             id: mouseArea
+            enabled: targetDrone.workMode === DroneBase.EXCLUSION_EDIT
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             anchors.fill: parent
             onClicked: {
