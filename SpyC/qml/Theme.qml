@@ -40,7 +40,7 @@ Item {
     property int panelTitleWidth: 256
 
     // Opacities
-    property double exclusionAreaOpacity: .33
+    property double exclusionAreaOpacity: .5
 
     // Font
     property string standardFont: "Segoe UI"

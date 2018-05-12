@@ -4,7 +4,6 @@ import QtPositioning 5.6
 import QtLocation 5.6
 import QtQuick.Controls 1.4
 import Components 1.0
-import QtQuick.Shapes 1.0
 import "../.."
 import "../../toolbars"
 
@@ -13,42 +12,14 @@ Map {
     id: mapView
     plugin: mapPlugin
     zoomLevel: 10
-    property bool missionPlanVisible: true
-    property bool safetyVisible: true
     property variant targetDrone
-    gesture.enabled: (targetDrone.workMode !== DroneBase.SAFETY_EDIT) && (targetDrone.workMode !== DroneBase.MISSION_PLAN_EDIT)
-                     && (targetDrone.workMode !== DroneBase.EXCLUSION_EDIT)
+    property bool mapGestureEnabled: true
+    gesture.enabled: mapGestureEnabled
 
     // Map plugin
     Plugin {
         id: mapPlugin
         name: "osm"
-    }
-
-    // Blink effect for safety
-    Timer {
-        id: safetyBlinkTimer
-        interval: Theme.standardAnimationDuration
-        repeat: true
-        running: (targetDrone.workMode === DroneBase.SAFETY_EDIT)
-        onTriggered: mapView.safetyVisible = !mapView.safetyVisible
-        onRunningChanged: {
-            if (running === false)
-                mapView.safetyVisible = true
-        }
-    }
-
-    // Blink effect for mission plan
-    Timer {
-        id: missionPlanBlinkTimer
-        interval: Theme.standardAnimationDuration
-        repeat: true
-        running: (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
-        onTriggered: mapView.missionPlanVisible = !mapView.missionPlanVisible
-        onRunningChanged: {
-            if (running === false)
-                mapView.missionPlanVisible = true
-        }
     }
 
     // Drone marker
@@ -93,7 +64,7 @@ Map {
                     longitude: wayPointLongitude
                 }
                 radius: 250
-                color: mapView.missionPlanVisible ? Theme.missionPlanColor : "black"
+                color: Theme.missionPlanColor
                 border.width: 3
                 MouseArea {
                     id: circleMouseArea
@@ -107,6 +78,7 @@ Map {
                         }
                     }
                     onPressed: {
+                        mapGestureEnabled = false
                         targetDrone.missionPlanModel.currentPointIndex = index
                         circle.selected = true
                     }
@@ -118,6 +90,7 @@ Map {
                         }
                     }
                     onReleased: {
+                        mapGestureEnabled = true
                         circle.selected = false
                     }
                 }
@@ -130,7 +103,7 @@ Map {
         id: missionPlanPoly
         objectName: "missionPlanPoly"
         line.width: 3
-        line.color: mapView.missionPlanVisible ? Theme.missionPlanColor : "black"
+        line.color: Theme.missionPlanColor
         function updatePolyLine()
         {
             var lines = []
@@ -170,7 +143,7 @@ Map {
                     longitude: wayPointLongitude
                 }
                 radius: 250
-                color: mapView.safetyVisible ? Theme.safetyColor : "black"
+                color: Theme.safetyColor
                 border.width: 3
                 MouseArea {
                     id: circleMouseArea
@@ -182,6 +155,7 @@ Map {
                             targetDrone.removeCoordinateFromSafetyPlanAtIndex(index)
                     }
                     onPressed: {
+                        mapGestureEnabled = false
                         targetDrone.safetyModel.currentPointIndex = index
                         circle.selected = true
                     }
@@ -193,6 +167,7 @@ Map {
                         }
                     }
                     onReleased: {
+                        mapGestureEnabled = true
                         circle.selected = false
                     }
                 }
@@ -205,7 +180,7 @@ Map {
         id: safetyPoly
         objectName: "safetyPoly"
         line.width: 3
-        line.color: mapView.safetyVisible ? Theme.safetyColor : "black"
+        line.color: Theme.safetyColor
         function updatePolyLine()
         {
             var lines = []
@@ -231,80 +206,14 @@ Map {
         Component.onCompleted: targetDrone.safetyModel.pathChanged.connect(onDataChanged)
     }
 
-    // Exclusion area
-    MapItemView {
-        model: targetDrone.exclusionAreaModel
-        delegate: MapPolygon {
-            id: polygonShape
-            color: Theme.exclusionAreaColor
-            border.color: Theme.exclusionAreaBorderColor
-            border.width: 3
-            opacity: Theme.exclusionAreaOpacity
-            visible: false
-            property variant targetShape: shape
-            function onCurrentPathChanged()
-            {
-                polygonShape.path = []
-                for(var i=0; i<targetShape.count; i++)
-                {
-                    var coordinate = targetShape.path.coordinateAt(i)
-                    polygonShape.addCoordinate(coordinate)
-                }
-            }
-            onTargetShapeChanged: {
-                if ((typeof targetShape !== "undefined") && (targetShape !== null))
-                {
-                    polygonShape.visible = (targetShape.type === BaseShape.TRIANGLE) || (targetShape.type === BaseShape.RECTANGLE)
-                    if (polygonShape.visible)
-                    {
-                        targetShape.pathChanged.connect(onCurrentPathChanged)
-                        onCurrentPathChanged()
-                    }
-                }
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: shape.rotate(1)
-            }
-        }
+    // Exclusion area (polygon)
+    PolygonExclusionArea {
+         model: targetDrone.exclusionAreaModel
     }
 
-    // Exclusion area
-    MapItemView {
+    // Exclusion area (circle)
+    CircleExclusionArea {
         model: targetDrone.exclusionAreaModel
-        delegate: Component {
-            MapCircle {
-                id: circleShape
-                color: Theme.exclusionAreaColor
-                border.color: Theme.exclusionAreaBorderColor
-                opacity: Theme.exclusionAreaOpacity
-                visible: false
-                property variant targetShape: shape
-                center {
-                    latitude: shape.center.latitude
-                    longitude: shape.center.longitude
-                }
-                function onCurrentPathChanged()
-                {
-                    circleShape.radius = targetShape.radius
-                }
-                onTargetShapeChanged: {
-                    if ((typeof targetShape !== "undefined") && (targetShape !== null))
-                    {
-                        circleShape.visible = (targetShape.type === BaseShape.CIRCLE)
-                        if (circleShape.visible)
-                        {
-                            targetShape.pathChanged.connect(onCurrentPathChanged)
-                            onCurrentPathChanged()
-                        }
-                    }
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: shape.rescale(1)
-                }
-            }
-        }
     }
 
     // Handle clicks

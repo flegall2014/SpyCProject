@@ -20,6 +20,9 @@ Item {
     // Panel title
     property alias title: panelTitle.text
 
+    // Central title
+    property alias centralTitle: statusText.text
+
     // Panel contents
     property alias panelContents: panelContents.children
 
@@ -41,6 +44,24 @@ Item {
             anchors.leftMargin: Theme.standardMargin
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignLeft
+        }
+        StandardText {
+            id: statusText
+            color: Theme.warningColor
+            anchors.centerIn: parent
+            font.bold: true
+            opacity: 0
+            Timer {
+                id: timer
+                running: statusText.text.length > 0
+                interval: 1000
+                repeat: true
+                triggeredOnStart: true
+                onTriggered: statusText.opacity = 1-statusText.opacity
+            }
+            Behavior on opacity {
+                NumberAnimation {duration: timer.interval}
+            }
         }
     }
 

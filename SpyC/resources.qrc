@@ -113,5 +113,7 @@
         <file>icons/ico-anticlockwise.svg</file>
         <file>icons/ico-zoomin.svg</file>
         <file>icons/ico-zoomout.svg</file>
+        <file>qml/pages/dronePage/PolygonExclusionArea.qml</file>
+        <file>qml/pages/dronePage/CircleExclusionArea.qml</file>
     </qresource>
 </RCC>

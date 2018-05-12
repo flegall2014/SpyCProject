@@ -6,6 +6,7 @@ import ".."
 import "../widgets"
 
 PanelBase {
+    centralTitle: qsTr("EDITING MISSION PLAN")
     panelContents: Item {
         anchors.fill: parent
 

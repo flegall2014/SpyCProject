@@ -6,6 +6,7 @@ import "../widgets"
 import "../toolbars"
 
 PanelBase {
+    centralTitle: qsTr("EDITING SAFETY AREA")
     panelContents: Item {
         anchors.fill: parent
 
