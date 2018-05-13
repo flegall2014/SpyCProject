@@ -25,6 +25,7 @@ Item {
     property color selectedColor: "orange"
     property color exclusionAreaColor: "red"
     property color exclusionAreaBorderColor: "black"
+    property color currentSnapShotBorderColor: "orange"
 
     // Sizes
     property int toolBarWidth: 64
@@ -39,6 +40,7 @@ Item {
     property int busyIndicatorSize: 64
     property int panelTitleWidth: 256
     property int coordinateDelegateHeight: buttonSize
+    property int galleryViewToolBarHeight: 32
 
     // Opacities
     property double exclusionAreaOpacity: .5

@@ -19,6 +19,7 @@ struct SnapShot
 class GalleryModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(int currentScreenCapIndex READ currentScreenCapIndex WRITE setCurrentScreenCapIndex NOTIFY currentScreenCapIndexChanged)
 
 public:
     enum Roles {FileNameRole=Qt::UserRole+1, FilePathRole};
@@ -58,12 +59,32 @@ public:
     //! Initialize
     Q_INVOKABLE void initialize();
 
+    //! Remove current screenCap
+    Q_INVOKABLE void removeCurrentScreenCap();
+
+    //-------------------------------------------------------------------------------------------------
+    // Getters & setters
+    //-------------------------------------------------------------------------------------------------
+
+    //! Return current screenCap index
+    int currentScreenCapIndex() const;
+
+    //! Set current screenCap index
+    void setCurrentScreenCapIndex(int iIndex);
+
 private:
     //! Snaps
     QVector<SnapShot> m_vSnaps;
 
     //! Drone snap dir
     QString m_sSnapShotDir = "";
+
+    //! Current screencap index
+    int m_iCurrentScreenCapIndex = 0;
+
+signals:
+    //! Current screenCap index changed
+    void currentScreenCapIndexChanged();
 };
 
 #endif // GALLERYMODEL_H

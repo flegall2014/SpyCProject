@@ -11,7 +11,6 @@ Item {
 
     function showDialog(dialogType, droneUID)
     {
-        console.log("TOTO ", dialogType, SpyC.CONFIRM_TAKE_OFF)
         root.state = "active"
         if (dialogType === SpyC.CONFIRM_TAKE_OFF)
         {
@@ -74,9 +73,14 @@ Item {
             root.msgType = SpyC.INFORMATION
         }
         else
+        if (dialogType === SpyC.CONFIRM_REMOVE_CAPTURE)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/ConfirmRemoveCaptureDialog.qml"
+            root.msgType = SpyC.INFORMATION
+        }
+        else
         if (dialogType === SpyC.EXIT_SPYC)
         {
-            console.log("ICI!!!!!!!!!!!!!!!!!!!!!!")
             dialogLoader.source = "qrc:/qml/dialogs/ConfirmExitSpyCDialog.qml"
             root.msgType = SpyC.INFORMATION
         }

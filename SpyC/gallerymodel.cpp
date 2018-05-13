@@ -95,6 +95,7 @@ QString GalleryModel::getNextSnapShotName(const QString &sDroneUID)
     sUniqueName.replace(" ", "_");
     return QDir(m_sSnapShotDir).absoluteFilePath(sUniqueName);
 }
+
 //-------------------------------------------------------------------------------------------------
 
 void GalleryModel::initialize()
@@ -110,4 +111,34 @@ void GalleryModel::initialize()
             m_vSnaps << SnapShot(sFullImagePath);
     }
     endResetModel();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void GalleryModel::removeCurrentScreenCap()
+{
+    if ((m_iCurrentScreenCapIndex >= 0) && (m_iCurrentScreenCapIndex < rowCount()))
+    {
+        QString sSnapShotPath = m_vSnaps[m_iCurrentScreenCapIndex].filePath;
+        beginRemoveRows(QModelIndex(), m_iCurrentScreenCapIndex, m_iCurrentScreenCapIndex);
+        m_vSnaps.takeAt(m_iCurrentScreenCapIndex);
+        endRemoveRows();
+        QFile file(sSnapShotPath);
+        file.remove();
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+int GalleryModel::currentScreenCapIndex() const
+{
+    return m_iCurrentScreenCapIndex;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void GalleryModel::setCurrentScreenCapIndex(int iIndex)
+{
+    m_iCurrentScreenCapIndex = iIndex;
+    emit currentScreenCapIndexChanged();
 }
