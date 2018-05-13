@@ -117,7 +117,6 @@ void BaseShape::rescale(int iIncrement)
 
 void BaseShape::setLatitudeAtIndex(int iIndex, double dLatitude)
 {
-    qDebug() << "ICI " << iIndex << dLatitude;
     if ((iIndex >= 0) && (iIndex < m_path.size()))
     {
         QGeoCoordinate currentCoordinate = m_path.coordinateAt(iIndex);
@@ -270,7 +269,6 @@ void CircleShape::rescale(int iIncrement)
 {
     bool bUpScale = iIncrement >= 0;
     m_dRadius += (bUpScale ? BASE_INCREMENT : -BASE_INCREMENT);
-
     emit pathChanged();
 }
 

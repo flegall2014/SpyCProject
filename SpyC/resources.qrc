@@ -118,5 +118,6 @@
         <file>qml/dialogs/ExclusionAreaValidationDialog.qml</file>
         <file>qml/panels/CoordinateEditor.qml</file>
         <file>qml/widgets/StandardTextField.qml</file>
+        <file>qml/widgets/StandardLabelTextField.qml</file>
     </qresource>
 </RCC>

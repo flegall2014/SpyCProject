@@ -35,7 +35,7 @@ Item {
     property int alertDeleagateHeight: 32
     property int mapOrVideoThumbnailSize: 256
     property int goNextIconSize: 160
-    property int wayPointDelegateHeight: 64
+    property int standardDelegateHeight: 48
     property int busyIndicatorSize: 64
     property int panelTitleWidth: 256
     property int coordinateDelegateHeight: buttonSize

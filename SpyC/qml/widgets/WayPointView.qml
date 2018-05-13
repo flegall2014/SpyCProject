@@ -15,7 +15,7 @@ ListView {
         id: headerComponent
         Row {
             width: listView.width
-            height: Theme.wayPointDelegateHeight
+            height: Theme.standardDelegateHeight
             Repeater {
                 model: columnTitles
                 Item {
@@ -31,7 +31,7 @@ ListView {
     }
     delegate: Item {
         width: listView.width
-        height: Theme.wayPointDelegateHeight
+        height: Theme.standardDelegateHeight
 
         Row {
             anchors.fill: parent

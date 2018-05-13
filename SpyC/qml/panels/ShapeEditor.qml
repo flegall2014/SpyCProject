@@ -8,9 +8,21 @@ Item {
 
     Component {
         id: circleEditorComponent
-        StandardText {
-            anchors.centerIn: parent
-            text: currentShape.radius + " / " + currentShape.center
+        Item {
+            anchors.fill: parent
+            Column {
+                width: parent.width/2
+                height: 2*Theme.standardDelegateHeight
+                anchors.centerIn: parent
+                CoordinateEditor {
+                    id: delegate
+                    coordinate: currentShape.center
+                }
+                StandardLabelTextField {
+                    label: qsTr("Radius")
+                    text: currentShape.radius
+                }
+            }
         }
     }
     Component {
@@ -19,7 +31,7 @@ Item {
             anchors.fill: parent
             ListView {
                 width: parent.width/2
-                height: Theme.coordinateDelegateHeight*currentShape.count
+                height: Theme.standardDelegateHeight*currentShape.count
                 anchors.centerIn: parent
                 interactive: false
                 model: currentShape.count

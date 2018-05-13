@@ -130,7 +130,7 @@ public:
 class CircleShape : public BaseShape
 {
     Q_OBJECT
-    Q_PROPERTY(double radius READ radius NOTIFY radiusChanged)
+    Q_PROPERTY(double radius READ radius NOTIFY pathChanged)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -166,10 +166,6 @@ public:
 private:
     //! Circle radius
     double m_dRadius = 0;
-
-signals:
-    //! Radius changed
-    void radiusChanged();
 };
 
 class TriangleShape : public BaseShape

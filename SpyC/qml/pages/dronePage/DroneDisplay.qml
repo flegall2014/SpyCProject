@@ -67,30 +67,30 @@ Rectangle {
                     height: parent.height/2
                     z: 0
                     targetDrone: drone
+                }
 
-                    // Horizontal toolbar loader
-                    Loader {
-                        id: horizontalToolBarLoader
-                        width: parent.width
-                        height: Theme.toolBarHeight
-                        z: Theme.zMax
-                        anchors.top: parent.top
-                        onLoaded: item.targetDrone = targetDrone
-                        function onWorkModeChanged()
-                        {
-                            if (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
-                                horizontalToolBarLoader.source = "qrc:/qml/toolbars/MissionPlanToolBar.qml"
-                            else
-                            if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
-                                horizontalToolBarLoader.source =  "qrc:/qml/toolbars/SafetyToolBar.qml"
-                            else
-                            if (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
-                                horizontalToolBarLoader.source =  "qrc:/qml/toolbars/ExclusionAreaToolBar.qml"
-                            else
-                                horizontalToolBarLoader.source = ""
-                        }
-                        Component.onCompleted: targetDrone.workModeChanged.connect(onWorkModeChanged)
+                // Horizontal toolbar loader
+                Loader {
+                    id: horizontalToolBarLoader
+                    width: parent.width
+                    height: Theme.toolBarHeight
+                    z: Theme.zMax
+                    anchors.top: parent.top
+                    onLoaded: item.targetDrone = targetDrone
+                    function onWorkModeChanged()
+                    {
+                        if (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
+                            horizontalToolBarLoader.source = "qrc:/qml/toolbars/MissionPlanToolBar.qml"
+                        else
+                        if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
+                            horizontalToolBarLoader.source =  "qrc:/qml/toolbars/SafetyToolBar.qml"
+                        else
+                        if (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
+                            horizontalToolBarLoader.source =  "qrc:/qml/toolbars/ExclusionAreaToolBar.qml"
+                        else
+                            horizontalToolBarLoader.source = ""
                     }
+                    Component.onCompleted: targetDrone.workModeChanged.connect(onWorkModeChanged)
                 }
 
                 // Video view
