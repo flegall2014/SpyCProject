@@ -31,7 +31,8 @@ Rectangle {
             id: controlPanel
             width: 0
             opacity: 0
-            anchors.right: parent.right
+            anchors.right: MASTERCONTROLLER.settingController.hand === SettingController.RIGHT_HAND ? parent.right : undefined
+            anchors.left: MASTERCONTROLLER.settingController.hand === SettingController.LEFT_HAND ? parent.left : undefined
             anchors.bottom: commonArea.top
             anchors.top: parent.top
             targetDrone: drone
@@ -40,8 +41,8 @@ Rectangle {
 
         Item {
             id: root
-            anchors.left: parent.left
-            anchors.right: controlPanel.left
+            anchors.left: MASTERCONTROLLER.settingController.hand === SettingController.RIGHT_HAND ? parent.left : controlPanel.right
+            anchors.right: MASTERCONTROLLER.settingController.hand === SettingController.RIGHT_HAND ? controlPanel.left : parent.right
             anchors.bottom: commonArea.top
             anchors.top: parent.top
 
