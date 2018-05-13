@@ -29,7 +29,7 @@ Rectangle {
 
             // Login tab
             Tab {
-                title: qsTr("Login")
+                title: qsTr("Login") + TRANSLATOR.emptyString
                 LoginTab {
                     id: loginTab
                     anchors.fill: parent
@@ -45,7 +45,7 @@ Rectangle {
 
             // Settings
             Tab {
-                title: qsTr("Settings")
+                title: qsTr("Settings") + TRANSLATOR.emptyString
                 SettingsTab {
                     id: settingsTab
                     anchors.fill: parent
@@ -85,7 +85,7 @@ Rectangle {
             StandardText {
                 anchors.top: parent.bottom
                 anchors.topMargin: Theme.standardMargin
-                text: qsTr("Spy'Ranger by THALES")
+                text: qsTr("Spy'Ranger by THALES") + TRANSLATOR.emptyString
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: Theme.largeFontSize
                 font.bold: true

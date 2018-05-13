@@ -8,6 +8,16 @@
 
 // Application
 #include "settingcontroller.h"
+#define USER_ARMY "/user/army"
+#define USER_UNIT "/user/unit"
+#define USER_MISSION "/user/mission"
+#define USER_OPERATOR "/user/operator"
+#define USER_LANGUAGE  "/user/language"
+#define USER_MISSION_DIR "/user/mission_dir"
+#define USER_MAP_DIR "/user/map_dir"
+#define USER_LOG_DIR "/user/log_dir"
+#define USER_ALERT_DIR "/user/alert_dir"
+#define USER_GALLERY_DIR "/user/gallery_dir"
 
 //-------------------------------------------------------------------------------------------------
 
@@ -37,7 +47,7 @@ bool SettingController::startup(const QStringList &lArgs)
 
 void SettingController::shutdown()
 {
-
+    saveSettings();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -52,14 +62,6 @@ void SettingController::setMasterController(MasterController *pMasterController)
 void SettingController::applyLanguage(const QString &sLang)
 {
     setLangString(sLang);
-    if (sLang == "FR")
-        setLanguage(QLocale::French);
-    else
-    if (sLang == "US")
-        setLanguage(QLocale::English);
-    else
-    if (sLang == "SD")
-        setLanguage(QLocale::Arabic);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -147,24 +149,6 @@ void SettingController::setOperatorName(const QString &sName)
     {
         m_sOperator = sName;
         emit operatorNameChanged();
-    }
-}
-
-//-------------------------------------------------------------------------------------------------
-
-int SettingController::language() const
-{
-    return (int)m_eLanguage;
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void SettingController::setLanguage(int iLanguage)
-{
-    if ((QLocale::Language)iLanguage != m_eLanguage)
-    {
-        m_eLanguage = (QLocale::Language)iLanguage;
-        emit languageChanged();
     }
 }
 
@@ -300,7 +284,6 @@ QMap<int, QVariant> SettingController::allSettings()
     mAllSettings[UNIT] = m_sUnit;
     mAllSettings[MISSION] = m_sMission;
     mAllSettings[OPERATOR] = m_sOperator;
-    mAllSettings[LANGUAGE] = m_eLanguage;
     mAllSettings[LANGUAGE_STRING] = m_sLangString;
     mAllSettings[MAP_PATH] = m_sMapPath;
     mAllSettings[MISSION_PATH] = m_sMissionPath;
@@ -314,63 +297,82 @@ QMap<int, QVariant> SettingController::allSettings()
 
 void SettingController::loadSettings()
 {
+    qDebug() << "LOAD SETTINGS";
     QDir baseDir = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
 
     QSettings settings;
-    QString sArmy = settings.value("/user/army").toString();
+    QString sArmy = settings.value(USER_ARMY).toString();
     if (sArmy.simplified().isEmpty())
         sArmy = tr("Army");
     m_sArmy = sArmy;
 
-    QString sUnit = settings.value("/user/unit").toString();
+    QString sUnit = settings.value(USER_UNIT).toString();
     if (sUnit.simplified().isEmpty())
         sUnit = tr("Unit");
     m_sUnit = sUnit;
 
-    QString sMission = settings.value("/user/mission").toString();
+    QString sMission = settings.value(USER_MISSION).toString();
     if (sMission.simplified().isEmpty())
         sMission = tr("Mission");
     m_sMission = sMission;
 
-    QString sOperator = settings.value("/user/operator").toString();
+    QString sOperator = settings.value(USER_OPERATOR).toString();
     if (sOperator.simplified().isEmpty())
         sOperator = tr("Operator");
     m_sOperator = sOperator;
 
-    QString sLangString = settings.value("/user/language").toString();
+    QString sLangString = settings.value(USER_LANGUAGE).toString();
     if (sLangString.simplified().isEmpty())
         sLangString = "FR";
     applyLanguage(sLangString);
 
-    QString sMapPath = settings.value("/user/maps").toString();
+    QString sMapPath = settings.value(USER_MAP_DIR).toString();
     if (sMapPath.simplified().isEmpty())
         sMapPath = baseDir.absoluteFilePath("maps");
     createDir(sMapPath);
     m_sMapPath = sMapPath;
 
-    QString sMissionPath = settings.value("/user/mission").toString();
+    QString sMissionPath = settings.value(USER_MISSION_DIR).toString();
     if (sMissionPath.simplified().isEmpty())
         sMissionPath = baseDir.absoluteFilePath("mission");
     createDir(sMissionPath);
     m_sMissionPath = sMissionPath;
 
-    QString sLogPath = settings.value("/user/logs").toString();
+    QString sLogPath = settings.value(USER_LOG_DIR).toString();
     if (sLogPath.simplified().isEmpty())
         sLogPath = baseDir.absoluteFilePath("logs");
     createDir(sLogPath);
     m_sLogPath = sLogPath;
 
-    QString sAlertPath = settings.value("/user/alerts").toString();
+    QString sAlertPath = settings.value(USER_ALERT_DIR).toString();
     if (sAlertPath.simplified().isEmpty())
         sAlertPath = baseDir.absoluteFilePath("alerts");
     createDir(sAlertPath);
     m_sAlertPath = sAlertPath;
 
-    QString sGalleryPath = settings.value("/user/gallery").toString();
+    QString sGalleryPath = settings.value(USER_GALLERY_DIR).toString();
     if (sGalleryPath.simplified().isEmpty())
         sGalleryPath = baseDir.absoluteFilePath("gallery");
     createDir(sGalleryPath);
     m_sGalleryPath = sGalleryPath;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void SettingController::saveSettings()
+{
+    qDebug() << "SAVE SETTINGS";
+    QSettings settings;
+    settings.setValue(USER_ARMY, m_sArmy);
+    settings.setValue(USER_UNIT, m_sUnit);
+    settings.setValue(USER_MISSION, m_sMission);
+    settings.setValue(USER_OPERATOR, m_sOperator);
+    settings.setValue(USER_LANGUAGE, m_sLangString);
+    settings.setValue(USER_MAP_DIR, m_sMapPath);
+    settings.setValue(USER_MISSION_DIR, m_sMissionPath);
+    settings.setValue(USER_LOG_DIR, m_sLogPath);
+    settings.setValue(USER_ALERT_DIR, m_sAlertPath);
+    settings.setValue(USER_GALLERY_DIR, m_sGalleryPath);
 }
 
 //-------------------------------------------------------------------------------------------------

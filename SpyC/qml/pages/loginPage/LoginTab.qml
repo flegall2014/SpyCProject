@@ -50,7 +50,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.standardMargin
                     anchors.verticalCenter: parent.verticalCenter
-                    labelText: qsTr("Mission")
+                    labelText: qsTr("Mission") + TRANSLATOR.emptyString
                     checked: true
                 }
 
@@ -60,7 +60,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
-                    labelText: qsTr("Replay")
+                    labelText: qsTr("Replay") + TRANSLATOR.emptyString
                 }
             }
 
@@ -77,7 +77,7 @@ Item {
                     anchors.left: parent.left
                     horizontalAlignment: Text.AlignLeft
                     font.pixelSize: Theme.veryLargeFontSize
-                    text: qsTr("Army")
+                    text: qsTr("Army") + TRANSLATOR.emptyString
                     width: 224
                 }
                 StandardTextField {
@@ -105,7 +105,7 @@ Item {
                     anchors.left: parent.left
                     horizontalAlignment: Text.AlignLeft
                     font.pixelSize: Theme.veryLargeFontSize
-                    text: qsTr("Unit")
+                    text: qsTr("Unit") + TRANSLATOR.emptyString
                     width: 224
                 }
                 StandardTextField {
@@ -133,7 +133,7 @@ Item {
                     anchors.left: parent.left
                     horizontalAlignment: Text.AlignLeft
                     font.pixelSize: Theme.veryLargeFontSize
-                    text: qsTr("Mission")
+                    text: qsTr("Mission") + TRANSLATOR.emptyString
                     width: 224
                 }
                 StandardTextField {
@@ -161,7 +161,7 @@ Item {
                     anchors.left: parent.left
                     horizontalAlignment: Text.AlignLeft
                     font.pixelSize: Theme.veryLargeFontSize
-                    text: qsTr("Operator")
+                    text: qsTr("Operator") + TRANSLATOR.emptyString
                     width: 224
                 }
                 StandardTextField {

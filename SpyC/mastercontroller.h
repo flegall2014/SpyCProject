@@ -95,6 +95,9 @@ public:
     //! Return application title
     const QString &applicationTitle() const;
 
+    //! Return current lang string
+    const QString &currentLangString() const;
+
 private:
     //-------------------------------------------------------------------------------------------------
     // Getters & setters

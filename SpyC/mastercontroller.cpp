@@ -249,3 +249,10 @@ const QString &MasterController::applicationTitle() const
 {
     return m_sApplicationTitle;
 }
+
+//-------------------------------------------------------------------------------------------------
+
+const QString &MasterController::currentLangString() const
+{
+    return m_pSettingController->langString();
+}

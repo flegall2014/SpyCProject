@@ -69,7 +69,8 @@ HEADERS += \
     gpscontroller.h \
     waypoint.h \
     exclusionareamodel.h \
-    baseshape.h
+    baseshape.h \
+    translator.h
 
 SOURCES += \
     main.cpp \
@@ -89,7 +90,16 @@ SOURCES += \
     gpscontroller.cpp \
     waypoint.cpp \
     exclusionareamodel.cpp \
-    baseshape.cpp
+    baseshape.cpp \
+    translator.cpp
+
+lupdate_only {
+    SOURCES = *.qml
+}
+
+TRANSLATIONS = i18n/french.ts \
+               i18n/english.ts \
+               i18n/arabic.ts
 
 DISTFILES +=
 

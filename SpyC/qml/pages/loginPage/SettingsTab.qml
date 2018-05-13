@@ -34,7 +34,7 @@ Item {
                 FileSelectorWidget {
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    title: qsTr("Maps")
+                    title: qsTr("Maps") + TRANSLATOR.emptyString
                     selectedFolder: MASTERCONTROLLER.settingController.mapPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.mapPath = selectedFolder
                 }
@@ -52,7 +52,7 @@ Item {
                 FileSelectorWidget {
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    title: qsTr("Mission")
+                    title: qsTr("Mission") + TRANSLATOR.emptyString
                     selectedFolder: MASTERCONTROLLER.settingController.missionPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.missionPath = selectedFolder
                 }
@@ -70,7 +70,7 @@ Item {
                 FileSelectorWidget {
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    title: qsTr("Logs")
+                    title: qsTr("Logs") + TRANSLATOR.emptyString
                     selectedFolder: MASTERCONTROLLER.settingController.logPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.logPath = selectedFolder
                 }
@@ -88,7 +88,7 @@ Item {
                 FileSelectorWidget {
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    title: qsTr("Alerts")
+                    title: qsTr("Alerts") + TRANSLATOR.emptyString
                     selectedFolder: MASTERCONTROLLER.settingController.alertPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.alertPath = selectedFolder
                 }
@@ -106,7 +106,7 @@ Item {
                 FileSelectorWidget {
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    title: qsTr("Gallery")
+                    title: qsTr("Gallery") + TRANSLATOR.emptyString
                     selectedFolder: MASTERCONTROLLER.settingController.galleryPath
                     onSelectedFolderChanged: MASTERCONTROLLER.settingController.galleryPath = selectedFolder
                 }

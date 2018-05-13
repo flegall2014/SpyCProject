@@ -12,6 +12,7 @@ Row {
         checked: MASTERCONTROLLER.settingController.langString === "FR"
         onClicked: {
             MASTERCONTROLLER.settingController.applyLanguage("FR")
+            TRANSLATOR.selectLanguage("FR")
         }
     }
     ImageButton {
@@ -21,6 +22,7 @@ Row {
         checked: MASTERCONTROLLER.settingController.langString === "US"
         onClicked: {
             MASTERCONTROLLER.settingController.applyLanguage("US")
+            TRANSLATOR.selectLanguage("US")
         }
     }
     ImageButton {

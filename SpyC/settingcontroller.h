@@ -15,7 +15,6 @@ class SettingController : public QObject
     Q_PROPERTY(QString unit READ unit WRITE setUnit NOTIFY unitChanged)
     Q_PROPERTY(QString mission READ mission WRITE setMission NOTIFY missionChanged)
     Q_PROPERTY(QString operatorName READ operatorName WRITE setOperatorName NOTIFY operatorNameChanged)
-    Q_PROPERTY(int language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QString langString READ langString WRITE setLangString NOTIFY langStringChanged)
     Q_PROPERTY(QString mapPath READ mapPath WRITE setMapPath NOTIFY mapPathChanged)
     Q_PROPERTY(QString missionPath READ missionPath WRITE setMissionPath NOTIFY missionPathChanged)
@@ -32,7 +31,7 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Setting type
-    enum Setting {ARMY=Qt::UserRole+1, UNIT, MISSION, OPERATOR, LANGUAGE, LANGUAGE_STRING,
+    enum Setting {ARMY=Qt::UserRole+1, UNIT, MISSION, OPERATOR, LANGUAGE_STRING,
                  MAP_PATH, MISSION_PATH, LOG_PATH, ALERT_PATH, GALLERY_PATH};
 
     //! UI orientation
@@ -95,12 +94,6 @@ public:
     //! Set operator
     void setOperatorName(const QString &sName);
 
-    //! Return language
-    int language() const;
-
-    //! Set language
-    void setLanguage(int iLanguage);
-
     //! Return lang string
     const QString &langString() const;
 
@@ -150,6 +143,9 @@ private:
     //! Load settings
     void loadSettings();
 
+    //! Save settings
+    void saveSettings();
+
     //! Create dir
     void createDir(const QString &sDirPath);
 
@@ -169,11 +165,8 @@ private:
     //! Operator
     QString m_sOperator = "";
 
-    //! Language
-    QLocale::Language m_eLanguage = QLocale::French;
-
     //! Language string
-    QString m_sLangString = "FR";
+    QString m_sLangString = "US";
 
     //! Map path
     QString m_sMapPath = "";
@@ -205,9 +198,6 @@ signals:
 
     //! Operator name changed
     void operatorNameChanged();
-
-    //! Language changed
-    void languageChanged();
 
     //! Language string changed
     void langStringChanged();

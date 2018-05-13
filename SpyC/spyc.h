@@ -10,6 +10,7 @@ class QQuickItem;
 #include "iservice.h"
 class PluginLoader;
 class MasterController;
+class Translator;
 
 class SpyC : public QObject, public IService
 {
@@ -73,6 +74,9 @@ private:
 
     //! Drone controller
     MasterController *m_pMasterController = nullptr;
+
+    //! Translator
+    Translator *m_pTranslator = nullptr;
 
     //! Main view
     QQmlApplicationEngine m_engine;

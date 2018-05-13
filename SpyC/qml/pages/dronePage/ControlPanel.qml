@@ -41,10 +41,6 @@ Rectangle {
             }
         }
 
-        Tab {
-            title: qsTr("Settings")
-        }
-
         style: Theme.controlPanelTabViewStyle
     }
 }
