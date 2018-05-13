@@ -25,7 +25,7 @@ public:
     enum DialogType {CONFIRM_TAKE_OFF=Qt::UserRole+1, CONFIRM_FAILSAFE, EMPTY_MISSION_PLAN_ERROR,
                     EMPTY_SAFETY_ERROR, MISSION_PLAN_VALIDATION, NOT_ENOUGH_POINT_IN_MISSION_PLAN,
                     NOT_ENOUGH_POINT_IN_SAFETY, SAFETY_VALIDATION, NO_EXCLUSION_AREA_ERROR,
-                    EXCLUSION_AREA_VALIDATION, CONFIRM_REMOVE_CAPTURE, EXIT_SPYC};
+                    EXCLUSION_AREA_VALIDATION, CONFIRM_REMOVE_CAPTURE, CONFIRM_CLEAR_GALLERY, EXIT_SPYC};
 
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor

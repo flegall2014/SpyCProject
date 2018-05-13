@@ -22,35 +22,6 @@ Map {
         name: "osm"
     }
 
-    // Drone marker
-    MapQuickItem {
-        id: droneMarker
-        anchorPoint.x: droneItem.width  / 2
-        anchorPoint.y: droneItem.height / 2
-        coordinate: targetDrone.position
-
-        sourceItem: Item {
-            id: droneItem
-            width: droneIcon.width
-            height: droneIcon.height
-            property int size: 48
-
-            Image {
-                id: droneIcon
-                source: "qrc:/icons/ico-drone2.svg"
-                mipmap: true
-                width: droneItem.size
-                sourceSize.width: droneItem.size
-                fillMode: Image.PreserveAspectFit
-                transform: Rotation {
-                    origin.x: droneIcon.width /2
-                    origin.y: droneIcon.height/2
-                    angle: targetDrone.heading
-                }
-            }
-        }
-    }
-
     // Draw mission plan way points
     MapItemView {
         id: missionPlanWayPoints
@@ -214,6 +185,36 @@ Map {
     // Exclusion area (circle)
     CircleExclusionArea {
         model: targetDrone.exclusionAreaModel
+    }
+
+    // Drone marker
+    MapQuickItem {
+        id: droneMarker
+        anchorPoint.x: droneItem.width  / 2
+        anchorPoint.y: droneItem.height / 2
+        coordinate: targetDrone.position
+        z: Theme.zMax
+
+        sourceItem: Item {
+            id: droneItem
+            width: droneIcon.width
+            height: droneIcon.height
+            property int size: 48
+
+            Image {
+                id: droneIcon
+                source: "qrc:/icons/ico-drone2.svg"
+                mipmap: true
+                width: droneItem.size
+                sourceSize.width: droneItem.size
+                fillMode: Image.PreserveAspectFit
+                transform: Rotation {
+                    origin.x: droneIcon.width /2
+                    origin.y: droneIcon.height/2
+                    angle: targetDrone.heading
+                }
+            }
+        }
     }
 
     // Handle clicks

@@ -26,6 +26,9 @@ Item {
     // Panel contents
     property alias panelContents: panelContents.children
 
+    // Toolbar contents
+    property alias toolBarContents: toolBarContents.children
+
     // Panel object object (from JSON)
     property variant panelObject
 
@@ -62,6 +65,12 @@ Item {
             Behavior on opacity {
                 NumberAnimation {duration: timer.interval}
             }
+        }
+        Item {
+            id: toolBarContents
+            anchors.left: statusText.right
+            anchors.right: parent.right
+            height: parent.height
         }
     }
 

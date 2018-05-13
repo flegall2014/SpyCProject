@@ -3,7 +3,7 @@ import Components 1.0
 import ".."
 
 Item {
-    width: 96
+    width: 104
     height: Theme.toolBarHeight
     property alias statusText: statusLabel.text
     property int level

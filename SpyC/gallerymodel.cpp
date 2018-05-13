@@ -130,6 +130,20 @@ void GalleryModel::removeCurrentScreenCap()
 
 //-------------------------------------------------------------------------------------------------
 
+void GalleryModel::clear()
+{
+    foreach (SnapShot snapShot, m_vSnaps)
+    {
+        QFile file(snapShot.filePath);
+        file.remove();
+    }
+    beginResetModel();
+    m_vSnaps.clear();
+    endResetModel();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 int GalleryModel::currentScreenCapIndex() const
 {
     return m_iCurrentScreenCapIndex;

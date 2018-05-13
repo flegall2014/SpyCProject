@@ -29,6 +29,7 @@ DialogBase {
             label: qsTr("OK")
             onClicked: {
                 MASTERCONTROLLER.flightController.takeOff(targetDrone.uid)
+                targetDrone.setDefaultWorkMode()
                 closeDialog()
             }
         }

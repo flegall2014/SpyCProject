@@ -79,6 +79,12 @@ Item {
             root.msgType = SpyC.INFORMATION
         }
         else
+        if (dialogType === SpyC.CONFIRM_CLEAR_GALLERY)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/ConfirmClearGalleryDialog.qml"
+            root.msgType = SpyC.CRITICAL
+        }
+        else
         if (dialogType === SpyC.EXIT_SPYC)
         {
             dialogLoader.source = "qrc:/qml/dialogs/ConfirmExitSpyCDialog.qml"

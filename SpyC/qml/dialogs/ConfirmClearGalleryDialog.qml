@@ -15,7 +15,6 @@ DialogBase {
             anchors.verticalCenter: parent.verticalCenter
             label: qsTr("Cancel")
             onClicked: {
-                targetDrone.setDefaultWorkMode()
                 closeDialog()
             }
         }
@@ -28,7 +27,7 @@ DialogBase {
             anchors.verticalCenter: parent.verticalCenter
             label: qsTr("OK")
             onClicked: {
-                MASTERCONTROLLER.flightController.failSafe(targetDrone.uid)
+                targetDrone.galleryModel.clear()
                 targetDrone.setDefaultWorkMode()
                 closeDialog()
             }
@@ -39,7 +38,7 @@ DialogBase {
         StandardText {
             anchors.centerIn: parent
             font.pixelSize: Theme.largeFontSize
-            text: qsTr("Confirm failsafe?")
+            text: qsTr("Confirm clear gallery?")
         }
     }
 }

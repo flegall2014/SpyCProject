@@ -6,6 +6,16 @@ import "../widgets"
 
 PanelBase {
     id: root
+    toolBarContents: Item {
+        anchors.fill: parent
+        ImageButton {
+            anchors.right: parent.right
+            anchors.rightMargin: 4
+            anchors.verticalCenter: parent.verticalCenter
+            source: "qrc:/icons/ico-trash.svg"
+            onClicked: dialogMgr.showDialog(SpyC.CONFIRM_CLEAR_GALLERY)
+        }
+    }
     panelContents: Item {
         anchors.fill: parent
 

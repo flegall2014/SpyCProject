@@ -62,6 +62,9 @@ public:
     //! Remove current screenCap
     Q_INVOKABLE void removeCurrentScreenCap();
 
+    //! Clear gallery
+    Q_INVOKABLE void clear();
+
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
     //-------------------------------------------------------------------------------------------------
