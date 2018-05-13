@@ -124,5 +124,10 @@
         <file>qml/dialogs/ConfirmClearGalleryDialog.qml</file>
         <file>qml/widgets/HandWidget.qml</file>
         <file>icons/ico-right-hand.svg</file>
+        <file>qml/toolbars/LandingPlanToolBar.qml</file>
+        <file>qml/dialogs/EmptyLandingPlanErrorDialog.qml</file>
+        <file>qml/dialogs/LandingPlanValidationDialog.qml</file>
+        <file>icons/ico-landingplan.svg</file>
+        <file>qml/panels/LandingPlanEditorPanel.qml</file>
     </qresource>
 </RCC>

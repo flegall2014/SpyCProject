@@ -20,6 +20,7 @@ Item {
     property color disabledColor: "black"
     property color safetyColor: "red"
     property color missionPlanColor: "green"
+    property color landingPlanColor: "blue"
     property color videoBkgColor: "black"
     property color defaultButtonColor: "steelblue"
     property color selectedColor: "orange"

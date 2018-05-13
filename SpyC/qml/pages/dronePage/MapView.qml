@@ -69,10 +69,9 @@ Map {
         }
     }
 
-    // Draw mission plan polylines
+    // Draw mission plan
     MapPolyline {
         id: missionPlanPoly
-        objectName: "missionPlanPoly"
         line.width: 3
         line.color: Theme.missionPlanColor
         function updatePolyLine()
@@ -149,7 +148,6 @@ Map {
     // Draw safety
     MapPolyline {
         id: safetyPoly
-        objectName: "safetyPoly"
         line.width: 3
         line.color: Theme.safetyColor
         function updatePolyLine()
@@ -177,6 +175,82 @@ Map {
         Component.onCompleted: targetDrone.safetyModel.pathChanged.connect(onDataChanged)
     }
 
+    // Draw landing plan waypoints
+    MapItemView {
+        id: landingPlanWayPoints
+        model: targetDrone.landingPlanModel
+        delegate: Component {
+            MapCircle {
+                id: circle
+                property bool selected: false
+                center {
+                    latitude: wayPointLatitude
+                    longitude: wayPointLongitude
+                }
+                radius: 250
+                color: Theme.landingPlanColor
+                border.width: 3
+                MouseArea {
+                    id: circleMouseArea
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    anchors.fill: parent
+                    enabled: targetDrone.workMode === DroneBase.LANDING_PLAN_EDIT
+                    onClicked: {
+                        if (mouse.button === Qt.RightButton)
+                            targetDrone.removeCoordinateFromLandingPlanAtIndex(index)
+                    }
+                    onPressed: {
+                        mapGestureEnabled = false
+                        targetDrone.landingPlanModel.currentPointIndex = index
+                        circle.selected = true
+                    }
+                    onPositionChanged: {
+                        if (circle.selected)
+                        {
+                            var mapped = circleMouseArea.mapToItem(mapView, mouse.x, mouse.y)
+                            targetDrone.setLandingPlanPointPosition(index, mapView.toCoordinate(Qt.point(mapped.x, mapped.y)))
+                        }
+                    }
+                    onReleased: {
+                        mapGestureEnabled = true
+                        circle.selected = false
+                    }
+                }
+            }
+        }
+    }
+
+    // Draw landing plan
+    MapPolyline {
+        id: landingPlanPoly
+        line.width: 3
+        line.color: Theme.landingPlanColor
+        function updatePolyLine()
+        {
+            var lines = []
+            for(var i=0; i<targetDrone.landingPlanModel.path.size(); i++)
+                lines[i] = targetDrone.landingPlanModel.path.coordinateAt(i)
+            landingPlanPoly.path = lines
+        }
+        function onDataChanged()
+        {
+            console.log("TUTU")
+            if (targetDrone.landingPlanModel.path.size() === 0)
+            {
+                landingPlanPoly.visible = false
+                var lines = []
+                landingPlanPoly.path = lines
+            }
+            else
+            {
+                landingPlanPoly.visible = true
+                updatePolyLine()
+                landingPlanPoly.path = lines
+            }
+        }
+        Component.onCompleted: targetDrone.landingPlanModel.pathChanged.connect(onDataChanged)
+    }
+
     // Exclusion area (polygon)
     PolygonExclusionArea {
          model: targetDrone.exclusionAreaModel
@@ -190,7 +264,7 @@ Map {
     // Drone marker
     MapQuickItem {
         id: droneMarker
-        anchorPoint.x: droneItem.width  / 2
+        anchorPoint.x: droneItem.width / 2
         anchorPoint.y: droneItem.height / 2
         coordinate: targetDrone.position
         z: Theme.zMax
@@ -221,14 +295,20 @@ Map {
     MouseArea {
         anchors.fill: parent
         enabled: (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT) || (targetDrone.workMode === DroneBase.SAFETY_EDIT) ||
-                 (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
-
+                 (targetDrone.workMode === DroneBase.LANDING_PLAN_EDIT) || (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
         onClicked: {
+            console.log("TATA")
             if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
                 targetDrone.addCoordinateToSafety(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
             else
             if (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT)
                 targetDrone.addCoordinateToMissionPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+            else
+            if (targetDrone.workMode === DroneBase.LANDING_PLAN_EDIT)
+            {
+                console.log("TOTO")
+                targetDrone.addCoordinateToLandingPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
+            }
             else
             if (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
             {

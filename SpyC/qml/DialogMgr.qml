@@ -62,7 +62,6 @@ Item {
         else
         if (dialogType === SpyC.NO_EXCLUSION_AREA_ERROR)
         {
-             console.log("LA!!!!!!!!!!!!!!!!!!!!!!")
             dialogLoader.source = "qrc:/qml/dialogs/NoExclusionAreaErrorDialog.qml"
             root.msgType = SpyC.CRITICAL
         }
@@ -83,6 +82,18 @@ Item {
         {
             dialogLoader.source = "qrc:/qml/dialogs/ConfirmClearGalleryDialog.qml"
             root.msgType = SpyC.CRITICAL
+        }
+        else
+        if (dialogType === SpyC.EMPTY_LANDING_PLAN_ERROR)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/EmptyLandingPlanErrorDialog.qml"
+            root.msgType = SpyC.CRITICAL
+        }
+        else
+        if (dialogType === SpyC.LANDING_PLAN_VALIDATION)
+        {
+            dialogLoader.source = "qrc:/qml/dialogs/LandingPlanValidationDialog.qml"
+            root.msgType = SpyC.INFORMATION
         }
         else
         if (dialogType === SpyC.EXIT_SPYC)

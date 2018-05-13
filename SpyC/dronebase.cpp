@@ -43,6 +43,7 @@ void DroneBase::initialize(const QMap<int, QVariant> &mSettings)
     // Mission plan model
     m_pMissionPlanModel = new WayPointModel(this);
     m_pSafetyModel = new WayPointModel(this);
+    m_pLandingPlanModel = new WayPointModel(this);
     m_pAlertModel = new AlertModel(this);
     m_pGalleryModel = new GalleryModel(m_mSettings[SettingController::GALLERY_PATH].toString(), this);
     m_pExclusionAreaModel = new ExclusionAreaModel(this);
@@ -268,6 +269,13 @@ WayPointModel *DroneBase::safetyModel() const
 
 //-------------------------------------------------------------------------------------------------
 
+WayPointModel *DroneBase::landingPlanModel() const
+{
+    return m_pLandingPlanModel;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 AlertModel *DroneBase::alertModel() const
 {
     return m_pAlertModel;
@@ -305,6 +313,14 @@ void DroneBase::clearSafety()
 
 //-------------------------------------------------------------------------------------------------
 
+void DroneBase::clearLandingPlan()
+{
+    if (m_pLandingPlanModel != nullptr)
+        m_pLandingPlanModel->clear();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void DroneBase::addCoordinateToMissionPlan(const QGeoCoordinate &geoCoordinate)
 {
     if (m_pMissionPlanModel != nullptr)
@@ -317,6 +333,14 @@ void DroneBase::addCoordinateToSafety(const QGeoCoordinate &geoCoordinate)
 {
     if (m_pSafetyModel != nullptr)
         m_pSafetyModel->addCoordinate(geoCoordinate);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::addCoordinateToLandingPlan(const QGeoCoordinate &geoCoordinate)
+{
+    if (m_pLandingPlanModel != nullptr)
+        m_pLandingPlanModel->addCoordinate(geoCoordinate);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -337,6 +361,14 @@ void DroneBase::setSafetyPointPosition(int iPointIndex, const QGeoCoordinate &ge
 
 //-------------------------------------------------------------------------------------------------
 
+void DroneBase::setLandingPlanPointPosition(int iPointIndex, const QGeoCoordinate &geoCoord)
+{
+    if (m_pLandingPlanModel != nullptr)
+        m_pLandingPlanModel->setPointPosition(iPointIndex, geoCoord);
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void DroneBase::removeCoordinateFromSafetyPlanAtIndex(int iPointIndex)
 {
     if (m_pSafetyModel != nullptr)
@@ -349,6 +381,14 @@ void DroneBase::removeCoordinateFromMissionPlanAtIndex(int iPointIndex)
 {
     if (m_pMissionPlanModel != nullptr)
         m_pMissionPlanModel->removeCoordinateAtIndex(iPointIndex);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::removeCoordinateFromLandingPlanAtIndex(int iPointIndex)
+{
+    if (m_pLandingPlanModel != nullptr)
+        m_pLandingPlanModel->removeCoordinateAtIndex(iPointIndex);
 }
 
 //-------------------------------------------------------------------------------------------------

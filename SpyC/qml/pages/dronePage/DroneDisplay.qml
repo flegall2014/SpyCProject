@@ -86,6 +86,9 @@ Rectangle {
                         if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
                             horizontalToolBarLoader.source =  "qrc:/qml/toolbars/SafetyToolBar.qml"
                         else
+                        if (targetDrone.workMode === DroneBase.LANDING_PLAN_EDIT)
+                            horizontalToolBarLoader.source =  "qrc:/qml/toolbars/LandingPlanToolBar.qml"
+                        else
                         if (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
                             horizontalToolBarLoader.source =  "qrc:/qml/toolbars/ExclusionAreaToolBar.qml"
                         else

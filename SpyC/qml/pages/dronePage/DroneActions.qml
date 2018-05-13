@@ -44,6 +44,21 @@ Grid {
         ImageButton {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
+            source: "qrc:/icons/ico-landingplan.svg"
+            checkable: true
+            checked: targetDrone.workMode === DroneBase.LANDING_PLAN_EDIT
+            onClicked: targetDrone.workMode = DroneBase.LANDING_PLAN_EDIT
+            enabled: targetDrone.state !== DroneBase.FLYING
+            label: qsTr("Landing plan")
+            textPosition: "below"
+        }
+    }
+    Item {
+        width: parent.width/3
+        height: width
+        ImageButton {
+            endColor: Theme.defaultButtonColor
+            anchors.centerIn: parent
             source: "qrc:/icons/ico-exclude.svg"
             checkable: true
             checked: targetDrone.workMode === DroneBase.EXCLUSION_EDIT

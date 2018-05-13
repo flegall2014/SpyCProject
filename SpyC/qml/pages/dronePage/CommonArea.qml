@@ -36,6 +36,9 @@ Rectangle {
         if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
             panelMgr.loadPanel("SafetyPlanEditor")
         else
+        if (targetDrone.workMode === DroneBase.LANDING_PLAN_EDIT)
+            panelMgr.loadPanel("LandingPlanEditor")
+        else
         if (targetDrone.workMode === DroneBase.CARTO_EDIT)
             panelMgr.loadPanel("CartoEditor")
         else

@@ -53,6 +53,11 @@ StackView {
             "url": "qrc:/qml/panels/SafetyEditorPanel.qml"
         },
         {
+            "name": "LandingPlanEditor",
+            "displayName": "Landing Plan Editor",
+            "url": "qrc:/qml/panels/LandingPlanEditorPanel.qml"
+        },
+        {
             "name": "PayloadEditor",
             "displayName": "Payload Editor",
             "url": "qrc:/qml/panels/PayloadEditorPanel.qml"

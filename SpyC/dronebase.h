@@ -42,6 +42,7 @@ class DroneBase : public QObject
     // Mission plan model and safety model
     Q_PROPERTY(WayPointModel *missionPlanModel READ missionPlanModel NOTIFY missionPlanModelChanged)
     Q_PROPERTY(WayPointModel *safetyModel READ safetyModel NOTIFY safetyModelChanged)
+    Q_PROPERTY(WayPointModel *landingPlanModel READ landingPlanModel NOTIFY landingPlanModelChanged)
     Q_PROPERTY(ExclusionAreaModel *exclusionAreaModel READ exclusionAreaModel NOTIFY exclusionAreaModelChanged)
     Q_PROPERTY(AlertModel *alertModel READ alertModel NOTIFY alertModelChanged)
     Q_PROPERTY(GalleryModel *galleryModel READ galleryModel NOTIFY galleryModelChanged)
@@ -60,7 +61,7 @@ public:
     enum State {IDLE=Qt::UserRole+1, FLYING};
 
     //! Define a drone mode
-    enum WorkMode {MISSION_PLAN_EDIT=Qt::UserRole+1, SAFETY_EDIT, CARTO_EDIT, PAYLOAD_EDIT, GALLERY_EDIT, EXCLUSION_EDIT};
+    enum WorkMode {MISSION_PLAN_EDIT=Qt::UserRole+1, SAFETY_EDIT, LANDING_PLAN_EDIT, CARTO_EDIT, PAYLOAD_EDIT, GALLERY_EDIT, EXCLUSION_EDIT};
 
     //! Exclusion shape
     enum ExclusionShape {CIRCLE=Qt::UserRole+1, RECTANGLE, TRIANGLE};
@@ -169,6 +170,9 @@ public:
     //! Return safety model
     WayPointModel *safetyModel() const;
 
+    //! Return landing plan model
+    WayPointModel *landingPlanModel() const;
+
     //! Return alert model
     AlertModel *alertModel() const;
 
@@ -191,11 +195,17 @@ public:
     //! Clear safety
     Q_INVOKABLE void clearSafety();
 
+    //! Clear landing plan
+    Q_INVOKABLE void clearLandingPlan();
+
     //! Add coordinate to mission plan
     Q_INVOKABLE void addCoordinateToMissionPlan(const QGeoCoordinate &geoCoordinate);
 
     //! Add coordinate to safety
     Q_INVOKABLE void addCoordinateToSafety(const QGeoCoordinate &geoCoordinate);
+
+    //! Add coordinate to landing plan
+    Q_INVOKABLE void addCoordinateToLandingPlan(const QGeoCoordinate &geoCoordinate);
 
     //! Set mission plan point position
     Q_INVOKABLE void setMissionPlanPointPosition(int iPointIndex, const QGeoCoordinate &geoCoord);
@@ -203,11 +213,17 @@ public:
     //! Set safety point position
     Q_INVOKABLE void setSafetyPointPosition(int iPointIndex, const QGeoCoordinate &geoCoord);
 
+    //! Set landing plan point position
+    Q_INVOKABLE void setLandingPlanPointPosition(int iPointIndex, const QGeoCoordinate &geoCoord);
+
     //! Remove coordinate from safety at index
     Q_INVOKABLE void removeCoordinateFromSafetyPlanAtIndex(int iPointIndex);
 
     //! Remove coordinate from mission plan at index
     Q_INVOKABLE void removeCoordinateFromMissionPlanAtIndex(int iPointIndex);
+
+    //! Remove coordinate from landing plan at index
+    Q_INVOKABLE void removeCoordinateFromLandingPlanAtIndex(int iPointIndex);
 
     //! Clear exclusion areas
     Q_INVOKABLE void clearExclusionAreas();
@@ -271,6 +287,9 @@ private:
     //! Safety model
     WayPointModel *m_pSafetyModel = nullptr;
 
+    //! Landing plan model
+    WayPointModel *m_pLandingPlanModel = nullptr;
+
     //! Alert model
     AlertModel *m_pAlertModel = nullptr;
 
@@ -329,6 +348,9 @@ signals:
 
     //! Safety model changed
     void safetyModelChanged();
+
+    //! Landing plan model changed
+    void landingPlanModelChanged();
 
     //! Exclusion area model changed
     void exclusionAreaModelChanged();

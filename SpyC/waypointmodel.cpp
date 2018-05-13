@@ -129,6 +129,7 @@ void WayPointModel::setCurrentPointIndex(int iIndex)
 
 void WayPointModel::addCoordinate(const QGeoCoordinate &coordinate)
 {
+    qDebug() << "ADD COORD TO LANDING PLAN " << coordinate;
     beginResetModel();
     m_vWayPoints << WayPoint(coordinate);
     endResetModel();
