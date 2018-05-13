@@ -13,7 +13,6 @@ class MasterController;
 class MissionPlanController : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(SafetyError)
     Q_ENUMS(MissionPlanError)
 
 public:
@@ -93,5 +92,7 @@ signals:
     //! Mission plan error
     void missionPlanError(const MissionPlanError &eError, const QString &sDroneUID);
 };
+
+Q_DECLARE_METATYPE(MissionPlanController::MissionPlanError)
 
 #endif // MISSIONPLANCONTROLLER_H

@@ -81,4 +81,7 @@ private:
     static SpyC *sInstance;
 };
 
+Q_DECLARE_METATYPE(SpyC::MsgType)
+Q_DECLARE_METATYPE(SpyC::DialogType)
+
 #endif // SPYC_H

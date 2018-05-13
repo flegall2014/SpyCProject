@@ -22,14 +22,21 @@ class SettingController : public QObject
     Q_PROPERTY(QString logPath READ logPath WRITE setLogPath NOTIFY logPathChanged)
     Q_PROPERTY(QString alertPath READ alertPath WRITE setAlertPath NOTIFY alertPathChanged)
     Q_PROPERTY(QString galleryPath READ galleryPath WRITE setGalleryPath NOTIFY galleryPathChanged)
+    Q_PROPERTY(int hand READ hand WRITE setHand NOTIFY handChanged)
+    Q_ENUMS(Setting)
+    Q_ENUMS(UIOrientation)
 
 public:
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
 
+    //! Setting type
     enum Setting {ARMY=Qt::UserRole+1, UNIT, MISSION, OPERATOR, LANGUAGE, LANGUAGE_STRING,
                  MAP_PATH, MISSION_PATH, LOG_PATH, ALERT_PATH, GALLERY_PATH};
+
+    //! UI orientation
+    enum UIOrientation {RIGHT_HAND=Qt::UserRole+1, LEFT_HAND};
 
     //! Constructor
     SettingController(QObject *pParent=nullptr);
@@ -130,6 +137,12 @@ public:
     //! Set gallery path
     void setGalleryPath(const QString &sGalleryPath);
 
+    //! Return hand
+    int hand() const;
+
+    //! Set hand
+    void setHand(int iHand);
+
     //! Return all settings
     QMap<int, QVariant> allSettings();
 
@@ -177,6 +190,9 @@ private:
     //! Gallery path
     QString m_sGalleryPath = "";
 
+    //! UI orientation
+    UIOrientation m_eHand = RIGHT_HAND;
+
 signals:
     //! Army changed
     void armyChanged();
@@ -210,6 +226,12 @@ signals:
 
     //! Gallery path changed
     void galleryPathChanged();
+
+    //! Hand changed
+    void handChanged();
 };
+
+Q_DECLARE_METATYPE(SettingController::Setting)
+Q_DECLARE_METATYPE(SettingController::UIOrientation)
 
 #endif // SETTINGCONTROLLER_H

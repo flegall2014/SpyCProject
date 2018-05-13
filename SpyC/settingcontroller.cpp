@@ -278,6 +278,21 @@ void SettingController::setGalleryPath(const QString &sGalleryPath)
 
 //-------------------------------------------------------------------------------------------------
 
+int SettingController::hand() const
+{
+    return (int)m_eHand;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void SettingController::setHand(int iHand)
+{
+    m_eHand = (UIOrientation)iHand;
+    emit handChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 QMap<int, QVariant> SettingController::allSettings()
 {
     QMap<int, QVariant> mAllSettings;

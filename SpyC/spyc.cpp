@@ -115,9 +115,9 @@ void SpyC::registerTypes()
 {
     // Register types
     qmlRegisterType<SpyC>("Components", 1, 0, "SpyC");
+    qmlRegisterType<SettingController>("Components", 1, 0, "SettingController");
     qmlRegisterType<DroneBase>("Components", 1, 0, "DroneBase");
     qmlRegisterType<MasterController>("Components", 1, 0, "MasterController");
-    qmlRegisterType<SettingController>("Commponent", 1, 0, "SettingController");
     qmlRegisterType<MissionPlanController>("Components", 1, 0, "MissionPlanController");
     qmlRegisterType<FlightController>("Components", 1, 0, "FlightController");
     qmlRegisterType<DroneModel>("Components", 1, 0, "DroneModel");

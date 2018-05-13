@@ -349,6 +349,10 @@ signals:
     void currentExclusionShapeChanged();
 };
 
+Q_DECLARE_METATYPE(DroneBase::Status)
 Q_DECLARE_METATYPE(DroneBase::State)
+Q_DECLARE_METATYPE(DroneBase::WorkMode)
+Q_DECLARE_METATYPE(DroneBase::AlertType)
+Q_DECLARE_METATYPE(DroneBase::ExclusionShape)
 
 #endif // DRONEBASE_H

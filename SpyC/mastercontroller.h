@@ -191,4 +191,6 @@ signals:
     void applicationTitleChanged();
 };
 
+Q_DECLARE_METATYPE(MasterController::DroneError)
+
 #endif // MASTERCONTROLLER_H

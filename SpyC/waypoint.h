@@ -66,4 +66,6 @@ private:
     QMap<int, QVariant> m_mMetaData;
 };
 
+Q_DECLARE_METATYPE(WayPoint::Type)
+
 #endif // WAYPOINT_H

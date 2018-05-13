@@ -56,8 +56,16 @@ Rectangle {
             style: Theme.loginPageTabViewStyle
         }
 
+        // Hand
+        HandWidget {
+            anchors.right: langWidget.left
+            anchors.rightMargin: 16
+            anchors.top: parent.top
+        }
+
         // Language
         LangWidget {
+            id: langWidget
             anchors.right: parent.right
             anchors.top: parent.top
         }

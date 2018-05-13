@@ -122,5 +122,7 @@
         <file>qml/dialogs/ConfirmRemoveCaptureDialog.qml</file>
         <file>icons/ico-trash.svg</file>
         <file>qml/dialogs/ConfirmClearGalleryDialog.qml</file>
+        <file>qml/widgets/HandWidget.qml</file>
+        <file>icons/ico-right-hand.svg</file>
     </qresource>
 </RCC>

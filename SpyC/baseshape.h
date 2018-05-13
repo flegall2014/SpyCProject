@@ -98,6 +98,8 @@ signals:
     void typeChanged();
 };
 
+Q_DECLARE_METATYPE(BaseShape::Type)
+
 class RectangleShape : public BaseShape
 {
     Q_OBJECT
