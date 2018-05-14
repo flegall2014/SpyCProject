@@ -18,6 +18,9 @@
 
 MasterController::MasterController(QObject *pParent) : QObject(pParent)
 {
+    // Application main title
+    m_sApplicationTitle = tr("Welcome to Spy'C ground station");
+
     // Main drone model
     m_pDroneModel = new DroneModel(this);
 
@@ -40,10 +43,6 @@ MasterController::MasterController(QObject *pParent) : QObject(pParent)
     // Setup gps controller
     m_pGPSController = new GPSController(this);
     m_pGPSController->setMasterController(this);
-
-    // Speech management
-    m_pSpeech = new QTextToSpeech(this);
-    m_pSpeech->setLocale(QLocale::English);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -124,14 +123,6 @@ void MasterController::updateApplicationTitle(const QString &sArmy, const QStrin
 {
     QString sApplicationTitle = QString("[%1] [%2] [%3] [%4]").arg(sArmy).arg(sUnit).arg(sMission).arg(sOperator);
     setApplicationTitle(sApplicationTitle);
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void MasterController::say(const QString &sSpeech)
-{
-    qDebug() << "SAYING " << sSpeech.toLower();
-    m_pSpeech->say(sSpeech.toLower());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -217,7 +208,7 @@ void MasterController::onDroneGlobalStatusChanged()
                 sVoiceMsg = QString("%1 is in critical state").arg(pSender->uid());
             }
             if (!sVoiceMsg.isEmpty())
-                say(sVoiceMsg);
+                m_pSettingController->say(sVoiceMsg);
         }
     }
 }
@@ -252,10 +243,4 @@ const QString &MasterController::applicationTitle() const
     return m_sApplicationTitle;
 }
 
-//-------------------------------------------------------------------------------------------------
-
-const QString &MasterController::currentLangString() const
-{
-    return m_pSettingController->langString();
-}
 

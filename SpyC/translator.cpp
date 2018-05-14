@@ -36,6 +36,7 @@ void Translator::selectLanguage(const QString &sLanguage)
     // working folder
     if (sLanguage == "FR")
     {
+        // Setup translator
         if (!m_pTranslator->load(Helper::i18nDir().absoluteFilePath("french.qm")))
             qDebug() << "Failed to load: " << sLanguage;
         else

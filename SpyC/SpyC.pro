@@ -94,7 +94,7 @@ SOURCES += \
     helper.cpp
 
 lupdate_only {
-    SOURCES = *.qml *.cpp
+    SOURCES = *.qml *.cpp *.h
 }
 
 TRANSLATIONS = i18n/french.ts \

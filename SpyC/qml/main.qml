@@ -107,6 +107,6 @@ ApplicationWindow {
             }
         }
 
-        Component.onCompleted: MASTERCONTROLLER.say(MASTERCONTROLLER.applicationTitle)
+        Component.onCompleted: MASTERCONTROLLER.settingController.say(MASTERCONTROLLER.applicationTitle)
     }
 }

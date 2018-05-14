@@ -34,7 +34,7 @@ Rectangle {
         anchors.centerIn: parent
         font.pixelSize: Theme.largeFontSize
         font.bold: true
-        text: MASTERCONTROLLER.applicationTitle + TRANSLATOR.emptyString
+        text: qsTr("Welcome to Spy'C ground station") + TRANSLATOR.emptyString
     }
 
     // Quit button

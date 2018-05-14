@@ -3,7 +3,6 @@
 
 // Qt
 #include <QObject>
-class QTextToSpeech;
 class QQuickItem;
 
 // Application
@@ -35,6 +34,7 @@ class MasterController : public QObject, public IService
     Q_ENUMS(DroneError)
 
 public:
+    friend class SpyC;
     friend class MissionPlanController;
     friend class FlightController;
     friend class SettingController;
@@ -77,9 +77,6 @@ public:
     //! Update application title
     Q_INVOKABLE void updateApplicationTitle(const QString &sArmy, const QString &sUnit, const QString &sMission, const QString &sOperator);
 
-    //! Say speech
-    Q_INVOKABLE void say(const QString &sSpeech);
-
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
     //-------------------------------------------------------------------------------------------------
@@ -95,9 +92,6 @@ public:
 
     //! Return application title
     const QString &applicationTitle() const;
-
-    //! Return current lang string
-    const QString &currentLangString() const;
 
     //! Set dialog manager
     void setDialogMgr(QQuickItem *pDialogMgr);
@@ -130,7 +124,7 @@ private:
 
 private:
     //! Application title
-    QString m_sApplicationTitle = tr("Welcome to Spy'C ground station");
+    QString m_sApplicationTitle = "";
 
     //! Drone manager
     Model::DroneManager *m_pDroneManager = nullptr;
@@ -158,9 +152,6 @@ private:
 
     //! GPS controller
     GPSController *m_pGPSController = nullptr;
-
-    //! Text to speech
-    QTextToSpeech *m_pSpeech = nullptr;
 
     //! Dialog mgr
     QQuickItem *m_pDialogMgr = nullptr;

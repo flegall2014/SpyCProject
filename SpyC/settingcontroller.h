@@ -4,9 +4,11 @@
 // Qt
 #include <QObject>
 #include <QLocale>
+class QTextToSpeech;
 
 // Application
 class MasterController;
+class Translator;
 
 class SettingController : public QObject
 {
@@ -65,6 +67,9 @@ public:
 
     //! Return a gallery path given a drone UID
     Q_INVOKABLE QString snapShotPath(const QString &sDroneUID) const;
+
+    //! Say
+    Q_INVOKABLE void say(const QString &sSpeech);
 
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
@@ -139,6 +144,9 @@ public:
     //! Return all settings
     QMap<int, QVariant> allSettings();
 
+    //! Return translator
+    Translator *translator() const;
+
 private:
     //! Load settings
     void loadSettings();
@@ -185,6 +193,12 @@ private:
 
     //! UI orientation
     UIOrientation m_eHand = RIGHT_HAND;
+
+    //! Translator
+    Translator *m_pTranslator = nullptr;
+
+    //! Text to speech
+    QTextToSpeech *m_pSpeech = nullptr;
 
 signals:
     //! Army changed

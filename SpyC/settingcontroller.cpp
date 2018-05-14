@@ -5,9 +5,11 @@
 #include <QStandardPaths>
 #include <QSettings>
 #include <QLocale>
+#include <QTextToSpeech>
 
 // Application
 #include "settingcontroller.h"
+#include "translator.h"
 #define USER_ARMY "/user/army"
 #define USER_UNIT "/user/unit"
 #define USER_MISSION "/user/mission"
@@ -23,7 +25,12 @@
 
 SettingController::SettingController(QObject *pParent) : QObject(pParent)
 {
+    // Translator
+    m_pTranslator = new Translator(this);
 
+    // Speech management
+    m_pSpeech = new QTextToSpeech(this);
+    m_pSpeech->setLocale(QLocale::English);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -39,7 +46,18 @@ bool SettingController::startup(const QStringList &lArgs)
 {
     Q_UNUSED(lArgs);
 
+    // Load settings
     loadSettings();
+
+    // i18n
+    m_pTranslator->selectLanguage(m_sLangString);
+
+    // Setup speech
+    if (m_sLangString == "FR")
+        m_pSpeech->setLocale(QLocale::French);
+    else
+        m_pSpeech->setLocale(QLocale::English);
+
     return true;
 }
 
@@ -295,6 +313,13 @@ QMap<int, QVariant> SettingController::allSettings()
 
 //-------------------------------------------------------------------------------------------------
 
+Translator *SettingController::translator() const
+{
+    return m_pTranslator;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void SettingController::loadSettings()
 {
     qDebug() << "LOAD SETTINGS";
@@ -383,4 +408,12 @@ void SettingController::createDir(const QString &sDirPath)
     QDir dir(sDirPath);
     if (!dir.exists())
       dir.mkpath(".");
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void SettingController::say(const QString &sSpeech)
+{
+    qDebug() << "SAYING " << sSpeech.toLower();
+    m_pSpeech->say(sSpeech.toLower());
 }

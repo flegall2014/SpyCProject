@@ -34,9 +34,6 @@ SpyC::SpyC(QObject *parent) : QObject(parent)
     // Drone controller
     m_pMasterController = new MasterController(this);
 
-    // Translator
-    m_pTranslator = new Translator(this);
-
     // Set context properties
     setContextProperties();
 }
@@ -68,10 +65,6 @@ bool SpyC::startup(const QStringList &lArgs)
     // Start controller
     if (!m_pMasterController->startup())
         return false;
-
-    // Set language
-    qDebug() << "LOADING LANGUAGE " << m_pMasterController->currentLangString();
-    m_pTranslator->selectLanguage(m_pMasterController->currentLangString());
 
     // Set model on drone controller
     QVector<QObject *> vPlugins = m_pPluginLoader->getPlugins();
@@ -143,5 +136,5 @@ void SpyC::setContextProperties()
 {
     m_engine.rootContext()->setContextProperty("SPYC", this);
     m_engine.rootContext()->setContextProperty("MASTERCONTROLLER", m_pMasterController);
-    m_engine.rootContext()->setContextProperty("TRANSLATOR", m_pTranslator);
+    m_engine.rootContext()->setContextProperty("TRANSLATOR", m_pMasterController->settingController()->translator());
 }
