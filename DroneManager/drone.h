@@ -6,9 +6,11 @@
 #include <QTimer>
 #include <QGeoCoordinate>
 #include <QGeoPath>
+#include <QVector>
 
 // Application
 #include "drone_manager_global.h"
+#include "waypoint.h"
 
 namespace Model {
 class FlightSimulator;
@@ -50,13 +52,13 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Set safety
-    void setSafety(const QGeoPath &geoPath);
+    void setSafety(const QVector<WayPoint> &geoPath);
 
     //! Set mission plan
-    void setMissionPlan(const QGeoPath &geoPath);
+    void setMissionPlan(const QVector<WayPoint> &geoPath);
 
     //! Set landing plan
-    void setLandingPlan(const QGeoPath &geoPath);
+    void setLandingPlan(const QVector<WayPoint> &geoPath);
 
     //! Set exclusion area
     void setExclusionArea(const QList<QGeoPath> &lExclusionArea);
@@ -78,13 +80,13 @@ private:
     QGeoCoordinate m_initialPosition;
 
     //! Safety
-    QGeoPath m_safety;
+    QVector<WayPoint> m_safety;
 
     //! Mission plan
-    QGeoPath m_missionPlan;
+    QVector<WayPoint> m_missionPlan;
 
     //! Landing plan
-    QGeoPath m_landingPlan;
+    QVector<WayPoint> m_landingPlan;
 
     //! Exclusion area
     QList<QGeoPath> m_lExclusionArea;

@@ -234,7 +234,6 @@ Map {
         }
         function onDataChanged()
         {
-            console.log("TUTU")
             if (targetDrone.landingPlanModel.path.size() === 0)
             {
                 landingPlanPoly.visible = false

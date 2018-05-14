@@ -64,7 +64,7 @@ public:
     void setCurrentPointIndex(int iIndex);
 
     //! Return waypoints
-    const QVector<Model::WayPoint> &wayPoints() const;
+    const WayPointList &wayPoints() const;
 
     //-------------------------------------------------------------------------------------------------
     // Control methods
@@ -81,7 +81,7 @@ public:
 
 private:
     //! Way points
-    QVector<Model::WayPoint> m_vWayPoints;
+    WayPointList m_vWayPoints;
 
     //! Current point index
     int m_iCurrentPointIndex = 0;

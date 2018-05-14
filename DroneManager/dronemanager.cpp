@@ -5,6 +5,7 @@
 // Application
 #include "dronemanager.h"
 #include "drone.h"
+#include "waypoint.h"
 using namespace Model;
 
 //-------------------------------------------------------------------------------------------------
@@ -85,7 +86,7 @@ void DroneManager::onDroneTimeOut()
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneManager::setMissionPlan(const QString &sDroneUID, const QGeoPath &missionPlan)
+void DroneManager::setMissionPlan(const QString &sDroneUID, const QVector<WayPoint> &missionPlan)
 {
     Drone *pTargetDrone = m_hDrones[sDroneUID];
     if (pTargetDrone != nullptr)
@@ -94,11 +95,20 @@ void DroneManager::setMissionPlan(const QString &sDroneUID, const QGeoPath &miss
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneManager::setSafety(const QString &sDroneUID, const QGeoPath &safety)
+void DroneManager::setSafety(const QString &sDroneUID, const QVector<WayPoint> &safety)
 {
     Drone *pTargetDrone = m_hDrones[sDroneUID];
     if (pTargetDrone != nullptr)
         pTargetDrone->setSafety(safety);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneManager::setLandingPlan(const QString &sDroneUID, const QVector<WayPoint> &landingPlan)
+{
+    Drone *pTargetDrone = m_hDrones[sDroneUID];
+    if (pTargetDrone != nullptr)
+        pTargetDrone->setLandingPlan(landingPlan);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -121,7 +131,7 @@ void DroneManager::onFailSafeRequest(const QString &sDroneUID)
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneManager::onUploadMissionPlan(const QGeoPath &path, const QString &sDroneUID)
+void DroneManager::onUploadMissionPlan(const QVector<WayPoint> &path, const QString &sDroneUID)
 {
     // Retrieve target drone
     Drone *pDrone = m_hDrones[sDroneUID];
@@ -131,7 +141,7 @@ void DroneManager::onUploadMissionPlan(const QGeoPath &path, const QString &sDro
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneManager::onUploadSafety(const QGeoPath &path, const QString &sDroneUID)
+void DroneManager::onUploadSafety(const QVector<WayPoint> &path, const QString &sDroneUID)
 {
     // Retrieve target drone
     Drone *pDrone = m_hDrones[sDroneUID];
@@ -141,7 +151,7 @@ void DroneManager::onUploadSafety(const QGeoPath &path, const QString &sDroneUID
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneManager::onUploadLandingPlan(const QGeoPath &path, const QString &sDroneUID)
+void DroneManager::onUploadLandingPlan(const QVector<WayPoint> &path, const QString &sDroneUID)
 {
     // Retrieve target drone
     Drone *pDrone = m_hDrones[sDroneUID];

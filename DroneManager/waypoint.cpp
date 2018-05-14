@@ -6,7 +6,7 @@ using namespace  Model;
 
 WayPoint::WayPoint()
 {
-
+    qRegisterMetaType<WayPoint>("WayPoint");
 }
 
 //-------------------------------------------------------------------------------------------------

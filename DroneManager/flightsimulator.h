@@ -10,6 +10,7 @@
 
 // Application
 #include "basesimulator.h"
+#include "waypoint.h"
 #include "drone_manager_global.h"
 
 namespace Model {
@@ -33,7 +34,7 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Compute points
-    void computeFlightPath(const QGeoPath &geoPath, int iPointCount=100);
+    void computeFlightPath(const QVector<WayPoint> &geoPath, int iPointCount=100);
 
     //! Play
     virtual void start();

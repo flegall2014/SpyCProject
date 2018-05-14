@@ -68,7 +68,7 @@ void MissionPlanController::onValidateMissionPlan(const QString &sDroneUID)
             if (!missionPlan.isEmpty())
             {
                 if (missionPlan.size() > 2)
-                    emit uploadMissionPlan(pDrone->missionPlanModel()->path(), pDrone->uid());
+                    emit uploadMissionPlan(pDrone->missionPlanModel()->wayPoints(), pDrone->uid());
                 else
                     emit missionPlanError(MissionPlanError::NOT_ENOUGH_POINTS_IN_MISSION_PLAN, pDrone->uid());
             }
@@ -98,7 +98,7 @@ void MissionPlanController::onValidateSafetyPlan(const QString &sDroneUID)
             if (!safety.isEmpty())
             {
                 if (safety.size() > 2)
-                    emit uploadSafety(pDrone->safetyModel()->path(), pDrone->uid());
+                    emit uploadSafety(pDrone->safetyModel()->wayPoints(), pDrone->uid());
                 else
                     emit missionPlanError(MissionPlanError::NOT_ENOUGH_POINTS_IN_SAFETY, pDrone->uid());
             }
@@ -131,7 +131,7 @@ void MissionPlanController::onValidateLandingPlan(const QString &sDroneUID)
                 if (landingPlan.size() == 3)
                 {
                     qDebug() << "UPLOADING LANDING PLAN";
-                    emit uploadLandingPlan(pDrone->landingPlanModel()->path(), pDrone->uid());
+                    emit uploadLandingPlan(pDrone->landingPlanModel()->wayPoints(), pDrone->uid());
                 }
                 else
                 {

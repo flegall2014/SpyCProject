@@ -127,7 +127,7 @@ void WayPointModel::setCurrentPointIndex(int iIndex)
 
 //-------------------------------------------------------------------------------------------------
 
-const QVector<Model::WayPoint> &WayPointModel::wayPoints() const
+const WayPointList &WayPointModel::wayPoints() const
 {
     return m_vWayPoints;
 }

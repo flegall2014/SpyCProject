@@ -59,7 +59,7 @@ const QGeoCoordinate &Drone::initialPosition() const
 
 //-------------------------------------------------------------------------------------------------
 
-void Drone::setSafety(const QGeoPath &geoPath)
+void Drone::setSafety(const QVector<WayPoint> &geoPath)
 {
     m_safety = geoPath;
     emit safetyChanged(m_sDroneUID);
@@ -67,7 +67,7 @@ void Drone::setSafety(const QGeoPath &geoPath)
 
 //-------------------------------------------------------------------------------------------------
 
-void Drone::setMissionPlan(const QGeoPath &geoPath)
+void Drone::setMissionPlan(const QVector<WayPoint> &geoPath)
 {
     m_missionPlan = geoPath;
     emit missionPlanChanged(m_sDroneUID);
@@ -75,7 +75,7 @@ void Drone::setMissionPlan(const QGeoPath &geoPath)
 
 //-------------------------------------------------------------------------------------------------
 
-void Drone::setLandingPlan(const QGeoPath &geoPath)
+void Drone::setLandingPlan(const QVector<WayPoint> &geoPath)
 {
     m_landingPlan = geoPath;
     emit landingPlanChanged(m_sDroneUID);

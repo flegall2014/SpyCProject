@@ -3,6 +3,7 @@
 
 // Application
 #include "flightsimulator.h"
+#include "waypoint.h"
 using namespace Model;
 
 //-------------------------------------------------------------------------------------------------
@@ -23,7 +24,7 @@ FlightSimulator::~FlightSimulator()
 
 //-------------------------------------------------------------------------------------------------
 
-void FlightSimulator::computeFlightPath(const QGeoPath &geoPath, int iPointCount)
+void FlightSimulator::computeFlightPath(const QVector<WayPoint> &geoPath, int iPointCount)
 {
     m_iPointIndex++;
     m_vDetailedPath.clear();
@@ -31,8 +32,8 @@ void FlightSimulator::computeFlightPath(const QGeoPath &geoPath, int iPointCount
     int iPathSize = geoPath.size();
     for (int i=0; i<iPathSize-1; i++)
     {
-        QGeoCoordinate firstCoord = geoPath.coordinateAt(i);
-        QGeoCoordinate secondCoord = geoPath.coordinateAt(i+1);
+        QGeoCoordinate firstCoord = geoPath[i].geoCoord();
+        QGeoCoordinate secondCoord = geoPath[i+1].geoCoord();
         double m = (secondCoord.longitude()-firstCoord.longitude())/(secondCoord.latitude()-firstCoord.latitude());
         double p = firstCoord.longitude()-m*firstCoord.latitude();
         double dStep = (secondCoord.latitude()-firstCoord.latitude())/iPointCount;
@@ -40,7 +41,7 @@ void FlightSimulator::computeFlightPath(const QGeoPath &geoPath, int iPointCount
 
         for (int j=0; j<iPointCount; j++)
         {
-            double dLatitude = geoPath.coordinateAt(i).latitude()+j*dStep;
+            double dLatitude = geoPath[i].geoCoord().latitude()+j*dStep;
             double dLongitude = m*dLatitude+p;
             m_vDetailedPath << QGeoCoordinate(dLatitude, dLongitude);
             m_vHeading << dHeading*180/M_PI+180;

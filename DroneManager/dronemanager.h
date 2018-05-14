@@ -47,10 +47,13 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Set mission plan
-    void setMissionPlan(const QString &sDroneUID, const QGeoPath &missionPlan);
+    void setMissionPlan(const QString &sDroneUID, const QVector<WayPoint> &missionPlan);
 
     //! Set safety
-    void setSafety(const QString &sDroneUID, const QGeoPath &safety);
+    void setSafety(const QString &sDroneUID, const QVector<WayPoint> &safety);
+
+    //! Set landing plan
+    void setLandingPlan(const QString &sDroneUID, const QVector<WayPoint> &landinPlan);
 
 private:
     //! Drone timer
@@ -73,13 +76,13 @@ public slots:
     void onFailSafeRequest(const QString &DroneUID);
 
     //! Upload mission plan
-    void onUploadMissionPlan(const QGeoPath &path, const QString &sDroneUID);
+    void onUploadMissionPlan(const QVector<WayPoint> &path, const QString &sDroneUID);
 
     //! Upload safety
-    void onUploadSafety(const QGeoPath &path, const QString &sDroneUID);
+    void onUploadSafety(const QVector<WayPoint> &path, const QString &sDroneUID);
 
     //! Upload landing plan
-    void onUploadLandingPlan(const QGeoPath &path, const QString &sDroneUID);
+    void onUploadLandingPlan(const QVector<WayPoint> &path, const QString &sDroneUID);
 
     //! Upload exclusion area
     void onUploadExclusionArea(const QList<QGeoPath> &lExclusionArea, const QString &sDroneUID);

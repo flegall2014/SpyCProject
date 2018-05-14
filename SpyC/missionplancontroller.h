@@ -11,6 +11,7 @@ class QQuickItem;
 #include <drone.h>
 
 // Application
+#include <waypoint.h>
 class MasterController;
 
 class MissionPlanController : public QObject
@@ -115,13 +116,13 @@ signals:
     void validateExclusionAreaReq(const QString &sDroneUID);
 
     //! Upload mission plan
-    void uploadMissionPlan(const QGeoPath &geoPath, const QString &sDroneUID);
+    void uploadMissionPlan(const WayPointList &vWayPoints, const QString &sDroneUID);
 
     //! Upload safety
-    void uploadSafety(const QGeoPath &geoPath, const QString &sDroneUID);
+    void uploadSafety(const WayPointList &geoPath, const QString &sDroneUID);
 
     //! Upload landing plan
-    void uploadLandingPlan(const QGeoPath &geoPath, const QString &sDroneUID);
+    void uploadLandingPlan(const WayPointList &geoPath, const QString &sDroneUID);
 
     //! Upload exclusion areas
     void uploadExclusionArea(const QList<QGeoPath> &lExclusionArea, const QString &sDroneUID);

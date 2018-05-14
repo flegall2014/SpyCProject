@@ -122,6 +122,7 @@ void SpyC::launchUI()
 void SpyC::registerTypes()
 {
     // Register types
+    qRegisterMetaType<WayPointList>("WayPointList");
     qmlRegisterType<SpyC>("Components", 1, 0, "SpyC");
     qmlRegisterType<SettingController>("Components", 1, 0, "SettingController");
     qmlRegisterType<DroneBase>("Components", 1, 0, "DroneBase");

@@ -3,7 +3,9 @@
 
 // Qt
 #include <QGeoCoordinate>
-#include <QVariantMap>
+#include <QVector>
+#include <QMap>
+#include <QVariant>
 
 // Application
 #include "drone_manager_global.h"
@@ -71,6 +73,7 @@ private:
 };
 }
 
+typedef QVector<Model::WayPoint> WayPointList;
 Q_DECLARE_METATYPE(Model::WayPoint::Type)
 
 #endif // WAYPOINT_H
