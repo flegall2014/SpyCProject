@@ -7,6 +7,7 @@
 // Application
 #include "translator.h"
 #include "helper.h"
+#include "settingcontroller.h"
 
 //-------------------------------------------------------------------------------------------------
 
@@ -31,16 +32,16 @@ QString Translator::getEmptyString()
 
 //-------------------------------------------------------------------------------------------------
 
-void Translator::selectLanguage(const QString &sLanguage)
+void Translator::setLanguage(int iLanguage)
 {
     // working folder
-    if (sLanguage == "FR")
+    if ((SettingController::Language)iLanguage == SettingController::FRENCH)
     {
         // Setup translator
         if (!m_pTranslator->load(Helper::i18nDir().absoluteFilePath("french.qm")))
-            qDebug() << "Failed to load: " << sLanguage;
+            qDebug() << "Failed to load: " << iLanguage;
         else
-            qDebug() << sLanguage << " successfully loaded";
+            qDebug() << iLanguage << " successfully loaded";
         qApp->installTranslator(m_pTranslator);
     }
     else

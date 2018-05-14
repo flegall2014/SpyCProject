@@ -29,7 +29,7 @@ public:
     QString getEmptyString();
 
     //! Select language
-    Q_INVOKABLE void selectLanguage(const QString &sLanguage);
+    void setLanguage(int iLanguage);
 
 signals:
     //! Language changed

@@ -6,7 +6,7 @@
     <message>
         <location filename="../qml/widgets/BatteryStatusWidget.qml" line="7"/>
         <source>BAT</source>
-        <translation>Quitter Spy&apos;C?</translation>
+        <translation type="unfinished">BAT</translation>
     </message>
 </context>
 <context>

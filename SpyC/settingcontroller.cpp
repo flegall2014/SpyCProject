@@ -27,6 +27,7 @@ SettingController::SettingController(QObject *pParent) : QObject(pParent)
 {
     // Translator
     m_pTranslator = new Translator(this);
+    connect(this, &SettingController::languageChanged, this, SettingController::onLanguageChanged);
 
     // Speech management
     m_pSpeech = new QTextToSpeech(this);
@@ -50,13 +51,7 @@ bool SettingController::startup(const QStringList &lArgs)
     loadSettings();
 
     // i18n
-    m_pTranslator->selectLanguage(m_sLangString);
-
-    // Setup speech
-    if (m_sLangString == "FR")
-        m_pSpeech->setLocale(QLocale::French);
-    else
-        m_pSpeech->setLocale(QLocale::English);
+    setupTranslatorAndSpeech();
 
     return true;
 }
@@ -73,13 +68,6 @@ void SettingController::shutdown()
 void SettingController::setMasterController(MasterController *pMasterController)
 {
     m_pMasterController = pMasterController;
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void SettingController::applyLanguage(const QString &sLang)
-{
-    setLangString(sLang);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -172,19 +160,19 @@ void SettingController::setOperatorName(const QString &sName)
 
 //-------------------------------------------------------------------------------------------------
 
-const QString &SettingController::langString() const
+int SettingController::language() const
 {
-    return m_sLangString;
+    return (int)m_eLanguage;
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void SettingController::setLangString(const QString &sLangString)
+void SettingController::setLanguage(int iLanguage)
 {
-    if (sLangString != m_sLangString)
+    if ((Language)iLanguage != m_eLanguage)
     {
-        m_sLangString = sLangString;
-        emit langStringChanged();
+        m_eLanguage = (Language)iLanguage;
+        emit languageChanged();
     }
 }
 
@@ -302,7 +290,7 @@ QMap<int, QVariant> SettingController::allSettings()
     mAllSettings[UNIT] = m_sUnit;
     mAllSettings[MISSION] = m_sMission;
     mAllSettings[OPERATOR] = m_sOperator;
-    mAllSettings[LANGUAGE_STRING] = m_sLangString;
+    mAllSettings[LANGUAGE_STRING] = (int)m_eLanguage;
     mAllSettings[MAP_PATH] = m_sMapPath;
     mAllSettings[MISSION_PATH] = m_sMissionPath;
     mAllSettings[LOG_PATH] = m_sLogPath;
@@ -346,10 +334,10 @@ void SettingController::loadSettings()
         sOperator = tr("Operator");
     m_sOperator = sOperator;
 
-    QString sLangString = settings.value(USER_LANGUAGE).toString();
-    if (sLangString.simplified().isEmpty())
-        sLangString = "FR";
-    applyLanguage(sLangString);
+    int iLanguage = settings.value(USER_LANGUAGE).toInt();
+    if (iLanguage == 0)
+        iLanguage = (int)FRENCH;
+    setLanguage(iLanguage);
 
     QString sMapPath = settings.value(USER_MAP_DIR).toString();
     if (sMapPath.simplified().isEmpty())
@@ -392,7 +380,7 @@ void SettingController::saveSettings()
     settings.setValue(USER_UNIT, m_sUnit);
     settings.setValue(USER_MISSION, m_sMission);
     settings.setValue(USER_OPERATOR, m_sOperator);
-    settings.setValue(USER_LANGUAGE, m_sLangString);
+    settings.setValue(USER_LANGUAGE, (int)m_eLanguage);
     settings.setValue(USER_MAP_DIR, m_sMapPath);
     settings.setValue(USER_MISSION_DIR, m_sMissionPath);
     settings.setValue(USER_LOG_DIR, m_sLogPath);
@@ -414,6 +402,26 @@ void SettingController::createDir(const QString &sDirPath)
 
 void SettingController::say(const QString &sSpeech)
 {
-    qDebug() << "SAYING " << sSpeech.toLower();
     m_pSpeech->say(sSpeech.toLower());
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void SettingController::onLanguageChanged()
+{
+    setupTranslatorAndSpeech();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void SettingController::setupTranslatorAndSpeech()
+{
+    // i18n
+    m_pTranslator->setLanguage(m_eLanguage);
+
+    // Setup speech
+    if (m_eLanguage == FRENCH)
+        m_pSpeech->setLocale(QLocale::French);
+    else
+        m_pSpeech->setLocale(QLocale::English);
 }

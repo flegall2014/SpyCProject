@@ -113,8 +113,20 @@ Grid {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
             source: "qrc:/icons/ico-ground.svg"
-            enabled: false
+            enabled: targetDrone.state === DroneBase.FLYING
             label: qsTr("GoTo")
+            textPosition: "below"
+        }
+    }
+    Item {
+        width: parent.width/3
+        height: width
+        ImageButton {
+            endColor: Theme.defaultButtonColor
+            anchors.centerIn: parent
+            source: "qrc:/icons/ico-shape.svg"
+            enabled: false
+            label: qsTr("Loiter")
             textPosition: "below"
         }
     }
@@ -145,18 +157,6 @@ Grid {
                 targetDrone.galleryModel.initialize()
                 targetDrone.workMode = DroneBase.GALLERY_EDIT
             }
-        }
-    }
-    Item {
-        width: parent.width/3
-        height: width
-        ImageButton {
-            endColor: Theme.defaultButtonColor
-            anchors.centerIn: parent
-            source: "qrc:/icons/ico-shape.svg"
-            enabled: false
-            label: qsTr("Loiter")
-            textPosition: "below"
         }
     }
 }

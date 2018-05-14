@@ -17,7 +17,7 @@ class SettingController : public QObject
     Q_PROPERTY(QString unit READ unit WRITE setUnit NOTIFY unitChanged)
     Q_PROPERTY(QString mission READ mission WRITE setMission NOTIFY missionChanged)
     Q_PROPERTY(QString operatorName READ operatorName WRITE setOperatorName NOTIFY operatorNameChanged)
-    Q_PROPERTY(QString langString READ langString WRITE setLangString NOTIFY langStringChanged)
+    Q_PROPERTY(int language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QString mapPath READ mapPath WRITE setMapPath NOTIFY mapPathChanged)
     Q_PROPERTY(QString missionPath READ missionPath WRITE setMissionPath NOTIFY missionPathChanged)
     Q_PROPERTY(QString logPath READ logPath WRITE setLogPath NOTIFY logPathChanged)
@@ -26,6 +26,7 @@ class SettingController : public QObject
     Q_PROPERTY(int hand READ hand WRITE setHand NOTIFY handChanged)
     Q_ENUMS(Setting)
     Q_ENUMS(UIOrientation)
+    Q_ENUMS(Language)
 
 public:
     //-------------------------------------------------------------------------------------------------
@@ -38,6 +39,9 @@ public:
 
     //! UI orientation
     enum UIOrientation {RIGHT_HAND=Qt::UserRole+1, LEFT_HAND};
+
+    //! Languages
+    enum Language {FRENCH=Qt::UserRole+1, ENGLISH, ARABIC};
 
     //! Constructor
     SettingController(QObject *pParent=nullptr);
@@ -61,9 +65,6 @@ public:
 
     //! Set master controller
     void setMasterController(MasterController *pMasterController);
-
-    //! Apply language
-    Q_INVOKABLE void applyLanguage(const QString &sLang);
 
     //! Return a gallery path given a drone UID
     Q_INVOKABLE QString snapShotPath(const QString &sDroneUID) const;
@@ -99,11 +100,11 @@ public:
     //! Set operator
     void setOperatorName(const QString &sName);
 
-    //! Return lang string
-    const QString &langString() const;
+    //! Return language
+    int language() const;
 
-    //! Set lang string
-    void setLangString(const QString &sLangString);
+    //! Set language
+    void setLanguage(int iLanguage);
 
     //! Return map path
     const QString &mapPath() const;
@@ -157,6 +158,9 @@ private:
     //! Create dir
     void createDir(const QString &sDirPath);
 
+    //! Setup translator and speech
+    void setupTranslatorAndSpeech();
+
 private:
     //! Master controller
     MasterController *m_pMasterController = nullptr;
@@ -174,7 +178,7 @@ private:
     QString m_sOperator = "";
 
     //! Language string
-    QString m_sLangString = "US";
+    Language m_eLanguage = ENGLISH;
 
     //! Map path
     QString m_sMapPath = "";
@@ -200,6 +204,10 @@ private:
     //! Text to speech
     QTextToSpeech *m_pSpeech = nullptr;
 
+public slots:
+    //! Language changed
+    void onLanguageChanged();
+
 signals:
     //! Army changed
     void armyChanged();
@@ -213,8 +221,8 @@ signals:
     //! Operator name changed
     void operatorNameChanged();
 
-    //! Language string changed
-    void langStringChanged();
+    //! Language changed
+    void languageChanged();
 
     //! Map path changed
     void mapPathChanged();
