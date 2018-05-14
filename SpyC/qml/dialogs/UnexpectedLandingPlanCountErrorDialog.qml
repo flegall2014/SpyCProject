@@ -7,28 +7,14 @@ DialogBase {
     bottomBarContents: Item {
         anchors.fill: parent
 
-        // Cancel
+        // OK
         StandardButton {
             id: cancelButton
             anchors.right: parent.right
             anchors.rightMargin: 4
             anchors.verticalCenter: parent.verticalCenter
-            label: qsTr("Cancel")
-            onClicked: {
-                targetDrone.setDefaultWorkMode()
-                closeDialog()
-            }
-        }
-
-        // OK
-        StandardButton {
-            id: okButton
-            anchors.right: cancelButton.left
-            anchors.rightMargin: 4
-            anchors.verticalCenter: parent.verticalCenter
             label: qsTr("OK")
             onClicked: {
-                MASTERCONTROLLER.missionPlanController.validateLandingPlanRequest(targetDrone.uid)
                 targetDrone.setDefaultWorkMode()
                 closeDialog()
             }
@@ -39,7 +25,7 @@ DialogBase {
         StandardText {
             anchors.centerIn: parent
             font.pixelSize: Theme.largeFontSize
-            text: qsTr("Upload landing plan?")
+            text: qsTr("Landing plan should contain exactly 3 points. ABORTING")
         }
     }
 }

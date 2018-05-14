@@ -20,7 +20,7 @@ class DRONEMANAGERSHARED_EXPORT Drone : public QObject
 
 public:
     //! Drone error
-    enum DroneError {NO_SAFETY=Qt::UserRole+1, NO_MISSION_PLAN};
+    enum DroneError {NO_SAFETY=Qt::UserRole+1, NO_LANDING_PLAN, NO_MISSION_PLAN};
 
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
@@ -55,6 +55,9 @@ public:
     //! Set mission plan
     void setMissionPlan(const QGeoPath &geoPath);
 
+    //! Set landing plan
+    void setLandingPlan(const QGeoPath &geoPath);
+
     //! Set exclusion area
     void setExclusionArea(const QList<QGeoPath> &lExclusionArea);
 
@@ -79,6 +82,9 @@ private:
 
     //! Mission plan
     QGeoPath m_missionPlan;
+
+    //! Landing plan
+    QGeoPath m_landingPlan;
 
     //! Exclusion area
     QList<QGeoPath> m_lExclusionArea;
@@ -111,6 +117,9 @@ signals:
 
     //! Safety changed
     void safetyChanged(const QString &sDroneUID);
+
+    //! Landing plan changed
+    void landingPlanChanged(const QString &sDroneUID);
 
     //! Exclusion area changed
     void exclusionAreaChanged(const QString &sDroneUID);

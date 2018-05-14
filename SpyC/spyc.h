@@ -27,7 +27,7 @@ public:
                     EMPTY_SAFETY_ERROR, MISSION_PLAN_VALIDATION, NOT_ENOUGH_POINT_IN_MISSION_PLAN,
                     NOT_ENOUGH_POINT_IN_SAFETY, SAFETY_VALIDATION, NO_EXCLUSION_AREA_ERROR,
                     EXCLUSION_AREA_VALIDATION, CONFIRM_REMOVE_CAPTURE, CONFIRM_CLEAR_GALLERY, EMPTY_LANDING_PLAN_ERROR,
-                    LANDING_PLAN_VALIDATION, EXIT_SPYC};
+                    LANDING_PLAN_VALIDATION, UNEXPECTED_LANDING_PLAN_COUNT_ERROR, EXIT_SPYC};
 
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor

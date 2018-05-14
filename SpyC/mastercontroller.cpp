@@ -190,7 +190,7 @@ void MasterController::onNewDroneAvailable(const QString &sVideoUrl, const QGeoC
 {
     DroneBase *pDrone = new DroneBase(sDroneUID, sVideoUrl, initialPosition, this);
     pDrone->initialize(m_pSettingController->allSettings());
-    connect(pDrone, &DroneBase::globalStatusChanged, this, &MasterController::onDroneGlobalStatusChanged);
+    connect(pDrone, &DroneBase::globalStatusChanged, this, &MasterController::onDroneGlobalStatusChanged, Qt::QueuedConnection);
     m_vDrones << pDrone;
     m_pDroneModel->addDrone(pDrone);
 }
@@ -256,3 +256,4 @@ const QString &MasterController::currentLangString() const
 {
     return m_pSettingController->langString();
 }
+

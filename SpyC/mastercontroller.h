@@ -4,6 +4,7 @@
 // Qt
 #include <QObject>
 class QTextToSpeech;
+class QQuickItem;
 
 // Application
 #include "iservice.h"
@@ -98,6 +99,9 @@ public:
     //! Return current lang string
     const QString &currentLangString() const;
 
+    //! Set dialog manager
+    void setDialogMgr(QQuickItem *pDialogMgr);
+
 private:
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
@@ -157,6 +161,9 @@ private:
 
     //! Text to speech
     QTextToSpeech *m_pSpeech = nullptr;
+
+    //! Dialog mgr
+    QQuickItem *m_pDialogMgr = nullptr;
 
 public slots:
     //! New drone available

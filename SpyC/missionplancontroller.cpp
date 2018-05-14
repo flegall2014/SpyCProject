@@ -12,7 +12,10 @@
 
 MissionPlanController::MissionPlanController(QObject *pParent) : QObject(pParent)
 {
-
+    connect(this, &MissionPlanController::validateMissionPlanReq, this, &MissionPlanController::onValidateMissionPlan, Qt::QueuedConnection);
+    connect(this, &MissionPlanController::validateSafetyPlanReq, this, &MissionPlanController::onValidateSafetyPlan, Qt::QueuedConnection);
+    connect(this, &MissionPlanController::validateLandingPlanReq, this, &MissionPlanController::onValidateLandingPlan, Qt::QueuedConnection);
+    connect(this, &MissionPlanController::validateExclusionAreaReq, this, &MissionPlanController::onValidateExclusionAreas, Qt::QueuedConnection);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -46,7 +49,14 @@ void MissionPlanController::setMasterController(MasterController *pMasterControl
 
 //-------------------------------------------------------------------------------------------------
 
-void MissionPlanController::validateMissionPlan(const QString &sDroneUID)
+void MissionPlanController::validateMissionPlanRequest(const QString &sDroneUID)
+{
+    emit validateMissionPlanReq(sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MissionPlanController::onValidateMissionPlan(const QString &sDroneUID)
 {
     if (m_pMasterController != nullptr)
     {
@@ -69,7 +79,14 @@ void MissionPlanController::validateMissionPlan(const QString &sDroneUID)
 
 //-------------------------------------------------------------------------------------------------
 
-void MissionPlanController::validateSafety(const QString &sDroneUID)
+void MissionPlanController::validateSafetyPlanRequest(const QString &sDroneUID)
+{
+    emit validateSafetyPlanReq(sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MissionPlanController::onValidateSafetyPlan(const QString &sDroneUID)
 {
     if (m_pMasterController != nullptr)
     {
@@ -92,7 +109,48 @@ void MissionPlanController::validateSafety(const QString &sDroneUID)
 
 //-------------------------------------------------------------------------------------------------
 
-void MissionPlanController::validateExclusionAreas(const QString &sDroneUID)
+void MissionPlanController::validateLandingPlanRequest(const QString &sDroneUID)
+{
+    emit validateLandingPlanReq(sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MissionPlanController::onValidateLandingPlan(const QString &sDroneUID)
+{
+    qDebug() << "onValidateLandingPlan";
+    if (m_pMasterController != nullptr)
+    {
+        DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
+        if (pDrone != nullptr)
+        {
+            // Retrieve landing plan
+            QGeoPath landingPlan = pDrone->landingPlanModel()->path();
+            if (!landingPlan.isEmpty())
+            {
+                if (landingPlan.size() == 3)
+                    emit uploadLandingPlan(pDrone->landingPlanModel()->path(), pDrone->uid());
+                else
+                {
+                    qDebug() << "TOTO";
+                    emit missionPlanError(MissionPlanError::UNEXPECTED_LANDING_PLAN_COUNT, pDrone->uid());
+                }
+            }
+            else emit missionPlanError(MissionPlanError::EMPTY_LANDING_PLAN, pDrone->uid());
+        }
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MissionPlanController::validateExclusionAreaRequest(const QString &sDroneUID)
+{
+    emit validateExclusionAreaReq(sDroneUID);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MissionPlanController::onValidateExclusionAreas(const QString &sDroneUID)
 {
     if (m_pMasterController != nullptr)
     {
@@ -153,8 +211,12 @@ void MissionPlanController::onExclusionAreaChanged(const QString &sDroneUID)
 
 void MissionPlanController::onMissionPlanError(const Model::Drone::DroneError &eError, const QString &sDroneUID)
 {
+    qDebug() << "*** MISSION PLAN ERROR ***";
     if (eError == Model::Drone::NO_SAFETY)
         emit missionPlanError(EMPTY_SAFETY, sDroneUID);
+    else
+    if (eError == Model::Drone::NO_LANDING_PLAN)
+        emit missionPlanError(EMPTY_LANDING_PLAN, sDroneUID);
     else
     if (eError == Model::Drone::NO_MISSION_PLAN)
         emit missionPlanError(EMPTY_MISSION_PLAN, sDroneUID);

@@ -129,5 +129,6 @@
         <file>qml/dialogs/LandingPlanValidationDialog.qml</file>
         <file>icons/ico-landingplan.svg</file>
         <file>qml/panels/LandingPlanEditorPanel.qml</file>
+        <file>qml/dialogs/UnexpectedLandingPlanCountErrorDialog.qml</file>
     </qresource>
 </RCC>

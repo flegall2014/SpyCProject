@@ -28,7 +28,7 @@ DialogBase {
             anchors.verticalCenter: parent.verticalCenter
             label: qsTr("OK")
             onClicked: {
-                MASTERCONTROLLER.missionPlanController.validateSafety(targetDrone.uid)
+                MASTERCONTROLLER.missionPlanController.validateSafetyPlanRequest(targetDrone.uid)
                 targetDrone.setDefaultWorkMode()
                 closeDialog()
             }

@@ -76,10 +76,8 @@ ApplicationWindow {
         // Dialog manager
         DialogMgr {
             id: dialogMgr
+            objectName: "dialogMgr"
             anchors.fill: parent
-            Component.onCompleted: {
-                MASTERCONTROLLER.missionPlanController.missionPlanError.connect(onMissionPlanError)
-            }
 
             // Safety error
             function onMissionPlanError(error, droneUID)
@@ -95,6 +93,17 @@ ApplicationWindow {
                 else
                 if (error === MissionPlanController.NOT_ENOUGH_POINTS_IN_MISSION_PLAN)
                     dialogMgr.showDialog(SpyC.NOT_ENOUGH_POINT_IN_MISSION_PLAN, droneUID)
+                else
+                if (error === MissionPlanController.EMPTY_LANDING_PLAN)
+                    dialogMgr.showDialog(SpyC.EMPTY_LANDING_PLAN_ERROR, droneUID)
+                else
+                if (error === MissionPlanController.UNEXPECTED_LANDING_PLAN_COUNT)
+                    dialogMgr.showDialog(SpyC.UNEXPECTED_LANDING_PLAN_COUNT_ERROR, droneUID)
+                return ""
+            }
+
+            Component.onCompleted: {
+                MASTERCONTROLLER.missionPlanController.missionPlanError.connect(onMissionPlanError)
             }
         }
 

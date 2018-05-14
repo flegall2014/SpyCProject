@@ -297,7 +297,6 @@ Map {
         enabled: (targetDrone.workMode === DroneBase.MISSION_PLAN_EDIT) || (targetDrone.workMode === DroneBase.SAFETY_EDIT) ||
                  (targetDrone.workMode === DroneBase.LANDING_PLAN_EDIT) || (targetDrone.workMode === DroneBase.EXCLUSION_EDIT)
         onClicked: {
-            console.log("TATA")
             if (targetDrone.workMode === DroneBase.SAFETY_EDIT)
                 targetDrone.addCoordinateToSafety(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
             else
@@ -306,7 +305,6 @@ Map {
             else
             if (targetDrone.workMode === DroneBase.LANDING_PLAN_EDIT)
             {
-                console.log("TOTO")
                 targetDrone.addCoordinateToLandingPlan(mapView.toCoordinate(Qt.point(mouse.x, mouse.y)))
             }
             else
