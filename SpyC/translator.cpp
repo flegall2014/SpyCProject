@@ -38,7 +38,8 @@ void Translator::setLanguage(int iLanguage)
     if ((SettingController::Language)iLanguage == SettingController::FRENCH)
     {
         // Setup translator
-        if (!m_pTranslator->load(Helper::i18nDir().absoluteFilePath("french.qm")))
+        Helper helper;
+        if (!m_pTranslator->load(helper.i18nDir().absoluteFilePath("french.qm")))
             qDebug() << "Failed to load: " << iLanguage;
         else
             qDebug() << iLanguage << " successfully loaded";

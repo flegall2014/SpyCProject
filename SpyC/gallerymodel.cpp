@@ -156,3 +156,12 @@ void GalleryModel::setCurrentScreenCapIndex(int iIndex)
     m_iCurrentScreenCapIndex = iIndex;
     emit currentScreenCapIndexChanged();
 }
+
+//-------------------------------------------------------------------------------------------------
+
+QString GalleryModel::currentScreenCapPath() const
+{
+    if ((m_iCurrentScreenCapIndex >= 0) && (m_iCurrentScreenCapIndex < rowCount()))
+        return m_vSnaps[m_iCurrentScreenCapIndex].filePath;
+    return QString("");
+}

@@ -19,6 +19,7 @@
 #include "exclusionareamodel.h"
 #include "baseshape.h"
 #include "translator.h"
+#include "helper.h"
 SpyC *SpyC::sInstance = nullptr;
 
 //-------------------------------------------------------------------------------------------------
@@ -33,6 +34,9 @@ SpyC::SpyC(QObject *parent) : QObject(parent)
 
     // Drone controller
     m_pMasterController = new MasterController(this);
+
+    // Helper
+    m_pHelper = new Helper(this);
 
     // Set context properties
     setContextProperties();
@@ -90,21 +94,6 @@ void SpyC::shutdown()
 
 //-------------------------------------------------------------------------------------------------
 
-QString SpyC::toLocalFile(const QString &sInput)
-{
-    QUrl url(sInput);
-    return url.toLocalFile();
-}
-
-//-------------------------------------------------------------------------------------------------
-
-QString SpyC::fromLocalFile(const QString &sInput)
-{
-    return QUrl::fromLocalFile(sInput).toString();
-}
-
-//-------------------------------------------------------------------------------------------------
-
 void SpyC::launchUI()
 {
     m_engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
@@ -137,4 +126,5 @@ void SpyC::setContextProperties()
     m_engine.rootContext()->setContextProperty("SPYC", this);
     m_engine.rootContext()->setContextProperty("MASTERCONTROLLER", m_pMasterController);
     m_engine.rootContext()->setContextProperty("TRANSLATOR", m_pMasterController->settingController()->translator());
+    m_engine.rootContext()->setContextProperty("HELPER", m_pHelper);
 }

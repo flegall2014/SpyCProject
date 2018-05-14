@@ -6,6 +6,7 @@ import "../widgets"
 
 PanelBase {
     id: root
+    signal thumbNailMaximizeRequest(int index)
     toolBarContents: Item {
         anchors.fill: parent
         ImageButton {
@@ -70,13 +71,14 @@ PanelBase {
                         id: image
                         anchors.fill: parent
                         fillMode: Image.PreserveAspectFit
-                        source: SPYC.fromLocalFile(filePath)
+                        source: HELPER.fromLocalFile(filePath)
                         asynchronous: true
                     }
 
                     MouseArea {
                         anchors.fill: parent
                         onClicked: targetDrone.galleryModel.currentScreenCapIndex = index
+                        onDoubleClicked: droneDisplay.flip()
                     }
                 }
 

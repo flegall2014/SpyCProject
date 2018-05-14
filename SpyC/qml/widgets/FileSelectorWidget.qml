@@ -13,7 +13,7 @@ Item {
         id: folderDialog
         folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
         onAccepted: {
-            input.text = SPYC.toLocalFile(folderDialog.folder)
+            input.text = HELPER.toLocalFile(folderDialog.folder)
         }
     }
     StandardText {

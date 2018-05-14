@@ -10,6 +10,7 @@ class QQuickItem;
 #include "iservice.h"
 class PluginLoader;
 class MasterController;
+class Helper;
 
 class SpyC : public QObject, public IService
 {
@@ -51,12 +52,6 @@ public:
     //! Stop server
     virtual void shutdown();
 
-    //! To local file
-    Q_INVOKABLE QString toLocalFile(const QString &sInput);
-
-    //! From local file
-    Q_INVOKABLE QString fromLocalFile(const QString &sInput);
-
 private:
     //! Register types
     void registerTypes();
@@ -74,6 +69,9 @@ private:
 
     //! Drone controller
     MasterController *m_pMasterController = nullptr;
+
+    //! Helper
+    Helper *m_pHelper = nullptr;
 
     //! Main view
     QQmlApplicationEngine m_engine;

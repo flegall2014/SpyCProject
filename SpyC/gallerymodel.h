@@ -20,6 +20,7 @@ class GalleryModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(int currentScreenCapIndex READ currentScreenCapIndex WRITE setCurrentScreenCapIndex NOTIFY currentScreenCapIndexChanged)
+    Q_PROPERTY(QString currentScreenCapPath READ currentScreenCapPath NOTIFY currentScreenCapIndexChanged)
 
 public:
     enum Roles {FileNameRole=Qt::UserRole+1, FilePathRole};
@@ -74,6 +75,9 @@ public:
 
     //! Set current screenCap index
     void setCurrentScreenCapIndex(int iIndex);
+
+    //! Return current screenCap path
+    QString currentScreenCapPath() const;
 
 private:
     //! Snaps
