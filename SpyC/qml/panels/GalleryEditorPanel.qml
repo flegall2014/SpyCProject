@@ -72,11 +72,11 @@ PanelBase {
                         fillMode: Image.PreserveAspectFit
                         source: SPYC.fromLocalFile(filePath)
                         asynchronous: true
+                    }
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: targetDrone.galleryModel.currentScreenCapIndex = index
-                        }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: targetDrone.galleryModel.currentScreenCapIndex = index
                     }
                 }
 

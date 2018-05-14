@@ -125,7 +125,7 @@ Grid {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
             source: "qrc:/icons/ico-shape.svg"
-            enabled: false
+            enabled: targetDrone.state === DroneBase.FLYING
             label: qsTr("Loiter")
             textPosition: "below"
         }
