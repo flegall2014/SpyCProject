@@ -34,7 +34,7 @@ Rectangle {
         anchors.centerIn: parent
         font.pixelSize: Theme.largeFontSize
         font.bold: true
-        text: MASTERCONTROLLER.applicationTitle
+        text: MASTERCONTROLLER.applicationTitle + TRANSLATOR.emptyString
     }
 
     // Quit button

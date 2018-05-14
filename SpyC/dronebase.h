@@ -228,6 +228,9 @@ public:
     //! Clear exclusion areas
     Q_INVOKABLE void clearExclusionAreas();
 
+    //! Close safety
+    void closeSafety();
+
 private:
     //! Update battery status
     void updateBatteryStatus();

@@ -50,7 +50,7 @@ public:
     void setMissionPlan(const QString &sDroneUID, const QVector<WayPoint> &missionPlan);
 
     //! Set safety
-    void setSafety(const QString &sDroneUID, const QVector<WayPoint> &safety);
+    void setSafety(const QString &sDroneUID, const QGeoPath &safety);
 
     //! Set landing plan
     void setLandingPlan(const QString &sDroneUID, const QVector<WayPoint> &landinPlan);
@@ -79,7 +79,7 @@ public slots:
     void onUploadMissionPlan(const QVector<WayPoint> &path, const QString &sDroneUID);
 
     //! Upload safety
-    void onUploadSafety(const QVector<WayPoint> &path, const QString &sDroneUID);
+    void onUploadSafety(const QGeoPath &path, const QString &sDroneUID);
 
     //! Upload landing plan
     void onUploadLandingPlan(const QVector<WayPoint> &path, const QString &sDroneUID);

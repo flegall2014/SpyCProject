@@ -6,6 +6,7 @@
 
 // Application
 #include "translator.h"
+#include "helper.h"
 
 //-------------------------------------------------------------------------------------------------
 
@@ -35,7 +36,7 @@ void Translator::selectLanguage(const QString &sLanguage)
     // working folder
     if (sLanguage == "FR")
     {
-        if (!m_pTranslator->load("D:/projects/SpyCProject/SpyC/i18n/french.qm"))
+        if (!m_pTranslator->load(Helper::i18nDir().absoluteFilePath("french.qm")))
             qDebug() << "Failed to load: " << sLanguage;
         else
             qDebug() << sLanguage << " successfully loaded";

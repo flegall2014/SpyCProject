@@ -79,6 +79,9 @@ public:
     //! Clear mission plan
     void clear();
 
+    //! Close path
+    void closePath();
+
 private:
     //! Way points
     WayPointList m_vWayPoints;

@@ -95,7 +95,7 @@ void DroneManager::setMissionPlan(const QString &sDroneUID, const QVector<WayPoi
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneManager::setSafety(const QString &sDroneUID, const QVector<WayPoint> &safety)
+void DroneManager::setSafety(const QString &sDroneUID, const QGeoPath &safety)
 {
     Drone *pTargetDrone = m_hDrones[sDroneUID];
     if (pTargetDrone != nullptr)
@@ -141,7 +141,7 @@ void DroneManager::onUploadMissionPlan(const QVector<WayPoint> &path, const QStr
 
 //-------------------------------------------------------------------------------------------------
 
-void DroneManager::onUploadSafety(const QVector<WayPoint> &path, const QString &sDroneUID)
+void DroneManager::onUploadSafety(const QGeoPath &path, const QString &sDroneUID)
 {
     // Retrieve target drone
     Drone *pDrone = m_hDrones[sDroneUID];

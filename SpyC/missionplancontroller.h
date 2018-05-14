@@ -119,7 +119,7 @@ signals:
     void uploadMissionPlan(const WayPointList &vWayPoints, const QString &sDroneUID);
 
     //! Upload safety
-    void uploadSafety(const WayPointList &geoPath, const QString &sDroneUID);
+    void uploadSafety(const QGeoPath &geoPath, const QString &sDroneUID);
 
     //! Upload landing plan
     void uploadLandingPlan(const WayPointList &geoPath, const QString &sDroneUID);

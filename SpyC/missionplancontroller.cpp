@@ -98,7 +98,10 @@ void MissionPlanController::onValidateSafetyPlan(const QString &sDroneUID)
             if (!safety.isEmpty())
             {
                 if (safety.size() > 2)
-                    emit uploadSafety(pDrone->safetyModel()->wayPoints(), pDrone->uid());
+                {
+                    pDrone->closeSafety();
+                    emit uploadSafety(pDrone->safetyModel()->path(), pDrone->uid());
+                }
                 else
                     emit missionPlanError(MissionPlanError::NOT_ENOUGH_POINTS_IN_SAFETY, pDrone->uid());
             }

@@ -59,7 +59,7 @@ const QGeoCoordinate &Drone::initialPosition() const
 
 //-------------------------------------------------------------------------------------------------
 
-void Drone::setSafety(const QVector<WayPoint> &geoPath)
+void Drone::setSafety(const QGeoPath &geoPath)
 {
     m_safety = geoPath;
     emit safetyChanged(m_sDroneUID);

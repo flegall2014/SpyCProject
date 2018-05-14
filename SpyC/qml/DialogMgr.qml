@@ -119,7 +119,7 @@ Item {
 
     // Dialog container
     Rectangle {
-        width: 512
+        width: 540
         height: 384
         color: Theme.backgroundColor
         border.color: msgType === SpyC.INFORMATION ? Theme.nominalColor : (msgType === SpyC.WARNING ? Theme.warningColor : Theme.criticalColor)

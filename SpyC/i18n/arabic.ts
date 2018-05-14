@@ -111,11 +111,6 @@
         <source>Alerts</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../qml/pages/dronePage/ControlPanel.qml" line="45"/>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CoordinateEditor</name>
@@ -146,7 +141,7 @@
 <context>
     <name>DialogMgr</name>
     <message>
-        <location filename="../qml/DialogMgr.qml" line="128"/>
+        <location filename="../qml/DialogMgr.qml" line="145"/>
         <source>Spy&apos;C messenger</source>
         <translation type="unfinished"></translation>
     </message>
@@ -165,47 +160,93 @@
     </message>
     <message>
         <location filename="../qml/pages/dronePage/DroneActions.qml" line="52"/>
+        <source>Landing plan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/dronePage/DroneActions.qml" line="67"/>
         <source>Exclusion area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/dronePage/DroneActions.qml" line="65"/>
+        <location filename="../qml/pages/dronePage/DroneActions.qml" line="80"/>
         <source>Take off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/dronePage/DroneActions.qml" line="78"/>
+        <location filename="../qml/pages/dronePage/DroneActions.qml" line="93"/>
         <source>Fail safe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/dronePage/DroneActions.qml" line="90"/>
-        <source>Home</source>
+        <location filename="../qml/pages/dronePage/DroneActions.qml" line="105"/>
+        <source>Go home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/dronePage/DroneActions.qml" line="102"/>
+        <location filename="../qml/pages/dronePage/DroneActions.qml" line="129"/>
         <source>Snapshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/dronePage/DroneActions.qml" line="115"/>
+        <location filename="../qml/pages/dronePage/DroneActions.qml" line="142"/>
         <source>Gallery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/dronePage/DroneActions.qml" line="131"/>
+        <location filename="../qml/pages/dronePage/DroneActions.qml" line="158"/>
         <source>Loiter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/dronePage/DroneActions.qml" line="143"/>
+        <location filename="../qml/pages/dronePage/DroneActions.qml" line="117"/>
         <source>GoTo</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>DroneBase</name>
     <message>
-        <location filename="../qml/pages/dronePage/DroneActions.qml" line="155"/>
-        <source>Test</source>
+        <location filename="../dronebase.cpp" line="151"/>
+        <source>Low battery level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dronebase.cpp" line="151"/>
+        <source>Critical battery level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dronebase.cpp" line="168"/>
+        <source>Low GPS strength</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dronebase.cpp" line="168"/>
+        <source>Critical GPS strength</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dronebase.cpp" line="199"/>
+        <source>Flying</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dronebase.cpp" line="200"/>
+        <source>IDLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EmptyLandingPlanErrorDialog</name>
+    <message>
+        <location filename="../qml/dialogs/EmptyLandingPlanErrorDialog.qml" line="16"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/dialogs/EmptyLandingPlanErrorDialog.qml" line="28"/>
+        <source>Landing plan is empty. ABORTING</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -311,6 +352,50 @@
     </message>
 </context>
 <context>
+    <name>LandingPlanEditorPanel</name>
+    <message>
+        <location filename="../qml/panels/LandingPlanEditorPanel.qml" line="9"/>
+        <source>EDITING LANDING PLAN</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LandingPlanToolBar</name>
+    <message>
+        <location filename="../qml/toolbars/LandingPlanToolBar.qml" line="16"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/toolbars/LandingPlanToolBar.qml" line="27"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/toolbars/LandingPlanToolBar.qml" line="38"/>
+        <source>Done</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LandingPlanValidationDialog</name>
+    <message>
+        <location filename="../qml/dialogs/LandingPlanValidationDialog.qml" line="16"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/dialogs/LandingPlanValidationDialog.qml" line="29"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/dialogs/LandingPlanValidationDialog.qml" line="42"/>
+        <source>Upload landing plan?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LoginPage</name>
     <message>
         <location filename="../qml/pages/loginPage/LoginPage.qml" line="32"/>
@@ -360,7 +445,7 @@
 <context>
     <name>MasterController</name>
     <message>
-        <location filename="../mastercontroller.h" line="126"/>
+        <location filename="../mastercontroller.h" line="133"/>
         <source>Welcome to Spy&apos;C ground station</source>
         <translation type="unfinished"></translation>
     </message>
@@ -493,6 +578,29 @@
     </message>
 </context>
 <context>
+    <name>SettingController</name>
+    <message>
+        <location filename="../settingcontroller.cpp" line="306"/>
+        <source>Army</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingcontroller.cpp" line="311"/>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingcontroller.cpp" line="316"/>
+        <source>Mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingcontroller.cpp" line="321"/>
+        <source>Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsTab</name>
     <message>
         <location filename="../qml/pages/loginPage/SettingsTab.qml" line="37"/>
@@ -525,6 +633,19 @@
     <message>
         <location filename="../qml/panels/ShapeEditor.qml" line="22"/>
         <source>Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnexpectedLandingPlanCountErrorDialog</name>
+    <message>
+        <location filename="../qml/dialogs/UnexpectedLandingPlanCountErrorDialog.qml" line="16"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/dialogs/UnexpectedLandingPlanCountErrorDialog.qml" line="28"/>
+        <source>Landing plan should contain exactly 3 points. ABORTING</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

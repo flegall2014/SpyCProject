@@ -102,7 +102,19 @@ Grid {
             anchors.centerIn: parent
             source: "qrc:/icons/ico-home.svg"
             enabled: targetDrone.state === DroneBase.FLYING
-            label: qsTr("Home")
+            label: qsTr("Go home")
+            textPosition: "below"
+        }
+    }
+    Item {
+        width: parent.width/3
+        height: width
+        ImageButton {
+            endColor: Theme.defaultButtonColor
+            anchors.centerIn: parent
+            source: "qrc:/icons/ico-ground.svg"
+            enabled: false
+            label: qsTr("GoTo")
             textPosition: "below"
         }
     }
@@ -144,30 +156,6 @@ Grid {
             source: "qrc:/icons/ico-shape.svg"
             enabled: false
             label: qsTr("Loiter")
-            textPosition: "below"
-        }
-    }
-    Item {
-        width: parent.width/3
-        height: width
-        ImageButton {
-            endColor: Theme.defaultButtonColor
-            anchors.centerIn: parent
-            source: "qrc:/icons/ico-ground.svg"
-            enabled: false
-            label: qsTr("GoTo")
-            textPosition: "below"
-        }
-    }
-    Item {
-        width: parent.width/3
-        height: width
-        ImageButton {
-            endColor: Theme.defaultButtonColor
-            anchors.centerIn: parent
-            source: "qrc:/icons/ico-shape.svg"
-            enabled: false
-            label: qsTr("Test")
             textPosition: "below"
         }
     }

@@ -52,7 +52,7 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Set safety
-    void setSafety(const QVector<WayPoint> &geoPath);
+    void setSafety(const QGeoPath &geoPath);
 
     //! Set mission plan
     void setMissionPlan(const QVector<WayPoint> &geoPath);
@@ -80,7 +80,7 @@ private:
     QGeoCoordinate m_initialPosition;
 
     //! Safety
-    QVector<WayPoint> m_safety;
+    QGeoPath m_safety;
 
     //! Mission plan
     QVector<WayPoint> m_missionPlan;

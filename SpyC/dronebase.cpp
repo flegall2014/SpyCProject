@@ -401,6 +401,14 @@ void DroneBase::clearExclusionAreas()
 
 //-------------------------------------------------------------------------------------------------
 
+void DroneBase::closeSafety()
+{
+    if (m_pSafetyModel != nullptr)
+        m_pSafetyModel->closePath();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void DroneBase::onGlobalStatusChanged()
 {
     Status eNewGlobalStatus = (Status)qMax(batteryStatus(), gpsStatus());

@@ -166,4 +166,12 @@ void WayPointModel::clear()
     emit pathChanged();
 }
 
+//-------------------------------------------------------------------------------------------------
 
+void WayPointModel::closePath()
+{
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    m_vWayPoints << m_vWayPoints.first();
+    endInsertRows();
+    emit pathChanged();
+}
