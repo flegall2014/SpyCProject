@@ -4,7 +4,10 @@
 // Qt
 #include <QObject>
 
-class IBasePlugin : public QObject
+// Application
+#include "drone_manager_global.h"
+
+class DRONEMANAGERSHARED_EXPORT IBasePlugin : public QObject
 {
     Q_OBJECT
 

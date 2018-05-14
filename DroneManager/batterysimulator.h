@@ -7,9 +7,10 @@
 
 // Application
 #include "basesimulator.h"
+#include "drone_manager_global.h"
 
 namespace Model {
-class BatterySimulator : public BaseSimulator
+class DRONEMANAGERSHARED_EXPORT BatterySimulator : public BaseSimulator
 {
     Q_OBJECT
 

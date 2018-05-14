@@ -10,9 +10,10 @@
 
 // Application
 #include "basesimulator.h"
+#include "drone_manager_global.h"
 
 namespace Model {
-class FlightSimulator : public BaseSimulator
+class DRONEMANAGERSHARED_EXPORT FlightSimulator : public BaseSimulator
 {
     Q_OBJECT
 

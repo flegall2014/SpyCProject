@@ -67,7 +67,6 @@ HEADERS += \
     gallerymodel.h \
     batterycontroller.h \
     gpscontroller.h \
-    waypoint.h \
     exclusionareamodel.h \
     baseshape.h \
     translator.h
@@ -88,7 +87,6 @@ SOURCES += \
     gallerymodel.cpp \
     batterycontroller.cpp \
     gpscontroller.cpp \
-    waypoint.cpp \
     exclusionareamodel.cpp \
     baseshape.cpp \
     translator.cpp

@@ -5,7 +5,11 @@
 #include <QGeoCoordinate>
 #include <QVariantMap>
 
-class WayPoint
+// Application
+#include "drone_manager_global.h"
+
+namespace Model {
+class DRONEMANAGERSHARED_EXPORT WayPoint
 {
     Q_ENUMS(Type)
 
@@ -65,7 +69,8 @@ private:
     //! Point metadata
     QMap<int, QVariant> m_mMetaData;
 };
+}
 
-Q_DECLARE_METATYPE(WayPoint::Type)
+Q_DECLARE_METATYPE(Model::WayPoint::Type)
 
 #endif // WAYPOINT_H

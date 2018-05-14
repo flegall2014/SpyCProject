@@ -5,8 +5,11 @@
 #include <QObject>
 #include <QTimer>
 
+// Application
+#include "drone_manager_global.h"
+
 namespace Model {
-class BaseSimulator : public QObject
+class DRONEMANAGERSHARED_EXPORT BaseSimulator : public QObject
 {
     Q_OBJECT
 

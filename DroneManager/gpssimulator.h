@@ -7,9 +7,10 @@
 
 // Application
 #include "basesimulator.h"
+#include "drone_manager_global.h"
 
 namespace Model {
-class GPSSimulator : public BaseSimulator
+class DRONEMANAGERSHARED_EXPORT GPSSimulator : public BaseSimulator
 {
     Q_OBJECT
 
