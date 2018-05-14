@@ -72,6 +72,7 @@ void DroneManager::onDroneTimeOut()
         connect(pDrone, &Drone::gpsStrengthChanged, this, &DroneManager::gpsStrengthChanged, Qt::QueuedConnection);
         connect(pDrone, &Drone::missionPlanChanged, this, &DroneManager::missionPlanChanged, Qt::QueuedConnection);
         connect(pDrone, &Drone::safetyChanged, this, &DroneManager::safetyChanged, Qt::QueuedConnection);
+        connect(pDrone, &Drone::landingPlanChanged, this, &DroneManager::landingPlanChanged, Qt::QueuedConnection);
         connect(pDrone, &Drone::exclusionAreaChanged, this, &DroneManager::exclusionAreaChanged, Qt::QueuedConnection);
         connect(pDrone, &Drone::droneError, this, &DroneManager::droneError, Qt::QueuedConnection);
         connect(pDrone, &Drone::failSafeDone, this, &DroneManager::failSafeDone, Qt::QueuedConnection);
@@ -136,6 +137,16 @@ void DroneManager::onUploadSafety(const QGeoPath &path, const QString &sDroneUID
     Drone *pDrone = m_hDrones[sDroneUID];
     if (pDrone != nullptr)
         pDrone->setSafety(path);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneManager::onUploadLandingPlan(const QGeoPath &path, const QString &sDroneUID)
+{
+    // Retrieve target drone
+    Drone *pDrone = m_hDrones[sDroneUID];
+    if (pDrone != nullptr)
+        pDrone->setLandingPlan(path);
 }
 
 //-------------------------------------------------------------------------------------------------

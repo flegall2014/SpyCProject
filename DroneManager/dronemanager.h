@@ -78,6 +78,9 @@ public slots:
     //! Upload safety
     void onUploadSafety(const QGeoPath &path, const QString &sDroneUID);
 
+    //! Upload landing plan
+    void onUploadLandingPlan(const QGeoPath &path, const QString &sDroneUID);
+
     //! Upload exclusion area
     void onUploadExclusionArea(const QList<QGeoPath> &lExclusionArea, const QString &sDroneUID);
 
@@ -99,6 +102,9 @@ signals:
 
     //! Safety changed
     void safetyChanged(const QString &sDroneUID);
+
+    //! Landing plan changed
+    void landingPlanChanged(const QString &sDroneUID);
 
     //! Exclusion area changed
     void exclusionAreaChanged(const QString &sDroneUID);

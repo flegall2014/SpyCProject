@@ -89,6 +89,9 @@ public slots:
     //! Safety changed
     void onSafetyChanged(const QString &sDroneUID);
 
+    //! Landing plan changed
+    void onLandingPlanChanged(const QString &sDroneUID);
+
     //! Exclusion area changed
     void onExclusionAreaChanged(const QString &sDroneUID);
 

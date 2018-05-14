@@ -95,6 +95,7 @@ void MasterController::setModel(Model::DroneManager *pDroneManager)
         connect(m_pDroneManager, &Model::DroneManager::gpsStrengthChanged, m_pGPSController, &GPSController::onGPSStrengthChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::missionPlanChanged, m_pMissionPlanController, &MissionPlanController::onMissionPlanChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::safetyChanged, m_pMissionPlanController, &MissionPlanController::onSafetyChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::landingPlanChanged, m_pMissionPlanController, &MissionPlanController::onLandingPlanChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::exclusionAreaChanged, m_pMissionPlanController, &MissionPlanController::onExclusionAreaChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::droneError, m_pMissionPlanController, &MissionPlanController::onMissionPlanError, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::failSafeDone, m_pMissionPlanController, &MissionPlanController::onFailSafeDone, Qt::QueuedConnection);
@@ -103,6 +104,7 @@ void MasterController::setModel(Model::DroneManager *pDroneManager)
         connect(this, &MasterController::startDroneDetection, m_pDroneManager, &Model::DroneManager::onStartDroneDetection, Qt::QueuedConnection);
         connect(m_pMissionPlanController, &MissionPlanController::uploadMissionPlan, m_pDroneManager, &Model::DroneManager::onUploadMissionPlan, Qt::QueuedConnection);
         connect(m_pMissionPlanController, &MissionPlanController::uploadSafety, m_pDroneManager, &Model::DroneManager::onUploadSafety, Qt::QueuedConnection);
+        connect(m_pMissionPlanController, &MissionPlanController::uploadLandingPlan, m_pDroneManager, &Model::DroneManager::onUploadLandingPlan, Qt::QueuedConnection);
         connect(m_pMissionPlanController, &MissionPlanController::uploadExclusionArea, m_pDroneManager, &Model::DroneManager::onUploadExclusionArea, Qt::QueuedConnection);
         connect(m_pFlightController, &FlightController::takeOffRequest, m_pDroneManager, &Model::DroneManager::onTakeOffRequest, Qt::QueuedConnection);
         connect(m_pFlightController, &FlightController::failSafeRequest, m_pDroneManager, &Model::DroneManager::onFailSafeRequest, Qt::QueuedConnection);

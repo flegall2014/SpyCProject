@@ -129,10 +129,12 @@ void MissionPlanController::onValidateLandingPlan(const QString &sDroneUID)
             if (!landingPlan.isEmpty())
             {
                 if (landingPlan.size() == 3)
+                {
+                    qDebug() << "UPLOADING LANDING PLAN";
                     emit uploadLandingPlan(pDrone->landingPlanModel()->path(), pDrone->uid());
+                }
                 else
                 {
-                    qDebug() << "TOTO";
                     emit missionPlanError(MissionPlanError::UNEXPECTED_LANDING_PLAN_COUNT, pDrone->uid());
                 }
             }
@@ -182,6 +184,20 @@ void MissionPlanController::onMissionPlanChanged(const QString &sDroneUID)
 //-------------------------------------------------------------------------------------------------
 
 void MissionPlanController::onSafetyChanged(const QString &sDroneUID)
+{
+    if (m_pMasterController != nullptr)
+    {
+        DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
+        if (pDrone != nullptr)
+        {
+            pDrone->setState(DroneBase::IDLE);
+        }
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void MissionPlanController::onLandingPlanChanged(const QString &sDroneUID)
 {
     if (m_pMasterController != nullptr)
     {
