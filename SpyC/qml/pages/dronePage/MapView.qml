@@ -220,6 +220,37 @@ Map {
         }
     }
 
+    // Snapshot position view
+    MapItemView {
+        id: snapShotPositionView
+        model: targetDrone.galleryModel
+
+        // Camera marker
+        delegate: MapQuickItem {
+            id: droneMarker
+            anchorPoint.x: cameraItem.width / 2
+            anchorPoint.y: cameraItem.height / 2
+            coordinate: position
+            z: Theme.zMax
+
+            sourceItem: Item {
+                id: cameraItem
+                width: cameraIcon.width
+                height: cameraIcon.height
+                property int size: 48
+
+                Image {
+                    id: cameraIcon
+                    source: "qrc:/icons/ico-camera.svg"
+                    mipmap: true
+                    width: cameraItem.size
+                    sourceSize.width: cameraItem.size
+                    fillMode: Image.PreserveAspectFit
+                }
+            }
+        }
+    }
+
     // Draw landing plan
     MapPolyline {
         id: landingPlanPoly
@@ -262,7 +293,7 @@ Map {
 
     // Drone marker
     MapQuickItem {
-        id: droneMarker
+        id: cameraMarker
         anchorPoint.x: droneItem.width / 2
         anchorPoint.y: droneItem.height / 2
         coordinate: targetDrone.position

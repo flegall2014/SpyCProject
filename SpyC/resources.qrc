@@ -130,5 +130,6 @@
         <file>icons/ico-landingplan.svg</file>
         <file>qml/panels/LandingPlanEditorPanel.qml</file>
         <file>qml/dialogs/UnexpectedLandingPlanCountErrorDialog.qml</file>
+        <file>icons/ico-camera.svg</file>
     </qresource>
 </RCC>

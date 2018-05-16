@@ -35,6 +35,7 @@ QHash<int, QByteArray> GalleryModel::roleNames() const
     QHash<int, QByteArray> hRoleNames;
     hRoleNames[FileNameRole] = "fileName";
     hRoleNames[FilePathRole] = "filePath";
+    hRoleNames[PositionRole] = "position";
     return hRoleNames;
 }
 
@@ -47,12 +48,14 @@ QVariant GalleryModel::data(const QModelIndex &index, int iRole) const
     if ((index.row() < 0) || (index.row() > (rowCount()-1)))
         return QVariant();
     SnapShot snapShot = m_vSnaps[index.row()];
-    QFileInfo fi(snapShot.filePath);
+    QFileInfo fi(snapShot._filePath);
 
     if (iRole == FileNameRole)
         return fi.baseName();
     if (iRole == FilePathRole)
         return fi.absoluteFilePath();
+    if (iRole == PositionRole)
+        return qVariantFromValue(snapShot._geoCoord);
 
     return QVariant();
 }
@@ -67,15 +70,14 @@ int GalleryModel::rowCount(const QModelIndex &parent) const
 
 //-------------------------------------------------------------------------------------------------
 
-void GalleryModel::addSnapShot(const QString &sSnapShotPath)
+void GalleryModel::addSnapShot(const QString &sSnapShotPath, const QGeoCoordinate &position)
 {
     QImage img(sSnapShotPath);
-    qDebug() << sSnapShotPath;
     if (!img.isNull())
     {
         qDebug() << "TEST ADDING: " << sSnapShotPath;
         beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        m_vSnaps << SnapShot(sSnapShotPath);
+        m_vSnaps << SnapShot(sSnapShotPath, position);
         endInsertRows();
     }
 }
@@ -119,7 +121,7 @@ void GalleryModel::removeCurrentScreenCap()
 {
     if ((m_iCurrentScreenCapIndex >= 0) && (m_iCurrentScreenCapIndex < rowCount()))
     {
-        QString sSnapShotPath = m_vSnaps[m_iCurrentScreenCapIndex].filePath;
+        QString sSnapShotPath = m_vSnaps[m_iCurrentScreenCapIndex]._filePath;
         beginRemoveRows(QModelIndex(), m_iCurrentScreenCapIndex, m_iCurrentScreenCapIndex);
         m_vSnaps.takeAt(m_iCurrentScreenCapIndex);
         endRemoveRows();
@@ -134,7 +136,7 @@ void GalleryModel::clear()
 {
     foreach (SnapShot snapShot, m_vSnaps)
     {
-        QFile file(snapShot.filePath);
+        QFile file(snapShot._filePath);
         file.remove();
     }
     beginResetModel();
@@ -162,6 +164,6 @@ void GalleryModel::setCurrentScreenCapIndex(int iIndex)
 QString GalleryModel::currentScreenCapPath() const
 {
     if ((m_iCurrentScreenCapIndex >= 0) && (m_iCurrentScreenCapIndex < rowCount()))
-        return m_vSnaps[m_iCurrentScreenCapIndex].filePath;
+        return m_vSnaps[m_iCurrentScreenCapIndex]._filePath;
     return QString("");
 }

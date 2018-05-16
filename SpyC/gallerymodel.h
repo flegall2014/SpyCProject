@@ -4,16 +4,19 @@
 // Qt
 #include <QAbstractListModel>
 #include <QDateTime>
+#include <QGeoCoordinate>
 class GalleryModel;
 
 struct SnapShot
 {
     SnapShot() {
     }
-    SnapShot(const QString &sFilePath) : filePath(sFilePath)
+    SnapShot(const QString &sFilePath, const QGeoCoordinate &geoCoord=QGeoCoordinate()) : _filePath(sFilePath),
+        _geoCoord(geoCoord)
     {
     }
-    QString filePath = "";
+    QString _filePath = "";
+    QGeoCoordinate _geoCoord;
 };
 
 class GalleryModel : public QAbstractListModel
@@ -23,7 +26,7 @@ class GalleryModel : public QAbstractListModel
     Q_PROPERTY(QString currentScreenCapPath READ currentScreenCapPath NOTIFY currentScreenCapIndexChanged)
 
 public:
-    enum Roles {FileNameRole=Qt::UserRole+1, FilePathRole};
+    enum Roles {FileNameRole=Qt::UserRole+1, FilePathRole, PositionRole};
 
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
@@ -52,7 +55,7 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Add snapshot
-    Q_INVOKABLE void addSnapShot(const QString &sDroneSnapDir);
+    Q_INVOKABLE void addSnapShot(const QString &sSnapShotPath, const QGeoCoordinate &position);
 
     //! Return next snapshot name
     Q_INVOKABLE QString getNextSnapShotName(const QString &sDroneUID);

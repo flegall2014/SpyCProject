@@ -29,7 +29,7 @@ Rectangle {
         video.grabToImage(function(image) {
             var snapShotPath = targetDrone.galleryModel.getNextSnapShotName(targetDrone.uid)
             image.saveToFile(snapShotPath)
-            targetDrone.galleryModel.addSnapShot(snapShotPath)
+            targetDrone.galleryModel.addSnapShot(snapShotPath, targetDrone.position)
         });
     }
 
@@ -38,6 +38,7 @@ Rectangle {
         id: video
         anchors.fill: parent
         source: targetDrone.videoUrl
+        onSourceChanged: console.log("***************************************** ", source)
         loops: MediaPlayer.Infinite
         focus: true
         opacity: targetDrone.state === DroneBase.FLYING ? 1 : 0

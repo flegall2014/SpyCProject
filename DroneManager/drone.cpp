@@ -95,6 +95,7 @@ void Drone::takeOff()
 {
     if (m_safety.isEmpty())
         emit droneError(NO_SAFETY, m_sDroneUID);
+    else
     if (m_landingPlan.isEmpty())
         emit droneError(NO_LANDING_PLAN, m_sDroneUID);
     else

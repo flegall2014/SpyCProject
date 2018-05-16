@@ -1,0 +1,12 @@
+#ifndef MESSENGER_GLOBAL_H
+#define MESSENGER_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(MESSENGER_LIBRARY)
+#  define MESSENGERSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define MESSENGERSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // MESSENGER_GLOBAL_H
