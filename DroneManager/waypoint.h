@@ -16,18 +16,8 @@ class DRONEMANAGERSHARED_EXPORT WayPoint
     Q_ENUMS(Type)
 
 public:
-    enum Type {POINT, LOITER, EIGHT, HIPPODROM};
-    enum MetaData {
-        // Loiter
-        RADIUS,
-
-        // Eight / Hippodrom
-        ANGLE,
-        LENGTH,
-
-        // Clock wise?
-        CLOCKWISE
-    };
+    enum Type {POINT=Qt::UserRole+1, LOITER, EIGHT, HIPPODROM};
+    enum Speed {ECO=Qt::UserRole+1, OBSERVATION, FAST};
 
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
@@ -58,8 +48,11 @@ public:
     //! Set type
     void setType(const Type &eType, bool bClockWise=true);
 
-    //! Set default meta data for type
-    void setDefaultMetaDataForType(const Type &eType, bool bClockWise=true);
+    //! Return speed
+    int speed() const;
+
+    //! Set speed
+    void setSpeed(int iSpeed);
 
 private:
     //! Geo coordinate
@@ -70,6 +63,9 @@ private:
 
     //! Point metadata
     QMap<int, QVariant> m_mMetaData;
+
+    //! Speed
+    Speed m_eSpeed = ECO;
 };
 }
 

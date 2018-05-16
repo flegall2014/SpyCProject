@@ -49,31 +49,18 @@ const WayPoint::Type &WayPoint::type() const
 void WayPoint::setType(const Type &eType, bool bClockWise)
 {
     m_eType = eType;
-    setDefaultMetaDataForType(m_eType, bClockWise);
 }
 
 //-------------------------------------------------------------------------------------------------
 
-void WayPoint::setDefaultMetaDataForType(const Type &eType, bool bClockWise)
+int WayPoint::speed() const
 {
-    m_mMetaData.clear();
-    if (eType == LOITER)
-    {
-        m_mMetaData[RADIUS] = 300;
-        m_mMetaData[CLOCKWISE] = bClockWise;
-    }
-    else
-    if (eType == EIGHT)
-    {
-        m_mMetaData[RADIUS] = 300;
-        m_mMetaData[LENGTH] = 300;
-        m_mMetaData[CLOCKWISE] = bClockWise;
-    }
-    else
-    if (eType == HIPPODROM)
-    {
-        m_mMetaData[RADIUS] = 300;
-        m_mMetaData[LENGTH] = 300;
-        m_mMetaData[CLOCKWISE] = bClockWise;
-    }
+    return (int)m_eSpeed;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void WayPoint::setSpeed(int iSpeed)
+{
+    m_eSpeed = (Speed)iSpeed;
 }

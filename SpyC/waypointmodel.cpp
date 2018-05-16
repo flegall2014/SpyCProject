@@ -60,6 +60,10 @@ QVariant WayPointModel::data(const QModelIndex &index, int iRole) const
     if (iRole == WayPointType)
         return (int)m_vWayPoints[index.row()].type();
 
+    // Return way point speed
+    if (iRole == WayPointSpeed)
+        return (int)m_vWayPoints[index.row()].speed();
+
     return QVariant();
 }
 
@@ -89,6 +93,7 @@ QHash<int, QByteArray> WayPointModel::roleNames() const
     hRoleNames[WayPointAltitude] = "wayPointAltitude";
     hRoleNames[WayPointLongitude] = "wayPointLongitude";
     hRoleNames[WayPointType] = "wayPointType";
+    hRoleNames[WayPointType] = "wayPointSpeed";
 
     return hRoleNames;
 }

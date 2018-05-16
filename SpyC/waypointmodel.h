@@ -16,14 +16,17 @@ class WayPointModel : public QAbstractListModel
     Q_PROPERTY(QGeoPath path READ path NOTIFY pathChanged)
     Q_PROPERTY(int pointCount READ pointCount NOTIFY pathChanged)
     Q_PROPERTY(int currentPointIndex READ currentPointIndex WRITE setCurrentPointIndex NOTIFY currentPointIndexChanged)
+    Q_ENUMS(PointSpeed)
 
 public:
+    enum PointSpeed {ECO=Qt::UserRole+1, OBS, FAST};
+
     //-------------------------------------------------------------------------------------------------
     // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
 
     //! Define roles
-    enum Roles {WayPointIndex=Qt::UserRole+1, WayPointCoordinate, WayPointLatitude, WayPointLongitude, WayPointAltitude, WayPointType};
+    enum Roles {WayPointIndex=Qt::UserRole+1, WayPointCoordinate, WayPointLatitude, WayPointLongitude, WayPointAltitude, WayPointType, WayPointSpeed};
 
     //! Constructor
     WayPointModel(QObject *pParent=nullptr);

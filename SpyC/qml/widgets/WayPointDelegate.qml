@@ -7,6 +7,7 @@ Item {
     id: indexDelegate
     property alias text: label.text
     property alias color: label.color
+    signal itemClicked
     Rectangle {
         anchors.fill: parent
         color: Theme.backgroundColor
@@ -21,5 +22,9 @@ Item {
         height: parent.height
         width: 1
         color: "green"
+    }
+    MouseArea {
+        anchors.fill: parent
+        onClicked: itemClicked()
     }
 }

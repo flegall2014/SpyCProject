@@ -1,4 +1,5 @@
 import QtQuick 2.5
+import Components 1.0
 import ".."
 
 ListView {
@@ -9,7 +10,8 @@ ListView {
         "Latitude",
         "Longitude",
         "Altitude",
-        "Ground height"
+        "Ground height",
+        "Point speed"
     ]
     header: Component {
         id: headerComponent
@@ -42,6 +44,7 @@ ListView {
                 height: parent.height
                 text: wayPointIndex
                 color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
+                onItemClicked: listView.model.currentPointIndex = index
             }
 
             // Latitude delegate
@@ -50,6 +53,7 @@ ListView {
                 height: parent.height
                 text: wayPointLatitude.toFixed(3)
                 color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
+                onItemClicked: listView.model.currentPointIndex = index
             }
 
             // Longitude delegate
@@ -58,6 +62,7 @@ ListView {
                 height: parent.height
                 text: wayPointLongitude.toFixed(3)
                 color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
+                onItemClicked: listView.model.currentPointIndex = index
             }
 
             // Altitude delegate
@@ -66,6 +71,7 @@ ListView {
                 height: parent.height
                 text: wayPointAltitude.toFixed(3)
                 color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
+                onItemClicked: listView.model.currentPointIndex = index
             }
 
             // Ground height deleagate
@@ -74,6 +80,28 @@ ListView {
                 height: parent.height
                 text: "0"
                 color: index === listView.model.currentPointIndex ? Theme.selectedColor : Theme.defaultFontColor
+                onItemClicked: listView.model.currentPointIndex = index
+            }
+
+            // Speed delegate
+            SpeedDelegate {
+                width: listView.width/columnTitles.length
+                height: parent.height
+                echoRadioChecked: wayPointSpeed === WayPointModel.ECO
+                obsRadioChecked: wayPointSpeed === WayPointModel.OBS
+                fastRadioChecked: wayPointSpeed === WayPointModel.FAST
+                onEcoClicked: {
+                    wayPointSpeed = WayPointModel.ECO
+                    listView.model.currentPointIndex = index
+                }
+                onObsClicked: {
+                    wayPointSpeed = WayPointModel.OBS
+                    listView.model.currentPointIndex = index
+                }
+                onFastClicked: {
+                    wayPointSpeed = WayPointModel.FAST
+                    listView.model.currentPointIndex = index
+                }
             }
         }
 
@@ -92,11 +120,6 @@ ListView {
             height: 1
             color: "green"
             visible: index === listView.model.pointCount-1
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: listView.model.currentPointIndex = index
         }
     }
 }

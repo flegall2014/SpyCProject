@@ -131,5 +131,7 @@
         <file>qml/panels/LandingPlanEditorPanel.qml</file>
         <file>qml/dialogs/UnexpectedLandingPlanCountErrorDialog.qml</file>
         <file>icons/ico-camera.svg</file>
+        <file>qml/widgets/SpeedDelegate.qml</file>
+        <file>qml/widgets/StandardRadioButton.qml</file>
     </qresource>
 </RCC>
