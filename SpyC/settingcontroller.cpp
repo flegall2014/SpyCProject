@@ -100,7 +100,7 @@ void SettingController::setArmy(const QString &sArmy)
     if (sArmy != m_sArmy)
     {
         m_sArmy = sArmy;
-        emit armyChanged();
+        emit fullMissionNameChanged();
     }
 }
 
@@ -118,7 +118,7 @@ void SettingController::setUnit(const QString &sUnit)
     if (sUnit != m_sUnit)
     {
         m_sUnit = sUnit;
-        emit unitChanged();
+        emit fullMissionNameChanged();
     }
 }
 
@@ -136,7 +136,7 @@ void SettingController::setMission(const QString &sMission)
     if (sMission != m_sMission)
     {
         m_sMission = sMission;
-        emit missionChanged();
+        emit fullMissionNameChanged();
     }
 }
 
@@ -154,8 +154,16 @@ void SettingController::setOperatorName(const QString &sName)
     if (sName != m_sOperator)
     {
         m_sOperator = sName;
-        emit operatorNameChanged();
+        emit fullMissionNameChanged();
     }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+QString SettingController::fullMissionName() const
+{
+    QString sFullMissionName = QString("[%1][%2][%3][%4]").arg(m_sArmy).arg(m_sMission).arg(m_sUnit).arg(m_sOperator);
+    return sFullMissionName;
 }
 
 //-------------------------------------------------------------------------------------------------

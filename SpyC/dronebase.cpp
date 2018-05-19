@@ -84,6 +84,22 @@ void DroneBase::setBatteryLevel(int iBatteryLevel)
 
 //-------------------------------------------------------------------------------------------------
 
+int DroneBase::returnLevel() const
+{
+    return m_iReturnLevel;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void DroneBase::setReturnLevel(int iReturnLevel)
+{
+    m_iReturnLevel = iReturnLevel;
+    emit returnLevelChanged();
+    updateBatteryStatus();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 int DroneBase::gpsStrength() const
 {
     return m_iGPSStrength;

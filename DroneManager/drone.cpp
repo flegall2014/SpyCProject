@@ -23,6 +23,7 @@ Drone::Drone(const QString &sDroneUID, const QString &sVideoUrl, const QGeoCoord
     // Battery simulator
     m_pBatterySimulator = new BatterySimulator(sDroneUID, this);
     connect(m_pBatterySimulator, &BatterySimulator::batteryLevelChanged, this, &Drone::batteryLevelChanged, Qt::QueuedConnection);
+    connect(m_pBatterySimulator, &BatterySimulator::returnLevelChanged, this, &Drone::returnLevelChanged, Qt::QueuedConnection);
 
     // GPS simulator
     m_pGPSSimulator = new GPSSimulator(sDroneUID, this);

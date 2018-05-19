@@ -13,10 +13,11 @@ class Translator;
 class SettingController : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString army READ army WRITE setArmy NOTIFY armyChanged)
-    Q_PROPERTY(QString unit READ unit WRITE setUnit NOTIFY unitChanged)
-    Q_PROPERTY(QString mission READ mission WRITE setMission NOTIFY missionChanged)
-    Q_PROPERTY(QString operatorName READ operatorName WRITE setOperatorName NOTIFY operatorNameChanged)
+    Q_PROPERTY(QString army READ army WRITE setArmy NOTIFY fullMissionNameChanged)
+    Q_PROPERTY(QString unit READ unit WRITE setUnit NOTIFY fullMissionNameChanged)
+    Q_PROPERTY(QString mission READ mission WRITE setMission NOTIFY fullMissionNameChanged)
+    Q_PROPERTY(QString operatorName READ operatorName WRITE setOperatorName NOTIFY fullMissionNameChanged)
+    Q_PROPERTY(QString fullMissionName READ fullMissionName NOTIFY fullMissionNameChanged)
     Q_PROPERTY(int language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(QString mapPath READ mapPath WRITE setMapPath NOTIFY mapPathChanged)
     Q_PROPERTY(QString missionPath READ missionPath WRITE setMissionPath NOTIFY missionPathChanged)
@@ -99,6 +100,9 @@ public:
 
     //! Set operator
     void setOperatorName(const QString &sName);
+
+    //! Return full mission name
+    QString fullMissionName() const;
 
     //! Return language
     int language() const;
@@ -209,17 +213,8 @@ public slots:
     void onLanguageChanged();
 
 signals:
-    //! Army changed
-    void armyChanged();
-
-    //! Unit changed
-    void unitChanged();
-
-    //! Mission changed
-    void missionChanged();
-
-    //! Operator name changed
-    void operatorNameChanged();
+    //! Full mission name changed
+    void fullMissionNameChanged();
 
     //! Language changed
     void languageChanged();

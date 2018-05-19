@@ -27,6 +27,7 @@ Item {
     property color exclusionAreaColor: "red"
     property color exclusionAreaBorderColor: "black"
     property color currentSnapShotBorderColor: "orange"
+    property color batteryBkgColor: "black"
 
     // Sizes
     property int toolBarWidth: 64

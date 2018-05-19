@@ -47,6 +47,9 @@ private:
 public slots:
     //! Battery level changed
     void onBatteryLevelChanged(int iBatteryLevel, const QString &sDroneUID);
+
+    //! Return level changed
+    void onReturnLevelChanged(int iReturnLevel, const QString &sDroneUID);
 };
 
 #endif // BATTERYCONTROLLER_H

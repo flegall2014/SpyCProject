@@ -19,7 +19,7 @@ Rectangle {
             title: qsTr("Commands")
             Item {
                 anchors.fill: parent
-                anchors.margins: 8
+                anchors.margins: Theme.standardMargin
                 DroneActions {
                     anchors.fill: parent
                     targetDrone: root.targetDrone
@@ -33,7 +33,7 @@ Rectangle {
             title: qsTr("Alerts")
             Item {
                 anchors.fill: parent
-                anchors.margins: 8
+                anchors.margins: Theme.standardMargin
                 DroneAlertView {
                     anchors.fill: parent
                     targetDrone: root.targetDrone

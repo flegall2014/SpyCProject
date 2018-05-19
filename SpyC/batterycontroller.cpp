@@ -43,12 +43,24 @@ void BatteryController::setMasterController(MasterController *pMasterController)
 
 //-------------------------------------------------------------------------------------------------
 
-void BatteryController::onBatteryLevelChanged(int iLevel, const QString &sDroneUID)
+void BatteryController::onBatteryLevelChanged(int iBatteryLevel, const QString &sDroneUID)
 {
     if (m_pMasterController != nullptr)
     {
         DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
         if (pDrone != nullptr)
-            pDrone->setBatteryLevel(iLevel);
+            pDrone->setBatteryLevel(iBatteryLevel);
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void BatteryController::onReturnLevelChanged(int iReturnLevel, const QString &sDroneUID)
+{
+    if (m_pMasterController != nullptr)
+    {
+        DroneBase *pDrone = m_pMasterController->getDrone(sDroneUID);
+        if (pDrone != nullptr)
+            pDrone->setReturnLevel(iReturnLevel);
     }
 }

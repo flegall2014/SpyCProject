@@ -5,7 +5,7 @@ import "../../widgets"
 
 Item {
     anchors.fill: parent
-    anchors.margins: 8
+    anchors.margins: Theme.standardMargin
     property variant targetDrone
     ListView {
         id: alertView
@@ -29,7 +29,7 @@ Item {
                 }
                 StandardText {
                     anchors.right: parent.right
-                    anchors.rightMargin: 4
+                    anchors.rightMargin: Theme.standardMargin/2
                     anchors.verticalCenter: parent.verticalCenter
                     text: date
                 }

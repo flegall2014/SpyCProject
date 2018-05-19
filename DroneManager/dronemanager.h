@@ -97,6 +97,9 @@ signals:
     //! Battery level changed
     void batteryLevelChanged(int iBatteryLevel, const QString &sDroneUID);
 
+    //! Return level changed
+    void returnLevelChanged(int iBatteryLevel, const QString &sDroneUID);
+
     //! GPS strength changed
     void gpsStrengthChanged(int iGPSStrength, const QString &sDroneUID);
 

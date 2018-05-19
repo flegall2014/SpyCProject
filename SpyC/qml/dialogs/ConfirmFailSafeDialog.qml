@@ -11,7 +11,7 @@ DialogBase {
         StandardButton {
             id: cancelButton
             anchors.right: parent.right
-            anchors.rightMargin: 4
+            anchors.rightMargin: Theme.standardMargin/2
             anchors.verticalCenter: parent.verticalCenter
             label: qsTr("Cancel")
             onClicked: {
@@ -24,7 +24,7 @@ DialogBase {
         StandardButton {
             id: okButton
             anchors.right: cancelButton.left
-            anchors.rightMargin: 4
+            anchors.rightMargin: Theme.standardMargin/2
             anchors.verticalCenter: parent.verticalCenter
             label: qsTr("OK")
             onClicked: {

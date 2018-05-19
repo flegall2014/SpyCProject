@@ -154,7 +154,7 @@ Item {
             // Close button
             ImageButton {
                 anchors.right: parent.right
-                anchors.rightMargin: 4
+                anchors.rightMargin: Theme.standardMargin/2
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/icons/ico-close.svg"
                 onClicked: root.state = ""

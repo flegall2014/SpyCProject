@@ -66,9 +66,9 @@ Rectangle {
     // Display current lat/lon
     StandardText {
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 8
+        anchors.bottomMargin: Theme.standardMargin
         anchors.right: parent.right
-        anchors.rightMargin: 8
+        anchors.rightMargin: Theme.standardMargin
         text: targetDrone.position.latitude.toFixed(2) + " / " + targetDrone.position.longitude.toFixed(2)
         font.pixelSize: Theme.largeFontSize
         font.bold: true

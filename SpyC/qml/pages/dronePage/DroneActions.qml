@@ -136,6 +136,17 @@ Grid {
         ImageButton {
             endColor: Theme.defaultButtonColor
             anchors.centerIn: parent
+            source: "qrc:/icons/ico-ruler.svg"
+            label: qsTr("Ruler")
+            textPosition: "below"
+        }
+    }
+    Item {
+        width: parent.width/3
+        height: width
+        ImageButton {
+            endColor: Theme.defaultButtonColor
+            anchors.centerIn: parent
             source: "qrc:/icons/ico-snapshot.svg"
             enabled: targetDrone.state === DroneBase.FLYING
             label: qsTr("Snapshot")

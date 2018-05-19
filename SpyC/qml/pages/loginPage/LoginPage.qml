@@ -33,7 +33,7 @@ Rectangle {
                 LoginTab {
                     id: loginTab
                     anchors.fill: parent
-                    anchors.margins: 8
+                    anchors.margins: Theme.standardMargin
                     onLoginClicked: root.loginClicked()
                     onGoNextEnabledChanged: root.goNextEnabled = loginTab.goNextEnabled
                     onArmyTextChanged: root.armyText = loginTab.armyText
@@ -49,7 +49,7 @@ Rectangle {
                 SettingsTab {
                     id: settingsTab
                     anchors.fill: parent
-                    anchors.margins: 8
+                    anchors.margins: Theme.standardMargin
                 }
             }
 
@@ -123,10 +123,7 @@ Rectangle {
             enabled: root.goNextEnabled
             width: Theme.goNextIconSize
             height: Theme.goNextIconSize
-            onClicked: {
-                MASTERCONTROLLER.updateApplicationTitle(root.armyText, root.unitText, root.missionText, root.operatorText)
-                loginClicked()
-            }
+            onClicked: loginClicked()
         }
     }
 

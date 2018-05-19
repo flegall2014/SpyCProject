@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import ".."
 
 RadioButton {
     property string labelText: qsTr("Radio Button")
@@ -16,7 +17,7 @@ RadioButton {
                 visible: control.checked
                 color: "#555"
                 radius: 9
-                anchors.margins: 4
+                anchors.margins: Theme.standardMargin/2
             }
         }
         label: StandardText {

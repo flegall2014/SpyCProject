@@ -91,6 +91,7 @@ void MasterController::setModel(Model::DroneManager *pDroneManager)
         connect(m_pDroneManager, &Model::DroneManager::newDroneAvailable, this, &MasterController::onNewDroneAvailable, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::positionChanged, m_pFlightController, &FlightController::onPositionChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::batteryLevelChanged, m_pBatteryController, &BatteryController::onBatteryLevelChanged, Qt::QueuedConnection);
+        connect(m_pDroneManager, &Model::DroneManager::returnLevelChanged, m_pBatteryController, &BatteryController::onReturnLevelChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::gpsStrengthChanged, m_pGPSController, &GPSController::onGPSStrengthChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::missionPlanChanged, m_pMissionPlanController, &MissionPlanController::onMissionPlanChanged, Qt::QueuedConnection);
         connect(m_pDroneManager, &Model::DroneManager::safetyChanged, m_pMissionPlanController, &MissionPlanController::onSafetyChanged, Qt::QueuedConnection);
@@ -115,14 +116,6 @@ void MasterController::setModel(Model::DroneManager *pDroneManager)
 void MasterController::detectDrones()
 {
     emit startDroneDetection();
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void MasterController::updateApplicationTitle(const QString &sArmy, const QString &sUnit, const QString &sMission, const QString &sOperator)
-{
-    QString sApplicationTitle = QString("[%1] [%2] [%3] [%4]").arg(sArmy).arg(sUnit).arg(sMission).arg(sOperator);
-    setApplicationTitle(sApplicationTitle);
 }
 
 //-------------------------------------------------------------------------------------------------

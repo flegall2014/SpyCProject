@@ -70,6 +70,7 @@ void DroneManager::onDroneTimeOut()
         Drone *pDrone = new Drone(sDroneUID, lVideos[iDroneCount%3], initialPos, this);
         connect(pDrone, &Drone::positionChanged, this, &DroneManager::positionChanged, Qt::QueuedConnection);
         connect(pDrone, &Drone::batteryLevelChanged, this, &DroneManager::batteryLevelChanged, Qt::QueuedConnection);
+        connect(pDrone, &Drone::returnLevelChanged, this, &DroneManager::returnLevelChanged, Qt::QueuedConnection);
         connect(pDrone, &Drone::gpsStrengthChanged, this, &DroneManager::gpsStrengthChanged, Qt::QueuedConnection);
         connect(pDrone, &Drone::missionPlanChanged, this, &DroneManager::missionPlanChanged, Qt::QueuedConnection);
         connect(pDrone, &Drone::safetyChanged, this, &DroneManager::safetyChanged, Qt::QueuedConnection);

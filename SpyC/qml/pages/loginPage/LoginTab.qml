@@ -28,7 +28,7 @@ Item {
 
         Item {
             anchors.fill: parent
-            anchors.margins: 16
+            anchors.margins: Theme.standardMargin*2
 
             // Mission or replay?
             Item {
@@ -58,7 +58,7 @@ Item {
                 CustomRadioButton {
                     exclusiveGroup: group
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: Theme.standardMargin
                     anchors.verticalCenter: parent.verticalCenter
                     labelText: qsTr("Replay") + TRANSLATOR.emptyString
                 }

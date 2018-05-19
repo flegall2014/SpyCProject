@@ -35,12 +35,15 @@ Rectangle {
             interactive: false
             orientation: Qt.Horizontal
             model: MASTERCONTROLLER.droneModel
-            spacing: 8
+            spacing: Theme.standardSpacing
             delegate: StandardText {
+                id: droneStatusText
                 anchors.verticalCenter: parent.verticalCenter
                 color: (drone.globalStatus === DroneBase.NOMINAL) ? Theme.nominalColor : (drone.globalStatus === DroneBase.WARNING ? Theme.warningColor : Theme.criticalColor)
                 text: "[" + drone.uid + " (" + drone.stateText + ")]"
                 font.pixelSize: Theme.largeFontSize
+                visible: MASTERCONTROLLER.currentDrone !== drone
+                width: MASTERCONTROLLER.currentDrone === drone ? 0 : droneStatusText.implicitWidth
             }
         }
     }

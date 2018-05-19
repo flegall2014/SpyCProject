@@ -39,6 +39,9 @@ private:
     //! Battery level
     int m_iBatteryLevel = 100;
 
+    //! Return level
+    int m_iReturnLevel = 0;
+
     //! Repeat
     bool m_bRepeat = false;
 
@@ -49,6 +52,9 @@ public slots:
 signals:
     //! Battery level changed
     void batteryLevelChanged(int iLevel, const QString &sDroneUID);
+
+    //! Return level changed
+    void returnLevelChanged(int iLevel, const QString &sDroneUID);
 };
 }
 

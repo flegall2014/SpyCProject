@@ -74,9 +74,6 @@ public:
     //! Detect drones
     Q_INVOKABLE void detectDrones();
 
-    //! Update application title
-    Q_INVOKABLE void updateApplicationTitle(const QString &sArmy, const QString &sUnit, const QString &sMission, const QString &sOperator);
-
     //-------------------------------------------------------------------------------------------------
     // Getters & setters
     //-------------------------------------------------------------------------------------------------

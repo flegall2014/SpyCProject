@@ -35,6 +35,7 @@ ApplicationWindow {
             anchors.top: parent.top
             enabled: dialogMgr.state === ""
             showDroneStatus: MASTERCONTROLLER.currentDrone !== null
+            mainTitle: MASTERCONTROLLER.currentDrone !== null ? "[" + MASTERCONTROLLER.currentDrone.uid + "]" + MASTERCONTROLLER.settingController.fullMissionName : qsTr("Welcome to Spy'C ground station") + TRANSLATOR.emptyString
         }
 
         // Login page

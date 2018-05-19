@@ -20,7 +20,7 @@ Item {
 
         Item {
             anchors.fill: parent
-            anchors.margins: 16
+            anchors.margins: Theme.standardMargin*2
 
             // Maps
             Item {

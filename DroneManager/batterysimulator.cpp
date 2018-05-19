@@ -35,9 +35,12 @@ void BatterySimulator::start()
 void BatterySimulator::onTimeOut()
 {
     emit batteryLevelChanged(m_iBatteryLevel, m_sDroneUID);
+    emit returnLevelChanged(m_iReturnLevel, m_sDroneUID);
+
     m_iBatteryLevel--;
     if (m_iBatteryLevel < 0)
         m_iBatteryLevel = 100;
+    m_iReturnLevel = (100-m_iBatteryLevel)/2;
     if (m_bRepeat)
         m_timer.start();
 }

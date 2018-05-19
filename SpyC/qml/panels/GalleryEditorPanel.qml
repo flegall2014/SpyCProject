@@ -11,7 +11,7 @@ PanelBase {
         anchors.fill: parent
         ImageButton {
             anchors.right: parent.right
-            anchors.rightMargin: 4
+            anchors.rightMargin: Theme.standardMargin/2
             anchors.verticalCenter: parent.verticalCenter
             source: "qrc:/icons/ico-trash.svg"
             onClicked: dialogMgr.showDialog(SpyC.CONFIRM_CLEAR_GALLERY)
@@ -24,7 +24,7 @@ PanelBase {
             anchors.fill: parent
             orientation: Qt.Horizontal
             model: root.droneValid() ? targetDrone.galleryModel : undefined
-            spacing: 8
+            spacing: Theme.standardSpacing
             delegate: Rectangle {
                 height: parent.height
                 width: parent.height
@@ -40,7 +40,7 @@ PanelBase {
                     // Snapshot index
                     StandardText {
                         anchors.left: parent.left
-                        anchors.leftMargin: 4
+                        anchors.leftMargin: Theme.standardMargin/2
                         anchors.verticalCenter: parent.verticalCenter
                         text: index+1
                         font.bold: true
@@ -49,7 +49,7 @@ PanelBase {
                     // Close button
                     ImageButton {
                         anchors.right: parent.right
-                        anchors.rightMargin: 4
+                        anchors.rightMargin: Theme.standardMargin/2
                         anchors.top: parent.top
                         width: parent.height
                         height: parent.height

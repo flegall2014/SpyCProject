@@ -35,6 +35,7 @@ class DroneBase : public QObject
 
     // Battery and GPS level/status
     Q_PROPERTY(int batteryLevel READ batteryLevel WRITE setBatteryLevel NOTIFY batteryLevelChanged)
+    Q_PROPERTY(int returnLevel READ returnLevel NOTIFY batteryLevelChanged)
     Q_PROPERTY(int gpsStrength READ gpsStrength WRITE setGPSStrength NOTIFY gpsStrengthChanged)
     Q_PROPERTY(int batteryStatus READ batteryStatus NOTIFY batteryStatusChanged)
     Q_PROPERTY(int gpsStatus READ gpsStatus NOTIFY gpsStatusChanged)
@@ -97,6 +98,12 @@ public:
 
     //! Set battery level
     void setBatteryLevel(int iBatteryLevel);
+
+    //! Return level
+    int returnLevel() const;
+
+    //! Set return level
+    void setReturnLevel(int iReturnLevel);
 
     //! Return GPS strength
     int gpsStrength() const;
@@ -251,6 +258,9 @@ private:
     //! Battery level
     int m_iBatteryLevel = 0;
 
+    //! Return level
+    int m_iReturnLevel = 0;
+
     //! Battery status
     Status m_eBatteryStatus = NOMINAL;
 
@@ -324,6 +334,9 @@ signals:
 
     //! Battery level changed
     void batteryLevelChanged();
+
+    //! Return level changed
+    void returnLevelChanged();
 
     //! GPS strength changed
     void gpsStrengthChanged();

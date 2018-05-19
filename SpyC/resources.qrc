@@ -133,5 +133,7 @@
         <file>icons/ico-camera.svg</file>
         <file>qml/widgets/SpeedDelegate.qml</file>
         <file>qml/widgets/StandardRadioButton.qml</file>
+        <file>qml/widgets/BatteryWidget.qml</file>
+        <file>icons/ico-ruler.svg</file>
     </qresource>
 </RCC>

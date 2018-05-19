@@ -53,20 +53,46 @@ Rectangle {
             anchors.bottom: commonArea.top
             anchors.top: parent.top
 
-            // Drone status widget
-            DroneStatusWidget {
-                id: droneStatusWidget
+            Item {
+                id: topContainer
                 width: parent.width
                 height: Theme.toolBarHeight
-                targetDrone: drone
-                opacity: 1
-                visible: opacity > 0
+                visible: MASTERCONTROLLER.currentDrone === null
+
+                // Drone status widget
+                DroneStatusWidget {
+                    id: droneStatusWidget
+                    anchors.left: parent.left
+                    anchors.right: unlockButton.left
+                    height: Theme.toolBarHeight
+                    targetDrone: drone
+                    opacity: 1
+                    visible: opacity > 0
+                }
+
+                // Unlock
+                ImageButton {
+                    id: unlockButton
+                    anchors.right: parent.right
+                    anchors.rightMargin: Theme.standardMargin/2
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/icons/ico-edit.svg"
+                    Behavior on opacity {
+                        NumberAnimation {duration: Theme.standardAnimationDuration}
+                    }
+                    onClicked: {
+                        if (MASTERCONTROLLER.currentDrone === null)
+                            MASTERCONTROLLER.currentDrone = targetDrone
+                        else
+                            MASTERCONTROLLER.currentDrone = null
+                    }
+                }
             }
 
             Flipable {
                 id: flipable
                 width: parent.width
-                anchors.top: droneStatusWidget.bottom
+                anchors.top: topContainer.visible ? topContainer.bottom : parent.top
                 anchors.bottom: parent.bottom
 
                 // Define transform
@@ -156,9 +182,9 @@ Rectangle {
                     ImageButton {
                         id: switchButton
                         anchors.left: parent.left
-                        anchors.leftMargin: 4
+                        anchors.leftMargin: Theme.standardMargin/2
                         anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 4
+                        anchors.bottomMargin: Theme.standardMargin/2
                         source: "qrc:/icons/ico-swap.svg"
                         visible: (MASTERCONTROLLER.currentDrone !== null) && (targetDrone === MASTERCONTROLLER.currentDrone)
                         onClicked: {
@@ -172,9 +198,10 @@ Rectangle {
                         }
                     }
                 }
-                back: Item {
+                back: Rectangle {
                     width: parent.width
                     height: parent.height
+                    color: Theme.backgroundColor
                     Image {
                         anchors.fill: parent
                         source: HELPER.fromLocalFile(targetDrone.galleryModel.currentScreenCapPath)
@@ -183,9 +210,9 @@ Rectangle {
                         // Close button
                         ImageButton {
                             anchors.right: parent.right
-                            anchors.rightMargin: 4
+                            anchors.rightMargin: Theme.standardMargin/2
                             anchors.top: parent.top
-                            anchors.topMargin: 4
+                            anchors.topMargin: Theme.standardMargin/2
                             source: "qrc:/icons/ico-close.svg"
                             onClicked: flipable.state = ""
                         }

@@ -9,11 +9,13 @@ Rectangle {
     id: toolBar
     color: Theme.toolBarColor
     property bool showDroneStatus: false
+    property alias mainTitle: mainTitle.text
 
     // Drone status widget
     DroneStatusWidget {
         id: droneStatusWidget
-        width: (parent.width-Theme.controlPanelWidth)/2
+        width: toolBar.width-mainTitle.width-64
+        anchors.right: mainTitle.left
         height: parent.height
         opacity: showDroneStatus ? 1 : 0
         visible: opacity > 0
@@ -29,18 +31,21 @@ Rectangle {
         }
     }
 
-    // Mission name
+    // Main title
     StandardText {
-        anchors.centerIn: parent
+        id: mainTitle
+        anchors.centerIn: MASTERCONTROLLER.currentDrone !== null ? undefined : parent
+        anchors.right: MASTERCONTROLLER.currentDrone !== null ? quitButton.left : undefined
+        anchors.rightMargin: Theme.standardMargin
         font.pixelSize: Theme.largeFontSize
         font.bold: true
-        text: qsTr("Welcome to Spy'C ground station") + TRANSLATOR.emptyString
     }
 
     // Quit button
     ImageButton {
+        id: quitButton
         anchors.right: parent.right
-        anchors.rightMargin: 4
+        anchors.rightMargin: Theme.standardMargin/2
         anchors.verticalCenter: parent.verticalCenter
         source: "qrc:/icons/ico-shutdown.png"
         onClicked: dialogMgr.showDialog(SpyC.EXIT_SPYC)

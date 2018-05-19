@@ -30,7 +30,7 @@ RadioButton {
                 visible: control.checked
                 color: "green"
                 radius: Theme.buttonSize
-                anchors.margins: 4
+                anchors.margins: Theme.standardMargin/2
             }
         }
         background: Rectangle {
